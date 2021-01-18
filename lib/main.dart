@@ -43,6 +43,18 @@ class _MyHomePageState extends State<MyHomePage> {
       'month': 1,
       'date': 6,
     }),
+    Diary.fromMap({
+      'month': 1,
+      'date': 9,
+    }),
+    Diary.fromMap({
+      'month': 1,
+      'date': 10,
+    }),
+    Diary.fromMap({
+      'month': 1,
+      'date': 12,
+    }),
   ];
 
   @override
