@@ -230,11 +230,30 @@ class _WriteCardPage extends State<WriteCardPage> {
             child: Container(
               child: Row(
                 children: [
-                  Icon(Icons.add, color: Colors.grey, size: 30,),
-                  Icon(Icons.add, color: Colors.grey, size: 30,),
-                  Icon(Icons.add, color: Colors.grey, size: 30,),
-                  Icon(Icons.add, color: Colors.grey, size: 30,),
-                  Icon(Icons.add, color: Colors.grey, size: 30,),
+                  Image.asset(
+                    'assets/emoji/emoji-3.png',
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Image.asset(
+                    'assets/emoji/emoji-4.png',
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Image.asset(
+                    'assets/emoji/emoji-13.png',
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Image.asset(
+                    'assets/emoji/emoji-10.png',
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Image.asset(
+                    'assets/emoji/emoji-2.png',
+                    width: 30,
+                  ),
                 ],
               ),
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
