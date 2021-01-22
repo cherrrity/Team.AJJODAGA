@@ -1,117 +1,425 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:project_moonhwadiary/name.dart';
+import 'package:project_moonhwadiary/DBHelp.dart';
+DateTime _selectedDate;
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter route test',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FirstRoute(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class FirstRoute extends StatelessWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("main page"),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget> [
+            ListTile(
+              title: Text("옵션"),
+            ),
+            ListTile(
+              title: Text("폰트"),
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => sort()));
+              },
+            ),
+            ListTile(
+              title: Text("테마"),
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => backcolor()));
+              },
+            )],
+        ),
+      ),
+      body: Center(
+        child: Text('hi'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Text("+"),
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SecondRoute()));
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class SecondRoute extends StatefulWidget {
+  @override
+  _SecondRouteState createState() => _SecondRouteState();
+}
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class _SecondRouteState extends State<SecondRoute> {
+  File _image;
+  final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("add card"),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+        child:Column(
+            children: <Widget>[
+              RaisedButton(
+                child: Text("사진추가"),
+                onPressed: () {
+                  getImage(ImageSource.gallery);
+                },
+              ),
+              showImage(),
+              RaisedButton(
+                child: Text("글추가"),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => addText()));
+                },
+              ),
+
+              RaisedButton(
+                child: Text("완료"),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FirstRoute()));
+                },
+              ),
+
+            ]
+        ),
+      ),
+    );
+  }
+
+  Widget showImage(){
+    if(_image == null)
+      return Container();
+    else
+      return Image.file(_image,width:200,height:200);
+  }
+
+  Future getImage(ImageSource imageSource) async {
+    final pickedFile = await picker.getImage(source: imageSource);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('기본 이미지');
+      }
+    });
+  }
+}
+
+class addText extends StatelessWidget {
+  int feel =0;
+  String year='';
+  String month='';
+  String day='';
+  BuildContext _context;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("add card"),
+      ),
+      body: Center(
+        child:Column(
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+
+            RaisedButton(
+              child: Text('날짜 추가'),
+              onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => minidate()));
+
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Text('$_selectedDate', style: TextStyle(fontSize: 15),),
+            RaisedButton(
+              child: Text('내용 추가'),
+              onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => writeContexts()));
+
+              },
+            ),
+
+            // TextField(decoration: InputDecoration(
+            //   labelText: '제목',
+            // ),
+            // ),
+            // TextField(decoration: InputDecoration(
+            //   labelText: '내용',
+            // ),
+            // ),
+            Text('\n'),
+            Row(
+              children: <Widget> [
+                RaisedButton(
+                  child: Text('1'),
+                  onPressed: (){
+                    this.feel = 1;
+                    this.year=_selectedDate.year.toString();
+                    this.month=_selectedDate.month.toString();
+                    this.day=_selectedDate.day.toString();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('2'),
+                  onPressed: (){
+                    this.feel = 2;
+                    this.year=_selectedDate.year.toString();
+                    this.month=_selectedDate.month.toString();
+                    this.day=_selectedDate.day.toString();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('3'),
+                  onPressed: (){
+                    this.feel = 3;
+                    this.year=_selectedDate.year.toString();
+                    this.month=_selectedDate.month.toString();
+                    this.day=_selectedDate.day.toString();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('4'),
+                  onPressed: (){
+                    this.feel = 4;
+                    this.year=_selectedDate.year.toString();
+                    this.month=_selectedDate.month.toString();
+                    this.day=_selectedDate.day.toString();
+                  },
+                ),
+                RaisedButton(
+                    child: Text('5'),
+                    onPressed: () {
+                      this.feel = 5;
+                      this.year = _selectedDate.year.toString();
+                      this.month = _selectedDate.month.toString();
+                      this.day = _selectedDate.day.toString();
+                    }
+                ),
+              ],
+            ),
+            Text('\n'),
+            RaisedButton(
+              child: Text("완료"),
+              onPressed: save,
+            ),
+          ],
+        ),
+
+      ),
+    );
+
+  }
+  DBHelper sd = DBHelper();
+
+  Future<void> save() async{
+    var fido = Diary(
+      feel: this.feel,
+      year: this.year,
+      month: this.month,
+      day: this.day,
+    );
+    await sd.insertDiary(fido);
+
+  }
+}
+
+class sort extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(" 폰트 "),
+      ),
+      body: Center(
+
+      ),
+    );
+  }
+}
+
+class backcolor extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(" 테마 "),
+      ),
+      body: Center(
+
+      ),
+    );
+  }
+}
+
+class writeContexts extends StatefulWidget {
+  @override
+  _writeContextsState createState() => _writeContextsState();
+}
+
+class _writeContextsState extends State<writeContexts> {
+
+  String title ="";
+  String contents="";
+
+  final myControllerTitle = TextEditingController();
+  final myControllerContents = TextEditingController();
+  @override
+  void dispose(){
+    myControllerTitle.dispose();
+    myControllerContents.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    myControllerTitle.addListener(_printLatestValue);
+    myControllerContents.addListener(_printLatestValue);
+
+
+  }
+
+  _printLatestValue(){
+    print("second text field: ${myControllerTitle.text}");
+    print("second text field: ${myControllerContents.text}");
+
+
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("write title and contents"),
+      ),
+      body: Center(
+        child: Column(
+          children:<Widget> [
+            TextField(
+              decoration: InputDecoration(
+                labelText: '제목',
+              ),
+              controller:myControllerTitle,
+              onChanged: (title) {
+                print("title: $title");
+              },
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: '내용',
+              ),
+              controller:myControllerContents,
+              onChanged: (contents) {
+                print("title: $contents");
+              },
+            ),
+            RaisedButton(
+              child: Text("완료"),
+              onPressed: () => onBtnClick(),
+
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  void onBtnClick(){
+    setState(
+          (){
+        this.title = myControllerTitle.text;
+        this.contents = myControllerContents.text;
+        this.save();
+      },
+    );
+  }
+
+  DBHelper sd = DBHelper();
+
+  Future<void> save() async{
+    var fido = Diary(
+      title: this.title,
+      contents: this.contents,
+    );
+
+    await sd.insertDiary(fido);
+
+  }
+}
+
+
+class minidate extends StatefulWidget {
+  @override
+  _minidateState createState() => _minidateState();
+}
+
+class _minidateState extends State<minidate> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("add date"),
+      ),
+      body: Center(
+        child: Column(
+          children:<Widget> [
+            RaisedButton(
+              onPressed: () {
+                Future<DateTime> selected = showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2016),
+                  lastDate: DateTime(2026),
+                );
+
+                selected.then((dateTime) {
+                  setState(() {
+                    _selectedDate = dateTime;
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => addText()));
+                  });
+                });
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }
