@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_moonhwadiary/model_diary.dart';
 import 'package:project_moonhwadiary/pocket.dart';
 import 'package:project_moonhwadiary/views/writeCardPage.dart';
+import 'package:project_moonhwadiary/views/viewCardPage.dart';
 
 
 void main() {
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.red[200],
       ),
       //home: MyHomePage(),
-      home: WriteCardPage(),
+      //home: WriteCardPage(),
+      home: ViewCardPage(),
     );
   }
 }
