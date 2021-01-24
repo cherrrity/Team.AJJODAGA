@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:project_moonhwadiary/name.dart';
-import 'package:project_moonhwadiary/DBHelp.dart';
-DateTime _selectedDate;
+import 'package:mmini/name.dart';
+import 'package:mmini/DBHelp.dart';
+import 'package:flutter/cupertino.dart';
 
+DateTime choice;
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -97,7 +98,7 @@ class _SecondRouteState extends State<SecondRoute> {
                 child: Text("글추가"),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => addText()));
+                      MaterialPageRoute(builder: (context) => writeContexts()));
                 },
               ),
 
@@ -135,123 +136,7 @@ class _SecondRouteState extends State<SecondRoute> {
   }
 }
 
-class addText extends StatelessWidget {
-  int feel =0;
-  String year='';
-  String month='';
-  String day='';
-  BuildContext _context;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("add card"),
-      ),
-      body: Center(
-        child:Column(
-          children: <Widget>[
 
-            RaisedButton(
-              child: Text('날짜 추가'),
-              onPressed: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => minidate()));
-
-              },
-            ),
-            Text('$_selectedDate', style: TextStyle(fontSize: 15),),
-            RaisedButton(
-              child: Text('내용 추가'),
-              onPressed: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => writeContexts()));
-
-              },
-            ),
-
-            // TextField(decoration: InputDecoration(
-            //   labelText: '제목',
-            // ),
-            // ),
-            // TextField(decoration: InputDecoration(
-            //   labelText: '내용',
-            // ),
-            // ),
-            Text('\n'),
-            Row(
-              children: <Widget> [
-                RaisedButton(
-                  child: Text('1'),
-                  onPressed: (){
-                    this.feel = 1;
-                    this.year=_selectedDate.year.toString();
-                    this.month=_selectedDate.month.toString();
-                    this.day=_selectedDate.day.toString();
-                  },
-                ),
-                RaisedButton(
-                  child: Text('2'),
-                  onPressed: (){
-                    this.feel = 2;
-                    this.year=_selectedDate.year.toString();
-                    this.month=_selectedDate.month.toString();
-                    this.day=_selectedDate.day.toString();
-                  },
-                ),
-                RaisedButton(
-                  child: Text('3'),
-                  onPressed: (){
-                    this.feel = 3;
-                    this.year=_selectedDate.year.toString();
-                    this.month=_selectedDate.month.toString();
-                    this.day=_selectedDate.day.toString();
-                  },
-                ),
-                RaisedButton(
-                  child: Text('4'),
-                  onPressed: (){
-                    this.feel = 4;
-                    this.year=_selectedDate.year.toString();
-                    this.month=_selectedDate.month.toString();
-                    this.day=_selectedDate.day.toString();
-                  },
-                ),
-                RaisedButton(
-                    child: Text('5'),
-                    onPressed: () {
-                      this.feel = 5;
-                      this.year = _selectedDate.year.toString();
-                      this.month = _selectedDate.month.toString();
-                      this.day = _selectedDate.day.toString();
-                    }
-                ),
-              ],
-            ),
-            Text('\n'),
-            RaisedButton(
-              child: Text("완료"),
-              onPressed: save,
-            ),
-          ],
-        ),
-
-      ),
-    );
-
-  }
-  DBHelper sd = DBHelper();
-
-  Future<void> save() async{
-    var fido = Diary(
-      feel: this.feel,
-      year: this.year,
-      month: this.month,
-      day: this.day,
-    );
-    await sd.insertDiary(fido);
-
-  }
-}
 
 class sort extends StatelessWidget {
   @override
@@ -287,7 +172,10 @@ class writeContexts extends StatefulWidget {
 }
 
 class _writeContextsState extends State<writeContexts> {
-
+  int feel =0;
+  String year='';
+  String month='';
+  String day='';
   String title ="";
   String contents="";
 
@@ -325,9 +213,48 @@ class _writeContextsState extends State<writeContexts> {
       appBar: AppBar(
         title: Text("write title and contents"),
       ),
+
       body: Center(
         child: Column(
           children:<Widget> [
+            Container(
+              child: CupertinoButton(
+                  child: Text("날짜 선택"),
+                  onPressed: () async{
+                    DateTime result = await showCupertinoModalPopup<DateTime>(
+                        context: context,
+                        builder: (context){
+                          return Container(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        height: 200.0,
+                                        color: Colors.white,
+                                        child: CupertinoDatePicker(
+                                            onDateTimeChanged: (DateTime dt){
+                                              choice = dt;
+                                            }
+                                        )
+                                    ),
+                                    CupertinoButton(
+                                        child: Text("select"),
+                                        onPressed: (){
+                                          if(choice == null){
+                                            choice = DateTime.now();
+                                          }
+                                          Navigator.of(context).pop(choice);
+                                        }
+                                    )
+                                  ]
+                              )
+                          );
+                        }
+                    );
+                    print(result ?? "선택하지 않았습니다");
+                  }
+              ),
+            ),
             TextField(
               decoration: InputDecoration(
                 labelText: '제목',
@@ -346,6 +273,56 @@ class _writeContextsState extends State<writeContexts> {
                 print("title: $contents");
               },
             ),
+            Row(
+              children: <Widget> [
+                RaisedButton(
+                  child: Text('1'),
+                  onPressed: (){
+                    this.feel = 1;
+                    this.year=choice.year.toString();
+                    this.month=choice.month.toString();
+                    this.day=choice.day.toString();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('2'),
+                  onPressed: (){
+                    this.feel = 2;
+                    this.year=choice.year.toString();
+                    this.month=choice.month.toString();
+                    this.day=choice.day.toString();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('3'),
+                  onPressed: (){
+                    this.feel = 3;
+                    this.year=choice.year.toString();
+                    this.month=choice.month.toString();
+                    this.day=choice.day.toString();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('4'),
+                  onPressed: (){
+                    this.feel = 4;
+                    this.year=choice.year.toString();
+                    this.month=choice.month.toString();
+                    this.day=choice.day.toString();
+                  },
+                ),
+                RaisedButton(
+                    child: Text('5'),
+                    onPressed: () {
+                      this.feel = 5;
+                      this.year=choice.year.toString();
+                      this.month=choice.month.toString();
+                      this.day=choice.day.toString();
+                    }
+                ),
+              ],
+            ),
+            Text('\n'),
             RaisedButton(
               child: Text("완료"),
               onPressed: () => onBtnClick(),
@@ -358,6 +335,7 @@ class _writeContextsState extends State<writeContexts> {
   }
 
   void onBtnClick(){
+    BuildContext _context;
     setState(
           (){
         this.title = myControllerTitle.text;
@@ -367,59 +345,20 @@ class _writeContextsState extends State<writeContexts> {
     );
   }
 
+
   DBHelper sd = DBHelper();
 
   Future<void> save() async{
     var fido = Diary(
       title: this.title,
       contents: this.contents,
+      feel: this.feel,
+      year: this.year,
+      month: this.month,
+      day: this.day,
     );
 
     await sd.insertDiary(fido);
 
   }
-}
-
-
-class minidate extends StatefulWidget {
-  @override
-  _minidateState createState() => _minidateState();
-}
-
-class _minidateState extends State<minidate> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("add date"),
-      ),
-      body: Center(
-        child: Column(
-          children:<Widget> [
-            RaisedButton(
-              onPressed: () {
-                Future<DateTime> selected = showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2016),
-                  lastDate: DateTime(2026),
-                );
-
-                selected.then((dateTime) {
-                  setState(() {
-                    _selectedDate = dateTime;
-
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => addText()));
-                  });
-                });
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
 }
