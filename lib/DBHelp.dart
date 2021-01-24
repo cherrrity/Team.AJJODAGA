@@ -38,6 +38,8 @@ class DBHelper {
     return List.generate(maps.length, (i) {
       return Diary(
         dateTime: maps[i]['dateTime'],
+        title: maps[i]['title'],
+        contents: maps[i]['contents'],
         feel: maps[i]['feel'],
       );
     });
