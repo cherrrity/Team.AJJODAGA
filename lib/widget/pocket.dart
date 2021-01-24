@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/model_diary.dart';
+import 'package:project_moonhwadiary/models/model_diary.dart';
 
 class Pocket extends StatefulWidget {
   final List<Diary> diaries;

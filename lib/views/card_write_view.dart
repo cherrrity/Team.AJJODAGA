@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:project_moonhwadiary/modules/diaryDatePicker.dart';
-import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
+import 'package:project_moonhwadiary/modules/DiaryDatePicker.dart';
+import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 
 class WriteCardPage extends StatefulWidget {
   @override
@@ -159,6 +159,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(40),
                               ],
+                              textAlign: TextAlign.center,
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,

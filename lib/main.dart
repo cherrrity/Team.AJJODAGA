@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/model_diary.dart';
-import 'package:project_moonhwadiary/pocket.dart';
-import 'package:project_moonhwadiary/views/writeCardPage.dart';
-import 'package:project_moonhwadiary/views/viewCardPage.dart';
+
+import 'package:project_moonhwadiary/modules/HorizontalList.dart';
+import 'package:project_moonhwadiary/views/card_write_view.dart';
+import 'package:project_moonhwadiary/views/card_view.dart';
+import 'package:project_moonhwadiary/models/model_diary.dart';
+import 'package:project_moonhwadiary/widget/pocket.dart';
+
+
 
 
 void main() {
@@ -20,8 +24,9 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.red[200],
       ),
       //home: MyHomePage(),
-      //home: WriteCardPage(),
-      home: ViewCardPage(),
+      //home: WriteCardPage()
+      home: ViewCardPage()
+      //home: DynamicHorizontalDemo(),
     );
   }
 }
