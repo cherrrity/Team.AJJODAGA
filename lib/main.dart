@@ -54,9 +54,7 @@ class FirstRoute extends StatelessWidget {
             )],
         ),
       ),
-      body: Center(
-        child: Text('hi'),
-      ),
+      // body: Expanded(child: child),
       floatingActionButton: FloatingActionButton(
         child: Text("+"),
         onPressed: () {
@@ -173,9 +171,7 @@ class writeContexts extends StatefulWidget {
 
 class _writeContextsState extends State<writeContexts> {
   int feel =0;
-  String year='';
-  String month='';
-  String day='';
+  String dateTime='';
   String title ="";
   String contents="";
 
@@ -251,7 +247,6 @@ class _writeContextsState extends State<writeContexts> {
                           );
                         }
                     );
-                    print(result ?? "선택하지 않았습니다");
                   }
               ),
             ),
@@ -279,45 +274,38 @@ class _writeContextsState extends State<writeContexts> {
                   child: Text('1'),
                   onPressed: (){
                     this.feel = 1;
-                    this.year=choice.year.toString();
-                    this.month=choice.month.toString();
-                    this.day=choice.day.toString();
+                    this.dateTime=choice.toString();
                   },
                 ),
                 RaisedButton(
                   child: Text('2'),
                   onPressed: (){
                     this.feel = 2;
-                    this.year=choice.year.toString();
-                    this.month=choice.month.toString();
-                    this.day=choice.day.toString();
+                    this.dateTime=choice.toString();
+
                   },
                 ),
                 RaisedButton(
                   child: Text('3'),
                   onPressed: (){
                     this.feel = 3;
-                    this.year=choice.year.toString();
-                    this.month=choice.month.toString();
-                    this.day=choice.day.toString();
+                    this.dateTime=choice.toString();
+
                   },
                 ),
                 RaisedButton(
                   child: Text('4'),
                   onPressed: (){
                     this.feel = 4;
-                    this.year=choice.year.toString();
-                    this.month=choice.month.toString();
-                    this.day=choice.day.toString();
+                    this.dateTime=choice.toString();
+
                   },
                 ),
                 RaisedButton(
                     child: Text('5'),
                     onPressed: () {
                       this.feel = 5;
-                      this.year=choice.year.toString();
-                      this.month=choice.month.toString();
-                      this.day=choice.day.toString();
+                      this.dateTime=choice.toString();
                     }
                 ),
               ],
@@ -353,12 +341,12 @@ class _writeContextsState extends State<writeContexts> {
       title: this.title,
       contents: this.contents,
       feel: this.feel,
-      year: this.year,
-      month: this.month,
-      day: this.day,
+      dateTime: this.dateTime,
+
     );
 
     await sd.insertDiary(fido);
 
   }
 }
+
