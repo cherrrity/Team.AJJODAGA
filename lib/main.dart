@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:mmini/name.dart';
-import 'package:mmini/DBHelp.dart';
+import 'package:package:project_moonhwadiary/name.dart';
+import 'package:package:project_moonhwadiary/DBHelp.dart';
 import 'package:flutter/cupertino.dart';
 
 DateTime choice;
