@@ -27,6 +27,9 @@ class _CardState extends State<PhotoCard> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+      padding: null,
+      width: MediaQuery.of(context).size.width * 0.92,
+      height: MediaQuery.of(context).size.height * 0.72,
       child: Center(
         // 메인 카드 앞면
         child: FlipCard(

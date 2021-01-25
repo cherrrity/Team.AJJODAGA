@@ -47,47 +47,7 @@ class _ViewCardPage extends State<ViewCardPage> {
             ),
           ),
           DynamicHorizontalDemo(),
-          Positioned(
-            bottom: MediaQuery.of(context).size.width * 0.1,
-            left:MediaQuery.of(context).size.width/2 - 230/2,
-            child: Container(
-              alignment: Alignment.center,
-              width: 230,
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/emoji/emoji-3.png',
-                    width: 30,
-                  ),
-                  SizedBox(width: 10),
-                  Image.asset(
-                    'assets/emoji/emoji-4.png',
-                    width: 30,
-                  ),
-                  SizedBox(width: 10),
-                  Image.asset(
-                    'assets/emoji/emoji-13.png',
-                    width: 30,
-                  ),
-                  SizedBox(width: 10),
-                  Image.asset(
-                    'assets/emoji/emoji-10.png',
-                    width: 30,
-                  ),
-                  SizedBox(width: 10),
-                  Image.asset(
-                    'assets/emoji/emoji-2.png',
-                    width: 30,
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: const Color(0xfffafafa),
-              ),
-            ),
-          ),
+
 
         ],
       ),

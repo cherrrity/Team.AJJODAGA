@@ -33,6 +33,7 @@ dependencies:
   flip_card: ^0.4.4
   scroll_snap_list: ^0.6.0
   # flutter_swiper: ^1.1.6
+  carousel_slider: ^2.3.1
 
 dev_dependencies:
   flutter_test:
