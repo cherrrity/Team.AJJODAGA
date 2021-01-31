@@ -90,7 +90,7 @@ class _CardState extends State<PhotoCard> {
                 child: Column(children: [
                   SizedBox(height: 15),
                   InkWell(
-                    child: Text(diary.day, style: TextStyle(fontSize: 20)),
+                    child: Text(diary.dateTime, style: TextStyle(fontSize: 20)),
                     onTap: () => {}, // date picker widget
                   ),
                   SizedBox(height: 10),

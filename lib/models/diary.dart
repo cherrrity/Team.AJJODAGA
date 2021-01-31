@@ -1,30 +1,25 @@
 class Diary{
   final String title;
   final String contents;
-  final String year;
-  final String month;
-  final String day;
-  final String image;
   final int feel;
+  final String image;
+  final String dateTime;
 
-  Diary({this.title, this.contents, this.year, this.month, this.day, this.image, this.feel,});
+  Diary({this.title, this.contents,this.dateTime,this.image,this.feel,});
 
   Map<String, dynamic> toMap(){
     return {
       'title' : title,
       'contents' : contents,
-      'year' : year,
-      'month' : month,
-      'day' : day,
-      'image' : image,
+      'dateTime' : dateTime,
       'feel' : feel,
+      'image' : image,
 
     };
   }
-
   @override
   String toString() {
-    return 'Diary{ title: $title, contents:$contents, year: $year,month: $month,day: $day, image: $image, feel: $feel}';
+    return 'Diary{ title: $title, contents:$contents, dateTime:$dateTime, image, : $image, feel: $feel}';
   }
 
 }
