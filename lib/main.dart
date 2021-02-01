@@ -331,10 +331,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showPicker() {
     DatePicker.showDatePicker(
       context,
-      locale: 'en',
+      //locale: 'en',
       dateFormat: 'yyyy-mm',
       initialDateTime: _currentDateTime,
-      onConfirm2: (dateTime, List<int> index) {
+      onConfirm: (dateTime, List<int> index) {
         setState(() {
           _currentDateTime = dateTime;
           _datesView();
