@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'moonhwaDiary',
       home: MyHomePage(),
+      routes: Routes.routes,  // 라우트 연결
     );
   }
 }
