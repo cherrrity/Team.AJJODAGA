@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/model/model_diary.dart';
+import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA_master/lib/models/model_diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
