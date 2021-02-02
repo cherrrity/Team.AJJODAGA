@@ -9,9 +9,9 @@ import 'package:project_moonhwadiary/views/card_write_view.dart';
 class Routes {
   Routes._();
 
-  static final routes = <String, WidgetBuilder>{
+  static final routes = {
     '/' : (BuildContext context) => MyHomePage(),
-    'card': (BuildContext context) => ViewCardPage(),
-    'write_card' : (BuildContext context) => WriteCardPage(),
+    '/card': (BuildContext context) => ViewCardPage(),
+    '/write_card' : (BuildContext context) => WriteCardPage(),
   };
 }

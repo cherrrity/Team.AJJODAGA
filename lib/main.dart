@@ -22,8 +22,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'moonhwaDiary',
-      home: MyHomePage(),
-      routes: Routes.routes,  // 라우트 연결
+      //home: MyHomePage(),
+      routes: Routes.routes, // 라우트 연결
+      onGenerateRoute: (RouteSettings){
+
+      },
     );
   }
 }
@@ -323,7 +326,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: IconButton(
                     icon: Icon(Icons.add, color: Colors.white),
                     iconSize: 30.0,
-                    onPressed: () => {print("add")},
+                    onPressed: () => Navigator.pushNamed(context, '/write_card'),
                   ),
                 ),
                 color: const Color(0xFFFEC4C4),

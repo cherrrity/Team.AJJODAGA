@@ -103,6 +103,7 @@ Widget pocket(List<Diary> diaries){
           GestureDetector(
             onTap: () {
               print('$_date');
+              Navigator.pushNamed(context, '/card', arguments: '$_date');
             },
           ),
         ],

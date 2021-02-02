@@ -7,15 +7,19 @@ import 'package:project_moonhwadiary/models/diary.dart';
 
 class PhotoCard extends StatefulWidget {
   final Diary diary;
+  final VoidCallback callback;
 
-  PhotoCard(this.diary);
+  PhotoCard(this.diary, this.callback);
 
   @override
-  _CardState createState() => _CardState();
+  _CardState createState() => _CardState(this.callback);
 }
 
 class _CardState extends State<PhotoCard> {
   Diary diary;
+  final VoidCallback onDeleteItem;
+
+  _CardState(this.onDeleteItem);
 
   @override
   void initState() {
@@ -43,20 +47,19 @@ class _CardState extends State<PhotoCard> {
                 ? Center(
                     child: Column(
                       children: [
-                        Positioned(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            height: MediaQuery.of(context).size.height * 0.62,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                // 이미지 full cover
-                                image: AssetImage(diary.image), // 카드가 될 이미지
-                                fit: BoxFit.cover,
-                              ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          height: MediaQuery.of(context).size.height * 0.62,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              // 이미지 full cover
+                              image: AssetImage(diary.image), // 카드가 될 이미지
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
+
                         SizedBox(
                           height: 20,
                         ),
@@ -100,14 +103,9 @@ class _CardState extends State<PhotoCard> {
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.52,
-                    child: SingleChildScrollView(
-                      physics: ClampingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      reverse: false,
-                      child: Text(
-                        diary.contents,
-                        textAlign: TextAlign.center,
-                      ),
+                    child: Text(
+                      diary.contents,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   Row(
@@ -119,14 +117,28 @@ class _CardState extends State<PhotoCard> {
                             Icons.edit_rounded,
                             color: Colors.grey,
                           ),
-                          onPressed: () => {}),
+                          onPressed: () => Navigator.pushNamed(context, '/write_card', arguments: diary)),
                       // 삭제 버튼
                       IconButton(
                           icon: Icon(
                             Icons.delete_rounded,
                             color: Colors.grey,
                           ),
-                          onPressed: () => {}),
+                          onPressed: () => {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("일기 삭제"),
+                                    content: Text("삭제하시겠습니까?"),
+                                    actions: [
+                                      FlatButton(onPressed: () => Navigator.pop(context), child: Text("취소")),
+                                      FlatButton(onPressed: () => {onDeleteItem(), Navigator.pop(context),}, child: Text("확인")),
+                                    ],
+                                  );
+                                }
+                            ),
+                          }),
                     ],
                   )
                 ]),

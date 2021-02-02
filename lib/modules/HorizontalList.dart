@@ -72,8 +72,32 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
     print(index);
     setState(() {
       _focusedIndex = index;
-      print(_focusedIndex);
     });
+  }
+
+  _onItemDelete(){
+    diaries.removeAt(_focusedIndex);
+
+    if(diaries.isNotEmpty) setState(() {});
+    else {
+      print("empty");
+      showDialog(
+          context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+              title: Text("알림"),
+              content: Text("더 이상 일기가 없습니다."),
+              actions: [
+                new FlatButton(onPressed: ()=>{
+                  // route to home
+
+                }, child: Text("확인"))
+              ],
+            );
+          }
+      );
+    }
+
   }
 
   Widget _buildListItem(BuildContext context, int index) {
@@ -83,7 +107,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
     //horizontal
     return Container(
       width: MediaQuery.of(context).size.width * 0.92,
-      child: PhotoCard(diaries[index]),
+      child: PhotoCard(diaries[index], _onItemDelete),
       //child: PhotoCard(diaries[index]),
     );
   }
@@ -98,16 +122,15 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Expanded(
-          child: ScrollSnapList(
-            onItemFocus: _onItemFocus,
-            itemSize: MediaQuery.of(context).size.width * 0.92,
-            itemBuilder: _buildListItem,
-            itemCount: diaries.length,
-            dynamicItemSize: true,
-            dynamicSizeEquation: customEquation, //optional
-          ),
+        ScrollSnapList(
+          onItemFocus: _onItemFocus,
+          itemSize: MediaQuery.of(context).size.width * 0.92,
+          itemBuilder: _buildListItem,
+          itemCount: diaries.length,
+          dynamicItemSize: true,
+          dynamicSizeEquation: customEquation, //optional
         ),
+
         Positioned(
           bottom: MediaQuery.of(context).size.height * 0.05,
           left: MediaQuery.of(context).size.width * 0.2,
