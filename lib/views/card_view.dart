@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 import 'package:project_moonhwadiary/modules/HorizontalList.dart';
-import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
+import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 
 class ViewCardPage extends StatefulWidget {
   @override

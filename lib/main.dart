@@ -1,9 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA_master/lib/models/model_diary.dart';
+
+// 라우터
+import 'package:project_moonhwadiary/router/routers.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+
+// 모델
+import 'package:project_moonhwadiary/models/model_diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+
 
 void main() {
   runApp(MyApp());
