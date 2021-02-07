@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:project_moonhwadiary/name.dart';
 
+
 final String tableName = 'diarys';
 
 class DBHelper {
@@ -14,7 +15,7 @@ class DBHelper {
 
         onCreate: (db, version) {
           return db.execute(
-            'CREATE TABLE tasks(생성할 열 이름 자료형)',
+            'CREATE TABLE tasks(dateTime DATE PRIMARY KEY, title TEXT, contents TEXT, feel NUMBER)',
           );
         },
         version: 1);
@@ -37,9 +38,9 @@ class DBHelper {
     // List<Map<String, dynamic>를 List<diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
       return Diary(
-        dateTime: maps[i]['dateTime'],
         title: maps[i]['title'],
-        contents: maps[i]['contents'],
+        contents: maps[i]['contents'] ,
+        dateTime: maps[i]['dateTime'],
         feel: maps[i]['feel'],
       );
     });
@@ -60,7 +61,7 @@ class DBHelper {
     );
   }
 
-  Future<void> deleteDiary(String day) async {
+  Future<void> deleteDiary(DateTime dateTime) async {
     final db = await database;
 
     // 데이터베이스에서 Diary를 삭제합니다.
@@ -69,11 +70,11 @@ class DBHelper {
       // 특정 diary를 제거하기 위해 `where` 절을 사용하세요
       where: "dateTime = ?",
       // Diary의 dateTime를 where의 인자로 넘겨 SQL injection을 방지합니다.
-      whereArgs: [day],
+      whereArgs: [dateTime],
     );
   }
 
-  Future<List<Diary>> findDiary(String dateTime) async {
+  Future<List<Diary>> findDiary(DateTime dateTime) async {
     final db = await database;
 
     // 모든 Diary를 얻기 위해 테이블에 질의합니다.
@@ -83,6 +84,8 @@ class DBHelper {
     // List<Map<String, dynamic>를 List<Diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
       return Diary(
+        title: maps[i]['title'],
+        contents: maps[i]['contents'] ,
         dateTime: maps[i]['dateTime'],
         feel: maps[i]['feel'],
       );
