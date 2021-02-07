@@ -8,6 +8,7 @@ import 'package:package:project_moonhwadiary/name.dart';
 import 'package:package:project_moonhwadiary/DBHelp.dart';
 import 'package:flutter/cupertino.dart';
 
+
 DateTime choice;
 void main() => runApp(MyApp());
 
@@ -171,7 +172,7 @@ class writeContexts extends StatefulWidget {
 
 class _writeContextsState extends State<writeContexts> {
   int feel =0;
-  String dateTime='';
+  DateTime dateTime= DateTime.now();
   String title ="";
   String contents="";
 
@@ -274,14 +275,14 @@ class _writeContextsState extends State<writeContexts> {
                   child: Text('1'),
                   onPressed: (){
                     this.feel = 1;
-                    this.dateTime=choice.toString();
+                    this.dateTime=choice;
                   },
                 ),
                 RaisedButton(
                   child: Text('2'),
                   onPressed: (){
                     this.feel = 2;
-                    this.dateTime=choice.toString();
+                    this.dateTime=choice;
 
                   },
                 ),
@@ -289,7 +290,7 @@ class _writeContextsState extends State<writeContexts> {
                   child: Text('3'),
                   onPressed: (){
                     this.feel = 3;
-                    this.dateTime=choice.toString();
+                    this.dateTime=choice;
 
                   },
                 ),
@@ -297,7 +298,7 @@ class _writeContextsState extends State<writeContexts> {
                   child: Text('4'),
                   onPressed: (){
                     this.feel = 4;
-                    this.dateTime=choice.toString();
+                    this.dateTime=choice;
 
                   },
                 ),
@@ -305,7 +306,7 @@ class _writeContextsState extends State<writeContexts> {
                     child: Text('5'),
                     onPressed: () {
                       this.feel = 5;
-                      this.dateTime=choice.toString();
+                      this.dateTime=choice;
                     }
                 ),
               ],
@@ -349,4 +350,3 @@ class _writeContextsState extends State<writeContexts> {
 
   }
 }
-
