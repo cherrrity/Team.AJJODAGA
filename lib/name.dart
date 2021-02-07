@@ -3,7 +3,7 @@ class Diary{
   final String title;
   final String contents;
   final int feel;
-  final String dateTime;
+  final DateTime dateTime;
 
   Diary({this.title, this.contents,this.dateTime,this.feel,});
 
