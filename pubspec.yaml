@@ -28,6 +28,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_cupertino_date_picker: ^0.8.0
+  simple_gesture_detector: ^0.1.6
   cupertino_icons: ^0.1.3
   flutter_svg: ^0.19.1
 
@@ -62,15 +63,21 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+  fonts:
+    #   - family: Schyler
+    #     fonts:
+    #       - asset: fonts/Schyler-Regular.ttf
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
+    - family: NanumGothic
+      fonts:
+        - asset: assets/fonts/NanumGothic.ttf
+    - family: NanumSehwa
+      fonts:
+        - asset: assets/fonts/nanumSehwa.ttf
+    - family: NanumDaheong
+      fonts:
+        - asset: assets/fonts/nanumDaheong.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

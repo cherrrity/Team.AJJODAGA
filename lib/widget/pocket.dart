@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/model/model_diary.dart';
+import 'package:project_moonhwadiary/model/diary.dart';
 
 Widget pocket(List<Diary> diaries){
-  List<int> dates = diaries.map((m) => m.date).toList();
-  List<int> satisfactions = diaries.map((m) => m.satisfaction).toList();
+  List<int> dates = diaries.map((m) => m.dateTime.day).toList();
+  List<int> satisfactions = diaries.map((m) => m.feel).toList();
 
   return GridView.builder(
     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),

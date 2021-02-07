@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/model/model_diary.dart';
+import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:project_moonhwadiary/model/diary.dart';
+import 'package:project_moonhwadiary/views/settings.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
@@ -9,12 +11,35 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  MyAppState createState() => MyAppState();
+
+  static MyAppState of(BuildContext context) => context.findAncestorStateOfType<MyAppState>();
+}
+
+class MyAppState extends State<MyApp> {
+  String _fontName = 'NanumGothic';
+  Color _backColor = Color(0xffFFDBDB);
+  Color _btnColor = Color(0xffFEC4C4);
+  Color _shadowColor = Color(0xFFD8A7A7);
+
+  set fontName(String value) => setState(() => _fontName = value);
+  set backColor(Color value) => setState(() => _backColor = value);
+  set btnColor(Color value) => setState(() => _btnColor = value);
+  set shadowColor(Color value) => setState(() => _shadowColor = value);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'moonhwaDiary',
+      theme: ThemeData(
+        fontFamily: _fontName,
+        scaffoldBackgroundColor: _backColor,
+        backgroundColor: _btnColor,
+        accentColor: _shadowColor,
+      ),
       home: MyHomePage(),
     );
   }
@@ -25,244 +50,166 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   DateTime _currentDateTime;
 
   List<Diary> diaries = [
-    Diary.fromMap({
-      'year': 2020,
-      'month': 12,
-      'date': 3,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2020,
-      'month': 12,
-      'date': 5,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2020,
-      'month': 12,
-      'date': 9,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2020,
-      'month': 12,
-      'date': 17,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2020,
-      'month': 12,
-      'date': 24,
-      'satisfaction': 5,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 1,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 2,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 3,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 4,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 5,
-      'satisfaction': 5,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 6,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 7,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 8,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 9,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 10,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 11,
-      'satisfaction': 5,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 12,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 13,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 14,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 15,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 16,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 17,
-      'satisfaction': 5,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 18,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 19,
-      'satisfaction': 5,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 20,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 21,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 22,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 23,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 24,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 25,
-      'satisfaction': 3,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 26,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 27,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 28,
-      'satisfaction': 2,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 29,
-      'satisfaction': 5,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 30,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 1,
-      'date': 31,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 2,
-      'date': 2,
-      'satisfaction': 4,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 2,
-      'date': 8,
-      'satisfaction': 1,
-    }),
-    Diary.fromMap({
-      'year': 2021,
-      'month': 2,
-      'date': 11,
-      'satisfaction': 3,
-    }),
+    Diary(
+      dateTime: DateTime(2020, 12, 3),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2020, 12, 5),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2020, 12, 9),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2020, 12, 17),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2020, 12, 24),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 1),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 2),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 3),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 4),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 5),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 6),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 7),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 8),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 9),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 10),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 11),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 12),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 13),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 14),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 15),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 16),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 17),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 18),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 19),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 20),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 21),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 22),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 23),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 24),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 25),
+      feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 26),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 27),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 28),
+      feel: 2,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 29),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 30),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 1, 31),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 2, 2),
+      feel: 4,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 2, 8),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 2, 11),
+      feel: 3,
+    ),
   ];
 
   @override
@@ -277,13 +224,21 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  void _onHorizontalSwipe(SwipeDirection direction) {
+    setState(() {
+      if (direction == SwipeDirection.left) {
+        _getNextMonth();
+      } else {
+        _getPrevMonth();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final height = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      backgroundColor: const Color(0xffFFDBDB),
       body: SafeArea(
         child: Column(
           children: [
@@ -295,15 +250,23 @@ class _MyHomePageState extends State<MyHomePage> {
               child: NeumorphicContainer(
                 child: GestureDetector(
                   child: Icon(Icons.settings, color: Colors.white),
-                  onTap: () => {print("settings")},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Settings()),
+                    );
+                  },
                 ),
-                color: const Color(0xFFFEC4C4),
                 shape: "iconButton",
               ),
             ),
+            // 날짜, 포켓
             Container(
               height: height * 0.78,
-              child: _datesView(),
+              child: SimpleGestureDetector(
+                onHorizontalSwipe: _onHorizontalSwipe,
+                child: _datesView(),
+              ),
             ),
             // 추가
             Container(
@@ -318,7 +281,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () => {print("add")},
                   ),
                 ),
-                color: const Color(0xFFFEC4C4),
                 shape: "add",
               ),
             ),
@@ -346,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _datesView() {
     List<Diary> _currentDiaries = new List<Diary>();
     for(var i = 0; i < diaries.length; i++){
-      if(_currentDateTime.year == diaries[i].year && _currentDateTime.month == diaries[i].month) _currentDiaries.add(diaries[i]);
+      if(_currentDateTime.year == diaries[i].dateTime.year && _currentDateTime.month == diaries[i].dateTime.month) _currentDiaries.add(diaries[i]);
     }
 
     return Column(
