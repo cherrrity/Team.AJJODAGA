@@ -93,16 +93,18 @@ class _CardState extends State<PhotoCard> {
                 child: Column(children: [
                   SizedBox(height: 15),
                   InkWell(
-                    child: Text(diary.dateTime, style: TextStyle(fontSize: 20)),
+                    child: Text('${diary.dateTime.year}년 ${diary.dateTime.month}월 ${diary.dateTime.day}일', style: TextStyle(fontSize: 20)),
                     onTap: () => {}, // date picker widget
                   ),
                   SizedBox(height: 10),
                   Text(
                     diary.title,
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(height: 10),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.52,
+                    height: MediaQuery.of(context).size.height * 0.499,
                     child: Text(
                       diary.contents,
                       textAlign: TextAlign.center,

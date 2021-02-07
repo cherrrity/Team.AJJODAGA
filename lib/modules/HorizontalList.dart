@@ -20,11 +20,18 @@ class DynamicHorizontalDemo extends StatefulWidget {
 class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
   List<Diary> diaries = [];
   int _focusedIndex = 0;
+  List<double> grayScale = <double>[
+    0.2126,0.7152,0.0722,0,0,
+    0.2126,0.7152,0.0722,0,0,
+    0.2126,0.7152,0.0722,0,0,
+    0,0,0,1,0,
+  ];
 
 
   @override
   void initState() {
     super.initState();
+
     diaries = widget.diaries;
 
     diaries = [
@@ -40,36 +47,35 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
             "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
             "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
             "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔",
-        dateTime: "2020-01-03",
+        dateTime: DateTime(2000, 1, 3),
         feel: 1
       ),
       Diary(
-        title: "오늘 콘서트 너무 재밌었다😂",
+        title: "오늘 콘서트 너무 재밌었다😂2",
         contents: "1년 6개월",
-          dateTime: "2020-01-03",
+        dateTime: DateTime(2000, 1, 3),
         feel: 2
       ),
       Diary(
-        title: "오늘 콘서트 너무 재밌었다😂",
+        title: "오늘 콘서트 너무 재밌었다😂3",
         contents: "1년 6개월",
-          dateTime: "2020-01-03",
-          feel: 3
+        dateTime: DateTime(2000, 1, 3),
+        feel: 3
       ),Diary(
-        title: "오늘 콘서트 너무 재밌었다😂",
+        title: "오늘 콘서트 너무 재밌었다😂4",
         contents: "1년 6개월",
-          dateTime: "2020-01-03",
-          feel: 1
+        dateTime: DateTime(2000, 1, 3),
+        feel: 1
       ),Diary(
-        title: "오늘 콘서트 너무 재밌었다😂",
+        title: "오늘 콘서트 너무 재밌었다😂5",
         contents: "1년 6개월",
-          dateTime: "2020-01-03",
-          feel: 5
+        dateTime: DateTime(2000, 1, 3),
+        feel: 5
       )
     ];
   }
 
   void _onItemFocus(int index) {
-    print(index);
     setState(() {
       _focusedIndex = index;
     });
@@ -142,12 +148,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                   colorFilter: diaries[_focusedIndex].feel == 1? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) : ColorFilter.matrix(<double>[
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0,0,0,1,0,
-                  ]),
+                  ) :  ColorFilter.matrix(grayScale),
                   child: Image.asset(
                   'assets/emoji/emoji-3.png',
                   width: 30,
@@ -158,12 +159,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                   colorFilter: diaries[_focusedIndex].feel == 2? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) : ColorFilter.matrix(<double>[
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0,0,0,1,0,
-                  ]),
+                  ) :  ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-4.png',
                     width: 30,
@@ -174,12 +170,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                   colorFilter: diaries[_focusedIndex].feel == 3? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) : ColorFilter.matrix(<double>[
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0,0,0,1,0,
-                  ]),
+                  ) :  ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-13.png',
                     width: 30,
@@ -190,12 +181,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                   colorFilter: diaries[_focusedIndex].feel == 4? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) : ColorFilter.matrix(<double>[
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0,0,0,1,0,
-                  ]),
+                  ) :  ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-10.png',
                     width: 30,
@@ -206,12 +192,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                   colorFilter: diaries[_focusedIndex].feel == 5? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) : ColorFilter.matrix(<double>[
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0.2126,0.7152,0.0722,0,0,
-                    0,0,0,1,0,
-                  ]),
+                  ) : ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-2.png',
                     width: 30,

@@ -3,9 +3,10 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
-import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
+import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
 
 class WriteCardPage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _WriteCardPage extends State<WriteCardPage> {
   Diary _diary;
   bool _isPhoto = false;
   bool _isEdit = false;
-  DateTime _diaryDate = DateTime.now();
+  DateTime _currentDateTime = DateTime.now();
 
   @override
   void initState(){
@@ -28,36 +29,22 @@ class _WriteCardPage extends State<WriteCardPage> {
     super.didChangeDependencies();
     _diary = ModalRoute.of(context).settings.arguments;
     _isEdit = _diary == null? false : true ;  // 수정인지 확인
+    _currentDateTime = _isEdit? _diary.dateTime : DateTime.now(); // 수정일 때 수정 날짜로 변경
     _isPhoto = _diary.image == null? false : true;
   }
 
-  void showDatePicker() {
-    showModalBottomSheet(
-        context: this.context,
-        builder: (context) {
-          return Container(
-            height: 300,
-            child: Stack(
-              children: <Widget>[
-                CupertinoDatePicker(
-                  minimumYear: 2000,
-                  maximumYear: DateTime.now().year,
-                  initialDateTime: DateTime.now(),
-                  maximumDate: DateTime.now(),
-                  onDateTimeChanged: (newDate) => { _diaryDate = newDate},
-                  mode: CupertinoDatePickerMode.date,
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: CupertinoButton(
-                    child: Text('확인'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }).whenComplete(() => setState(() => {}));
+  void _showPicker() {
+    DatePicker.showDatePicker(
+      context,
+      //locale: 'en',
+      dateFormat: 'yyyy-mm',
+      initialDateTime: _currentDateTime,
+      onConfirm: (dateTime, List<int> index) {
+        setState(() {
+          _currentDateTime = dateTime;
+        });
+      },
+    );
   }
 
   @override
@@ -81,7 +68,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                 NeumorphicContainer(
                   child: GestureDetector(
                     child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                    onTap: () => Navigator.of(context, rootNavigator: true).pop(),
+                    onTap: () => Navigator.pop(context),
                   ),
                   color: Color(0xFFFEC4C4),
                   shape: "iconButton",
@@ -164,9 +151,8 @@ class _WriteCardPage extends State<WriteCardPage> {
                             SizedBox(height: 15),
                             // 카드 입력(날짜)
                             InkWell(
-                              child: _isEdit? Text(_diary.dateTime, style: TextStyle(fontSize: 20)):
-                              Text("2020-01-01", style: TextStyle(fontSize: 20)),
-                              onTap: () => {}, // date picker widget
+                              child: Text('${_currentDateTime.year}년 ${_currentDateTime.month}월 ${_currentDateTime.day}일', style: TextStyle(fontSize: 20)),
+                              onTap: () => _showPicker(), // date picker widget
                             ),
                             SizedBox(height: 10),
                             // 카드 입력(제목)
@@ -235,7 +221,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                 iconSize: 40,
                 color: Colors.white,
                 onPressed: () => {
-                  print("back")
+                  // add function
                 },
               ),
               color: Color(0xFFFEC4C4),
@@ -248,9 +234,11 @@ class _WriteCardPage extends State<WriteCardPage> {
               child: Container(
                 child: Row(
                   children: [
-                    Image.asset(
-                      'assets/emoji/emoji-3.png',
-                      width: 30,
+                    InkWell(
+                      child: Image.asset(
+                        'assets/emoji/emoji-3.png',
+                        width: 30,
+                      ),
                     ),
                     SizedBox(width: 10),
                     Image.asset(

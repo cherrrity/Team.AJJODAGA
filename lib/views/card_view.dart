@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 import 'package:project_moonhwadiary/modules/HorizontalList.dart';
-import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
+import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/views/NeumorphicContainer.dart';
 
 class ViewCardPage extends StatefulWidget {
   @override
@@ -19,6 +19,7 @@ class _ViewCardPage extends State<ViewCardPage> {
   bool _isKeyboardUp = false;
   DateTime _diaryDate = DateTime.now();
 
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -27,9 +28,10 @@ class _ViewCardPage extends State<ViewCardPage> {
       backgroundColor: const Color(0xffFFDBDB),
       body: Stack(
         children: [
+          DynamicHorizontalDemo(),
           Container(
             margin:
-                const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
+                const EdgeInsets.only(top: 40, bottom: 30, left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -38,7 +40,7 @@ class _ViewCardPage extends State<ViewCardPage> {
                   child: GestureDetector(
                     child:
                         Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                    onTap: () => {print("back")},
+                    onTap: () => Navigator.pop(context),
                   ),
                   color: Color(0xFFFEC4C4),
                   shape: "iconButton",
@@ -46,8 +48,6 @@ class _ViewCardPage extends State<ViewCardPage> {
               ],
             ),
           ),
-          DynamicHorizontalDemo(),
-
 
         ],
       ),

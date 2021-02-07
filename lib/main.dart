@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 // 라우터
 import 'package:project_moonhwadiary/router/routers.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 // 모델
 import 'package:project_moonhwadiary/models/model_diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
-import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
+import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
 
 
 void main() {
@@ -24,9 +24,6 @@ class MyApp extends StatelessWidget {
       title: 'moonhwaDiary',
       //home: MyHomePage(),
       routes: Routes.routes, // 라우트 연결
-      onGenerateRoute: (RouteSettings){
-
-      },
     );
   }
 }
