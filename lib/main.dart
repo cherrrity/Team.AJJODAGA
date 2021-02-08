@@ -1,16 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // 라우터
 import 'package:project_moonhwadiary/router/routers.dart';
-
 
 // 모델
 import 'package:project_moonhwadiary/models/model_diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
 
+// 세팅
+import 'package:project_moonhwadiary/DB/setting.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() =>  _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -276,8 +281,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    getSetting();
     final date = DateTime.now();
     _currentDateTime = DateTime(date.year, date.month);
+  }
+
+  getSetting() async {
+    // setting
+    Map<String, dynamic> data = jsonDecode(await rootBundle.loadString('assets/userdata/setting.json'));
+    var setting = Setting.fromJson(data);
+    print(setting);
+  }
+
+  setTheme() async {
+    Setting(_theme, )
   }
 
   @override

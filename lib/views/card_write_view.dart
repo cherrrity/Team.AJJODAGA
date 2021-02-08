@@ -19,6 +19,13 @@ class _WriteCardPage extends State<WriteCardPage> {
   bool _isEdit = false;
   DateTime _currentDateTime = DateTime.now();
 
+  List<double> grayScale = <double>[
+    0.2126,0.7152,0.0722,0,0,
+    0.2126,0.7152,0.0722,0,0,
+    0.2126,0.7152,0.0722,0,0,
+    0,0,0,1,0,
+  ];
+
   @override
   void initState(){
     super.initState();
@@ -77,7 +84,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                   child: GestureDetector(
                     child: Icon(Icons.check_rounded, color: Colors.white),
                     onTap: () => {
-                      print("back")
+                      // card add function
                     },
                   ),
                   color: Color(0xFFFEC4C4),
@@ -235,30 +242,93 @@ class _WriteCardPage extends State<WriteCardPage> {
                 child: Row(
                   children: [
                     InkWell(
-                      child: Image.asset(
-                        'assets/emoji/emoji-3.png',
-                        width: 30,
+                      child : ColorFiltered(
+                        colorFilter: _diary.feel == 1? ColorFilter.mode(
+                          Colors.transparent,
+                          BlendMode.multiply,
+                        ) :  ColorFilter.matrix(grayScale),
+                        child: Image.asset(
+                          'assets/emoji/emoji-3.png',
+                          width: 30,
+                        ),
                       ),
+                      onTap: () => {
+                        setState(() {
+                          _diary.feel = 1;
+                        })
+                      },
                     ),
                     SizedBox(width: 10),
-                    Image.asset(
-                      'assets/emoji/emoji-4.png',
-                      width: 30,
+                    InkWell(
+                      child : ColorFiltered(
+                        colorFilter: _diary.feel == 2? ColorFilter.mode(
+                          Colors.transparent,
+                          BlendMode.multiply,
+                        ) :  ColorFilter.matrix(grayScale),
+                        child: Image.asset(
+                          'assets/emoji/emoji-4.png',
+                          width: 30,
+                        ),
+                      ),
+                      onTap: () => {
+                        setState(() {
+                          _diary.feel = 2;
+                        })
+                      },
                     ),
                     SizedBox(width: 10),
-                    Image.asset(
-                      'assets/emoji/emoji-13.png',
-                      width: 30,
+                    InkWell(
+                      child : ColorFiltered(
+                        colorFilter: _diary.feel == 3? ColorFilter.mode(
+                          Colors.transparent,
+                          BlendMode.multiply,
+                        ) :  ColorFilter.matrix(grayScale),
+                        child: Image.asset(
+                          'assets/emoji/emoji-13.png',
+                          width: 30,
+                        ),
+                      ),
+                      onTap: () => {
+                        setState(() {
+                          _diary.feel = 3;
+                        })
+                      },
                     ),
                     SizedBox(width: 10),
-                    Image.asset(
-                      'assets/emoji/emoji-10.png',
-                      width: 30,
+                    InkWell(
+                      child : ColorFiltered(
+                        colorFilter: _diary.feel == 4? ColorFilter.mode(
+                          Colors.transparent,
+                          BlendMode.multiply,
+                        ) :  ColorFilter.matrix(grayScale),
+                        child: Image.asset(
+                          'assets/emoji/emoji-10.png',
+                          width: 30,
+                        ),
+                      ),
+                      onTap: () => {
+                        setState(() {
+                          _diary.feel = 4;
+                        })
+                      },
                     ),
                     SizedBox(width: 10),
-                    Image.asset(
-                      'assets/emoji/emoji-2.png',
-                      width: 30,
+                    InkWell(
+                      child : ColorFiltered(
+                        colorFilter: _diary.feel == 5? ColorFilter.mode(
+                          Colors.transparent,
+                          BlendMode.multiply,
+                        ) :  ColorFilter.matrix(grayScale),
+                        child: Image.asset(
+                          'assets/emoji/emoji-9.png',
+                          width: 30,
+                        ),
+                      ),
+                      onTap: () => {
+                        setState(() {
+                          _diary.feel = 5;
+                        })
+                      },
                     ),
                   ],
                 ),
