@@ -11,7 +11,7 @@ class DBHelper {
   Future<Database> get database async {
     if (_db != null) return _db;
     _db = openDatabase(
-        join(await getDatabasesPath(), 'diary.db'),
+        join(await getDatabasesPath(), 'diarys.db'),
 
         onCreate: (db, version) {
           return db.execute(
