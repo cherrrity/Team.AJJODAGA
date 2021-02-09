@@ -15,7 +15,7 @@ class DBHelper {
 
         onCreate: (db, version) {
           return db.execute(
-            'CREATE TABLE tasks(dateTime DATE PRIMARY KEY, title TEXT, contents TEXT, feel NUMBER)',
+            'CREATE TABLE diarys(_no integer PRIMARY KEY AUTIONCREMENT, dateTime TEXT, title TEXT, contents TEXT, feel integer)',
           );
         },
         version: 1);
