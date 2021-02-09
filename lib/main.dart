@@ -1,10 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/services.dart';
 
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 // 라우터
 import 'package:project_moonhwadiary/router/routers.dart';
@@ -15,7 +20,8 @@ import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
 
 // 세팅
-import 'package:project_moonhwadiary/DB/setting.dart';
+import 'package:project_moonhwadiary/DB/userSetting.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,12 +40,15 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+
   @override
   _MyHomePageState createState() =>  _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   DateTime _currentDateTime;
+  UserSetting _setting;
+  int _counter;
 
   List<Diary> diaries = [
     Diary.fromMap({
@@ -278,24 +287,60 @@ class _MyHomePageState extends State<MyHomePage> {
     }),
   ];
 
+  var blue = ThemeData(
+  primaryColor: Color(0xffE2EDFC),
+  accentColor: Color(0xffCEDFF9),
+  backgroundColor: Color(0xFF9BB2D5)
+  );
+
+  _MyHomePageState();
+
+
   @override
   void initState() {
     super.initState();
-    getSetting();
+    print("now user_setting : "+ _setting.toString());
+    getUserInfo();
     final date = DateTime.now();
     _currentDateTime = DateTime(date.year, date.month);
   }
 
-  getSetting() async {
-    // setting
-    Map<String, dynamic> data = jsonDecode(await rootBundle.loadString('assets/userdata/setting.json'));
-    var setting = Setting.fromJson(data);
-    print(setting);
+  Future<void> saveUserSetting() async {
+
+    String themeName = (_setting != null && _setting.theme.themeName == "pink")? "blue" : "pink";
+
+    final UserSetting user = UserSetting.fromJson({
+      'theme': {
+        'themeName': '$themeName',
+        'pocketColor': ["FFDBDB", "FFDBDB"]
+      },
+      'font': '맑은 고딕'
+    });
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool result = await prefs.setString('userSetting', jsonEncode(user));
+    print("change : $result");
+    print("now user_setting : "+ _setting.toString());
   }
 
-  setTheme() async {
-    Setting(_theme, )
+  Future<UserSetting> getUserInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Map<String, dynamic> userMap;
+    final String userStr = prefs.getString('userSetting');
+    if (userStr != null) {
+      userMap = jsonDecode(userStr) as Map<String, dynamic>;
+    }
+
+    if (userMap != null) {
+      final UserSetting user = UserSetting.fromJson(userMap);
+      _setting = user;
+      print("get user_setting : "+ _setting.toString());
+      return user;
+    }
+    return null;
   }
+
 
   @override
   void dispose() {
@@ -340,7 +385,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: IconButton(
                     icon: Icon(Icons.add, color: Colors.white),
                     iconSize: 30.0,
-                    onPressed: () => Navigator.pushNamed(context, '/write_card'),
+                    onPressed: () => saveUserSetting(), //Navigator.pushNamed(context, '/write_card'),
                   ),
                 ),
                 color: const Color(0xFFFEC4C4),

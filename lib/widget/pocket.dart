@@ -29,7 +29,7 @@ Widget pocket(List<Diary> diaries){
                   borderRadius: BorderRadius.circular(17),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xffD8A7A7).withOpacity(0.4),
+                      color: const Color(0xffD8A7A7).withOpacity(0.4), //
                       offset: Offset(5.0, 5.0),
                       blurRadius: 10.0,
                       spreadRadius: 1.0,
