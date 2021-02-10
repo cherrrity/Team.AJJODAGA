@@ -365,7 +365,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: NeumorphicContainer(
                 child: GestureDetector(
                   child: Icon(Icons.settings, color: Colors.white),
-                  onTap: () => {print("settings")},
+                  onTap: () => Navigator.pushNamed(context, '/setting'),
                 ),
                 color: const Color(0xFFFEC4C4),
                 shape: "iconButton",
@@ -385,7 +385,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: IconButton(
                     icon: Icon(Icons.add, color: Colors.white),
                     iconSize: 30.0,
-                    onPressed: () => saveUserSetting(), //Navigator.pushNamed(context, '/write_card'),
+                    onPressed: () => Navigator.pushNamed(context, '/write_card'),
                   ),
                 ),
                 color: const Color(0xFFFEC4C4),
