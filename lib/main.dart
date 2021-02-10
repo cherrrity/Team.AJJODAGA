@@ -27,16 +27,41 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  MyAppState createState() => MyAppState();
+
+  static MyAppState of(BuildContext context) => context.findAncestorStateOfType<MyAppState>();
+}
+
+class MyAppState extends State<MyApp>{
+  String _fontName = 'NanumGothic';
+  Color _backColor = Color(0xffFFDBDB);
+  Color _btnColor = Color(0xffFEC4C4);
+  Color _shadowColor = Color(0xFFD8A7A7);
+
+  set fontName(String value) => setState(() => _fontName = value);
+  set backColor(Color value) => setState(() => _backColor = value);
+  set btnColor(Color value) => setState(() => _btnColor = value);
+  set shadowColor(Color value) => setState(() => _shadowColor = value);
+
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme : ThemeData(
+        fontFamily: _fontName,
+        scaffoldBackgroundColor: _backColor,
+        backgroundColor: _btnColor,
+        accentColor: _shadowColor,
+      ),
       title: 'moonhwaDiary',
       //home: MyHomePage(),
       routes: Routes.routes, // 라우트 연결
     );
   }
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -404,12 +429,6 @@ class _MyHomePageState extends State<MyHomePage> {
       //locale: 'en',
       dateFormat: 'yyyy-mm',
       initialDateTime: _currentDateTime,
-      onConfirm: (dateTime, List<int> index) {
-        setState(() {
-          _currentDateTime = dateTime;
-          _datesView();
-        });
-      },
     );
   }
 

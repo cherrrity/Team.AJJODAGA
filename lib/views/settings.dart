@@ -19,9 +19,7 @@ class Settings extends StatelessWidget {
                     child: NeumorphicContainer(
                       child: GestureDetector(
                         child: Icon(Icons.arrow_back_ios, color: Colors.white),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                        onTap: () => Navigator.pop(context),
                       ),
                       shape: "iconButton",
                     ),
@@ -50,12 +48,7 @@ class Settings extends StatelessWidget {
                       child: GestureDetector(
                         child: Icon(
                             Icons.arrow_forward_ios, color: Colors.white),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Font()),
-                          );
-                        },
+                        onTap: () => Navigator.pushNamed(context, '/setting_font'),
                       ),
                       shape: "iconButton",
                     ),
@@ -68,12 +61,7 @@ class Settings extends StatelessWidget {
                       child: GestureDetector(
                         child: Icon(
                             Icons.arrow_forward_ios, color: Colors.white),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ThemeColor()),
-                          );
-                        },
+                        onTap: () => Navigator.pushNamed(context, '/setting_theme'),
                       ),
                       shape: "iconButton",
                     ),

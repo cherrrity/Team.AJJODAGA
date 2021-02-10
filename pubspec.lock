@@ -128,12 +128,10 @@ packages:
   flutter_cupertino_date_picker:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "38630701b92a4fd0b753f9ab38b3581a5645a629"
-      url: "https://github.com/daveleenew/flutter-cupertino-date-picker.git"
-    source: git
-    version: "1.0.26+2"
+      name: flutter_cupertino_date_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.0"
   flutter_native_splash:
     dependency: "direct main"
     description:
@@ -327,7 +325,7 @@ packages:
     source: hosted
     version: "0.0.2+3"
   simple_gesture_detector:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: simple_gesture_detector
       url: "https://pub.dartlang.org"
@@ -387,13 +385,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0+2"
-  table_calendar:
-    dependency: "direct main"
-    description:
-      name: table_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.3"
   term_glyph:
     dependency: transitive
     description:

@@ -27,9 +27,7 @@ class _ThemeColorState extends State<ThemeColor> {
                     child: NeumorphicContainer(
                       child: GestureDetector(
                         child: Icon(Icons.arrow_back_ios, color: Colors.white),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                        onTap: () =>  Navigator.pop(context),
                       ),
                       shape: "iconButton",
                     ),

@@ -46,11 +46,6 @@ class _WriteCardPage extends State<WriteCardPage> {
       //locale: 'en',
       dateFormat: 'yyyy-mm',
       initialDateTime: _currentDateTime,
-      onConfirm: (dateTime, List<int> index) {
-        setState(() {
-          _currentDateTime = dateTime;
-        });
-      },
     );
   }
 
