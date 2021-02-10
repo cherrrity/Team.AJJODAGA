@@ -40,6 +40,7 @@ class _NeumorphicContainerState extends State<NeumorphicContainer> {
   @override
   Widget build(BuildContext context) {
     final color = this.widget.color ?? Theme.of(context).backgroundColor;
+    final shadowColor = this.widget.color ?? Theme.of(context).accentColor;
     final shape = this.widget.shape == "iconButton"? 6.0 : 7.0;
     final round = this.widget.shape == "iconButton"? 1.1 : 10.0;
 
@@ -71,7 +72,7 @@ class _NeumorphicContainerState extends State<NeumorphicContainer> {
             BoxShadow(
               blurRadius: widget.bevel,
               offset: widget.blurOffset,
-              color: color.mix(Color(0xFFD8A7A7), .4),   // 현재 테마 색상 중 밝은 그림자 색으로 변경
+              color: color.mix(shadowColor, .4),   // 현재 테마 색상 중 밝은 그림자 색으로 변경
             )
           ],
         ),
