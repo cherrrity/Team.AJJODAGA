@@ -7,6 +7,10 @@ import 'package:sqflite/sqflite.dart';
 import 'package:package:project_moonhwadiary/name.dart';
 import 'package:package:project_moonhwadiary/DBHelp.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:project_moonhwadiary/photo.dart';
+import 'package:project_moonhwadiary/DBHelper.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 
 DateTime choice;
@@ -76,6 +80,7 @@ class SecondRoute extends StatefulWidget {
 class _SecondRouteState extends State<SecondRoute> {
   File _image;
   final picker = ImagePicker();
+  String pic = "";
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +101,7 @@ class _SecondRouteState extends State<SecondRoute> {
               RaisedButton(
                 child: Text("글추가"),
                 onPressed: () {
+                  saveImg();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => writeContexts()));
                 },
@@ -127,11 +133,29 @@ class _SecondRouteState extends State<SecondRoute> {
 
     setState(() {
       if (pickedFile != null) {
+        this.pic = pickedFile.path;
+        print("selected image_path: $pic");
         _image = File(pickedFile.path);
-      } else {
-        print('기본 이미지');
       }
     });
+  }
+
+  DBHelper2 sd2 = DBHelper2();
+
+  Future<void> saveImg() async {
+
+    var fiph = Photo(
+      id: Str2sha512(DateTime.now().toString()),
+      pic: this.pic,
+    );
+    await sd2.insertPhoto(fiph);
+
+    print(await sd2.pic());
+  }
+  String Str2sha512(String text) {
+    var bytes = utf8.encode(text);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
   }
 }
 
