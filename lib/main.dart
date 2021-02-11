@@ -2,19 +2,22 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:package:project_moonhwadiary/name.dart';
-import 'package:package:project_moonhwadiary/DBHelp.dart';
+import 'package:project_moonhwadiary/name.dart';
+import 'package:project_moonhwadiary/DBHelp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project_moonhwadiary/photo.dart';
 import 'package:project_moonhwadiary/DBHelper.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-
 DateTime choice;
-void main() => runApp(MyApp());
+
+void main() async {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -40,6 +43,7 @@ class FirstRoute extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget> [
+
             ListTile(
               title: Text("옵션"),
             ),
@@ -69,6 +73,7 @@ class FirstRoute extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
+
   }
 }
 
@@ -196,7 +201,7 @@ class writeContexts extends StatefulWidget {
 
 class _writeContextsState extends State<writeContexts> {
   int feel =0;
-  DateTime dateTime= DateTime.now();
+  String dateTime = DateFormat('yyyy-MM-dd').format(DateTime.now());
   String title ="";
   String contents="";
 
@@ -216,15 +221,11 @@ class _writeContextsState extends State<writeContexts> {
 
     myControllerTitle.addListener(_printLatestValue);
     myControllerContents.addListener(_printLatestValue);
-
-
   }
 
   _printLatestValue(){
-    print("second text field: ${myControllerTitle.text}");
-    print("second text field: ${myControllerContents.text}");
-
-
+    // print("second text field: ${myControllerTitle.text}");
+    //print("second text field: ${myControllerContents.text}");
   }
 
 
@@ -299,38 +300,35 @@ class _writeContextsState extends State<writeContexts> {
                   child: Text('1'),
                   onPressed: (){
                     this.feel = 1;
-                    this.dateTime=choice;
+                    this.dateTime = DateFormat('yyyy-MM-dd').format(choice);
                   },
                 ),
                 RaisedButton(
                   child: Text('2'),
                   onPressed: (){
                     this.feel = 2;
-                    this.dateTime=choice;
-
+                    this.dateTime = DateFormat('yyyy-MM-dd').format(choice);
                   },
                 ),
                 RaisedButton(
                   child: Text('3'),
                   onPressed: (){
                     this.feel = 3;
-                    this.dateTime=choice;
-
+                    this.dateTime = DateFormat('yyyy-MM-dd').format(choice);
                   },
                 ),
                 RaisedButton(
                   child: Text('4'),
                   onPressed: (){
                     this.feel = 4;
-                    this.dateTime=choice;
-
+                    this.dateTime = DateFormat('yyyy-MM-dd').format(choice);
                   },
                 ),
                 RaisedButton(
                     child: Text('5'),
                     onPressed: () {
                       this.feel = 5;
-                      this.dateTime=choice;
+                      this.dateTime = DateFormat('yyyy-MM-dd').format(choice);
                     }
                 ),
               ],
@@ -358,19 +356,18 @@ class _writeContextsState extends State<writeContexts> {
     );
   }
 
-
   DBHelper sd = DBHelper();
 
   Future<void> save() async{
+    print(dateTime);
     var fido = Diary(
       title: this.title,
       contents: this.contents,
       feel: this.feel,
       dateTime: this.dateTime,
-
     );
 
     await sd.insertDiary(fido);
-
+    await sd.selectAllDiary();
   }
 }
