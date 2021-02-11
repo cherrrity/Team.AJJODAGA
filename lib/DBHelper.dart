@@ -69,7 +69,7 @@ class DBHelper2 {
     final db = await database;
 
     final List<Map<String, dynamic>> maps =
-    await db.query('photos', where: 'pic = ?', whereArgs: [id]);
+    await db.query('photos', where: 'id = ?', whereArgs: [id]);
 
     return List.generate(maps.length, (i) {
       return Photo(
