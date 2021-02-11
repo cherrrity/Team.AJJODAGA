@@ -176,7 +176,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                             TextFormField(
                               initialValue : _isEdit? _diary.title: "",
                               inputFormatters: [LengthLimitingTextInputFormatter(40),],
-                              style: TextStyle(fontSize: 18),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,

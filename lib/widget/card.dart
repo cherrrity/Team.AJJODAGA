@@ -106,7 +106,7 @@ class _CardState extends State<PhotoCard> {
                       SizedBox(height: 5),
                       Text(
                         diary.title,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       SizedBox(height: 20),
                     ],
@@ -121,7 +121,7 @@ class _CardState extends State<PhotoCard> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).accentColor.withOpacity(0.1),
+                    //color: Theme.of(context).accentColor.withOpacity(0.1),
                   ),
                 ),
                 SizedBox(height: 10),
