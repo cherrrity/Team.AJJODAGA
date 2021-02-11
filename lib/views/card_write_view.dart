@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +14,7 @@ class WriteCardPage extends StatefulWidget {
 }
 
 class _WriteCardPage extends State<WriteCardPage> {
-  Diary _diary;
+  Diary _diary = new Diary();
   bool _isPhoto = false;
   bool _isEdit = false;
   DateTime _currentDateTime = DateTime.now();
@@ -34,10 +34,11 @@ class _WriteCardPage extends State<WriteCardPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _diary = ModalRoute.of(context).settings.arguments;
-    _isEdit = _diary == null? false : true ;  // 수정인지 확인
+    var arg = ModalRoute.of(context).settings.arguments;
+    if(arg != null) _diary = arg;
+    _isEdit = arg == null? false : true ;  // 수정인지 확인
     _currentDateTime = _isEdit? _diary.dateTime : DateTime.now(); // 수정일 때 수정 날짜로 변경
-    _isPhoto = _diary.image == null? false : true;
+    _isPhoto = false;
   }
 
   void _showPicker() {
@@ -46,6 +47,11 @@ class _WriteCardPage extends State<WriteCardPage> {
       //locale: 'en',
       dateFormat: 'yyyy-mm',
       initialDateTime: _currentDateTime,
+      onConfirm2: (dateTime, List<int> index) {
+        setState(() {
+          _currentDateTime = dateTime;
+        });
+      },
     );
   }
 
@@ -80,6 +86,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                     child: Icon(Icons.check_rounded, color: Colors.white),
                     onTap: () => {
                       // card add function
+                      // new DBHelp.insertDiary(diary);
                     },
                   ),
                   color: Color(0xFFFEC4C4),
@@ -95,7 +102,7 @@ class _WriteCardPage extends State<WriteCardPage> {
               direction: FlipDirection.HORIZONTAL, // default
               front: Container(
                 padding: EdgeInsets.all(16.0),
-                width: MediaQuery.of(context).size.width * 0.92,
+                width: MediaQuery.of(context).size.width * 0.90,
                 height : MediaQuery.of(context).size.height * 0.72,
                 // 이미지가 있을 때 없을 때
                 child: _isPhoto ?
@@ -135,14 +142,17 @@ class _WriteCardPage extends State<WriteCardPage> {
                   color: _isPhoto ? Colors.white : Color(0xFFFDF5F5),
                   boxShadow:[
                     BoxShadow(
-                      color : Colors.grey,
+                      color: const Color(0xffD8A7A7).withOpacity(0.4),
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 10.0,
+                      spreadRadius: 1.0,
                     ),
                   ],
                 ),
               ),
               back: Container(
                 // 메인 카드 뒷면
-                width: MediaQuery.of(context).size.width * 0.92,
+                width: MediaQuery.of(context).size.width * 0.90,
                 height : MediaQuery.of(context).size.height * 0.72,
                 child: Center(
                   child: Form(
@@ -156,7 +166,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                               child: Text('${_currentDateTime.year}년 ${_currentDateTime.month}월 ${_currentDateTime.day}일', style: TextStyle(fontSize: 20)),
                               onTap: () => _showPicker(), // date picker widget
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 5),
                             // 카드 입력(제목)
                             TextFormField(
                               initialValue : _isEdit? _diary.title: "",
@@ -201,11 +211,14 @@ class _WriteCardPage extends State<WriteCardPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
-                  boxShadow:[
+                  boxShadow: [
                     BoxShadow(
-                      color : Colors.grey,
+                      color: const Color(0xffD8A7A7).withOpacity(0.4),
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 10.0,
+                      spreadRadius: 1.0,
                     ),
-                  ],
+                  ]
                 ),
               ),
             ),
@@ -315,7 +328,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                           BlendMode.multiply,
                         ) :  ColorFilter.matrix(grayScale),
                         child: Image.asset(
-                          'assets/emoji/emoji-9.png',
+                          'assets/emoji/emoji-2.png',
                           width: 30,
                         ),
                       ),

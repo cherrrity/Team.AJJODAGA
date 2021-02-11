@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA_master/lib/models/diary.dart';
+import 'package:project_moonhwadiary/models/diary.dart';
 
 final String tableName = 'diarys';
 
@@ -20,6 +20,7 @@ class DBHelper {
         version: 1);
     return _db;
   }
+
   Future<void> insertDiary(Diary diary) async {
     final db = await database;
 
@@ -29,6 +30,7 @@ class DBHelper {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
   Future<List<Diary>> diarys() async {
     final db = await database;
 
@@ -44,7 +46,6 @@ class DBHelper {
       );
     });
   }
-
 
   Future<void> updateDiary(Diary diary) async {
     final db = await database;

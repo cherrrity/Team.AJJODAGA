@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/model/diary.dart';
+import 'package:project_moonhwadiary/models/diary.dart';
 
 Widget pocket(List<Diary> diaries){
-  List<int> dates = diaries.map((m) => m.date).toList();
-  List<int> satisfactions = diaries.map((m) => m.satisfaction).toList();
+  List<int> dates = diaries.map((m) => m.dateTime.day).toList();
+  List<int> satisfactions = diaries.map((m) => m.feel).toList();
 
   return GridView.builder(
     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -103,6 +103,8 @@ Widget pocket(List<Diary> diaries){
           GestureDetector(
             onTap: () {
               print('$_date');
+              // 년 월 일로 넘겨야 검색하기 편할 것 같아요
+              Navigator.pushNamed(context, '/card', arguments: '$_date');
             },
           ),
         ],

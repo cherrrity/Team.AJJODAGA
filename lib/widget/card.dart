@@ -43,7 +43,7 @@ class _CardState extends State<PhotoCard> {
             width: MediaQuery.of(context).size.width * 0.92,
             height: MediaQuery.of(context).size.height * 0.72,
             // 이미지가 있을 때 없을 때
-            child: diary.image != null
+            child: diary.image != ''
                 ? Center(
                     child: Column(
                       children: [
@@ -78,7 +78,10 @@ class _CardState extends State<PhotoCard> {
               color: diary.image != null ? Colors.white : Color(0xFFFDF5F5),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey,
+                  color: const Color(0xffD8A7A7).withOpacity(0.4),
+                  offset: Offset(5.0, 5.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 1.0,
                 ),
               ],
             ),
@@ -89,7 +92,7 @@ class _CardState extends State<PhotoCard> {
             height: MediaQuery.of(context).size.height * 0.72,
             child: Center(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.only(top: 10, bottom: 5, left: 10, right: 10),
                 child: Column(children: [
                   SizedBox(height: 15),
                   InkWell(
@@ -104,12 +107,13 @@ class _CardState extends State<PhotoCard> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.499,
+                    height: MediaQuery.of(context).size.height * 0.51,
                     child: Text(
                       diary.contents,
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -151,7 +155,10 @@ class _CardState extends State<PhotoCard> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey,
+                  color: const Color(0xffD8A7A7).withOpacity(0.4),
+                  offset: Offset(5.0, 5.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 1.0,
                 ),
               ],
             ),

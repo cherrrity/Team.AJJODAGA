@@ -33,13 +33,14 @@ dependencies:
   flutter_svg: ^0.19.1
   flip_card: ^0.4.4
   scroll_snap_list: ^0.6.0
-  # flutter_swiper: ^1.1.6
+  flutter_swiper: ^1.1.6
   carousel_slider: ^2.3.1
   flutter_native_splash: ^0.2.9
   shared_preferences: ^0.5.12+4
   path_provider: ^1.6.27
   dynamic_theme: ^1.0.1
   sqflite: ^1.3.2+2
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:
@@ -59,13 +60,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/emoji/
+    - assets/fonts/
     - assets/images/
     - assets/userdata/
-
-flutter_native_splash:
-  image: assets/images/empty_card_cat.png
-  color: "FCB0B0"
-  android_disable_fullscreen: true
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -79,11 +76,6 @@ flutter_native_splash:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    #   - family: Schyler
-    #     fonts:
-    #       - asset: fonts/Schyler-Regular.ttf
-    #       - asset: fonts/Schyler-Italic.ttf
-    #         style: italic
     - family: NanumGothic
       fonts:
         - asset: assets/fonts/NanumGothic.ttf
@@ -93,8 +85,6 @@ flutter_native_splash:
     - family: NanumDaheong
       fonts:
         - asset: assets/fonts/nanumDaheong.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 /// ----  Pink(default) Theme  ----
 final pinkBackground    = Color(0xFFFFDBDB);
 final pinkAccent        = Color(0xFFFEC4C4);
-final pinkShadow        = Color(0xFFFEC4C4);
+final pinkShadow        = Color(0xFFD8A7A7);
+
 final pinkPocketColors = [
   Color(0xFFFFE8E8), Color(0xffFFD1D1),
   Color(0xFFFDD7D7), Color(0xffFFB2B2),
@@ -13,9 +14,114 @@ final pinkPocketColors = [
   Color(0xffFF7575), Color(0xffF95353)
 ];
 
-final pinkTheme = ThemeData(
-    primaryColor: pinkBackground,
-    accentColor: pinkAccent,
-    shadowColor: pinkAccent,
-    backgroundColor: pinkBackground
+ThemeData pinkTheme(String font) => ThemeData(
+    fontFamily: font,
+    scaffoldBackgroundColor: pinkBackground,
+    backgroundColor: pinkAccent,
+    accentColor: pinkShadow,
+);
+
+/// ----  purple Theme  ----
+final purpleBackground    = Color(0xFFE8DEFB);
+final purpleAccent        = Color(0xFFD9C8F8);
+final purpleShadow        = Color(0xffBAA7D9);
+
+// 그라데이션 미적용 오른쪽 컬러 변경 필요
+final purplePocketColors = [
+  Color(0xffEFE8FC), Color(0xffEFE8FC),
+  Color(0xffE5D9F9), Color(0xffE5D9F9),
+  Color(0xFFCBB5F4), Color(0xFFCBB5F4),
+  Color(0xFFB392F0), Color(0xFFB392F0),
+  Color(0xffA780F1), Color(0xffA780F1)
+];
+
+ThemeData purpleTheme(String font) => ThemeData(
+  fontFamily: font,
+  scaffoldBackgroundColor: purpleBackground,
+  backgroundColor: purpleAccent,
+  accentColor: purpleShadow,
+);
+
+/// ----  sky Theme  ----
+final skyBackground    = Color(0xFFE2EDFC);
+final skyAccent        = Color(0xFFCEDFF9);
+final skyShadow        = Color(0xFF9BB2D5);
+
+// 그라데이션 미적용 오른쪽 컬러 변경 필요
+final skyPocketColors = [
+  Color(0xffECF3FD), Color(0xffECF3FD),
+  Color(0xffDCE8FA), Color(0xffDCE8FA),
+  Color(0xFFBED5F6), Color(0xFFBED5F6),
+  Color(0xFF9EC0F2), Color(0xFF9EC0F2),
+  Color(0xff8EB9F3), Color(0xff8EB9F3)
+];
+
+ThemeData skyTheme(String font) => ThemeData(
+  fontFamily: font,
+  scaffoldBackgroundColor: skyBackground,
+  backgroundColor: skyAccent,
+  accentColor: skyShadow,
+);
+
+/// ----  mint Theme  ----
+final mintBackground    = Color(0xffE2F7F3);
+final mintAccent        = Color(0xffCFF1EB);
+final mintShadow        = Color(0xFFA1C4BE);
+
+// 그라데이션 미적용 오른쪽 컬러 변경 필요
+final mintPocketColors = [
+  Color(0xffE9F9F6), Color(0xffE9F9F6),
+  Color(0xffDCF4F0), Color(0xffDCF4F0),
+  Color(0xFFBDEBE3), Color(0xFFBDEBE3),
+  Color(0xFF9EE2D7), Color(0xFF9EE2D7),
+  Color(0xff8EE0D2), Color(0xff8EE0D2)
+];
+
+ThemeData mintTheme(String font) => ThemeData(
+  fontFamily: font,
+  scaffoldBackgroundColor: mintBackground,
+  backgroundColor: mintAccent,
+  accentColor: mintShadow,
+);
+
+/// ----  yellow Theme  ----
+final yellowBackground    = Color(0xffFFF5DA);
+final yellowAccent        = Color(0xffFEEDC2);
+final yellowShadow        = Color(0xFFD1BD8A);
+
+// 그라데이션 미적용 오른쪽 컬러 변경 필요
+final yellowPocketColors = [
+  Color(0xffFFF8E4), Color(0xffFFF8E4),
+  Color(0xffFDF1D4), Color(0xffFDF1D4),
+  Color(0xFFFDE6AD), Color(0xFFFDE6AD),
+  Color(0xFFFDDB85), Color(0xFFFDDB85),
+  Color(0xffFFD773), Color(0xffFFD773)
+];
+
+ThemeData yellowTheme(String font) => ThemeData(
+  fontFamily: font,
+  scaffoldBackgroundColor: yellowBackground,
+  backgroundColor: yellowAccent,
+  accentColor: yellowShadow,
+);
+
+/// ----  olive Theme  ----
+final oliveBackground    = Color(0xffE8F3E7);
+final oliveAccent        = Color(0xffD8EAD6);
+final oliveShadow        = Color(0xFF9BC397);
+
+// 그라데이션 미적용 오른쪽 컬러 변경 필요
+final olivePocketColors = [
+  Color(0xffEFF6EE), Color(0xffEFF6EE),
+  Color(0xffE2EFE1), Color(0xffE2EFE1),
+  Color(0xFFCAE2C8), Color(0xFFCAE2C8),
+  Color(0xFFB0D4AD), Color(0xFFB0D4AD),
+  Color(0xffA5CFA1), Color(0xffA5CFA1)
+];
+
+ThemeData oliveTheme(String font) => ThemeData(
+  fontFamily: font,
+  scaffoldBackgroundColor: oliveBackground,
+  backgroundColor: oliveAccent,
+  accentColor: oliveShadow,
 );

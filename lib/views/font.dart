@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_moonhwadiary/DB/test.dart';
 import 'package:project_moonhwadiary/main.dart';
 import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
 
@@ -13,6 +14,19 @@ class Font extends StatefulWidget {
 
 class FontState extends State<Font> {
   Fonts _fonts = Fonts.nanumGothic;
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      switch(MyApp.of(context).widget.themeController.currentFont){
+        case "NanumGothic" : _fonts = Fonts.nanumGothic; break;
+        case "NanumSehwa" : _fonts = Fonts.nanumSehwa; break;
+        case "NanumDaheong" : _fonts = Fonts.nanumDaheong; break;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +42,7 @@ class FontState extends State<Font> {
                     padding: EdgeInsets.only(left: 20.0),
                     child: NeumorphicContainer(
                       child: GestureDetector(
-                        child: Icon(Icons.arrow_back_ios, color: Colors.white),
+                        child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
                         onTap: () =>  Navigator.pop(context),
                       ),
                       shape: "iconButton",
@@ -71,6 +85,7 @@ class FontState extends State<Font> {
                       controlAffinity: ListTileControlAffinity.trailing,
                       onChanged: (value) {
                         setState(() {
+                          ThemeController.of(context).setFont('NanumGothic');
                           _fonts = value;
                           print('고딕');
                           MyApp.of(context).fontName = "NanumGothic";
@@ -82,6 +97,7 @@ class FontState extends State<Font> {
                       controlAffinity: ListTileControlAffinity.trailing,
                       onChanged: (value) {
                         setState(() {
+                          ThemeController.of(context).setFont('NanumSehwa');
                           _fonts = value;
                           print('세화');
                           MyApp.of(context).fontName = "NanumSehwa";
@@ -93,6 +109,7 @@ class FontState extends State<Font> {
                       controlAffinity: ListTileControlAffinity.trailing,
                       onChanged: (value) {
                         setState(() {
+                          ThemeController.of(context).setFont('NanumDaheong');
                           _fonts = value;
                           print('다행');
                           MyApp.of(context).fontName = "NanumDaheong";

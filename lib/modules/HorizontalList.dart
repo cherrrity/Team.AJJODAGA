@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -9,7 +10,7 @@ import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/widget/card.dart';
 
 class DynamicHorizontalDemo extends StatefulWidget {
-  final List<Diary> diaries;
+  List<Diary> diaries;
 
   DynamicHorizontalDemo({this.diaries});
 
@@ -18,8 +19,10 @@ class DynamicHorizontalDemo extends StatefulWidget {
 }
 
 class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
+  SwiperController _controller;
   List<Diary> diaries = [];
   int _focusedIndex = 0;
+
   List<double> grayScale = <double>[
     0.2126,0.7152,0.0722,0,0,
     0.2126,0.7152,0.0722,0,0,
@@ -27,83 +30,34 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
     0,0,0,1,0,
   ];
 
-
   @override
   void initState() {
     super.initState();
-
+    _controller = new SwiperController();
     diaries = widget.diaries;
-
-    diaries = [
-      Diary(
-        image: "assets/images/test.jpg",
-        title: "chew not choi",
-        contents: "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔"+
-            "최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔최한솔 한솔한솔한솔",
-        dateTime: DateTime(2000, 1, 3),
-        feel: 1
-      ),
-      Diary(
-        title: "오늘 콘서트 너무 재밌었다😂2",
-        contents: "1년 6개월",
-        dateTime: DateTime(2000, 1, 3),
-        feel: 2
-      ),
-      Diary(
-        title: "오늘 콘서트 너무 재밌었다😂3",
-        contents: "1년 6개월",
-        dateTime: DateTime(2000, 1, 3),
-        feel: 3
-      ),Diary(
-        title: "오늘 콘서트 너무 재밌었다😂4",
-        contents: "1년 6개월",
-        dateTime: DateTime(2000, 1, 3),
-        feel: 1
-      ),Diary(
-        title: "오늘 콘서트 너무 재밌었다😂5",
-        contents: "1년 6개월",
-        dateTime: DateTime(2000, 1, 3),
-        feel: 5
-      )
-    ];
   }
 
-  void _onItemFocus(int index) {
-    setState(() {
-      _focusedIndex = index;
-    });
+  void _onItemChange(int index) {
+    _focusedIndex = index;
+    print("now : " + _focusedIndex.toString());
   }
 
   _onItemDelete(){
-    diaries.removeAt(_focusedIndex);
+  int delete_index = _focusedIndex; // 삭제될 인덱스
 
-    if(diaries.isNotEmpty) setState(() {});
-    else {
-      print("empty");
-      showDialog(
-          context: context,
-          builder: (BuildContext context){
-            return AlertDialog(
-              title: Text("알림"),
-              content: Text("더 이상 일기가 없습니다."),
-              actions: [
-                new FlatButton(onPressed: ()=>{
-                  // route to home
+  print("delete_index : "+ delete_index.toString());
 
-                }, child: Text("확인"))
-              ],
-            );
-          }
-      );
-    }
-
+  if(diaries.isNotEmpty) {
+    if(diaries.length > 1) _controller.next(animation: true);
+    setState(() {
+      // DB delete 함수 들어가야함
+      // DBHelp.deleteDiary(diaies[delete_index].no);
+      // 삭제 되면 진행
+      diaries.removeAt(delete_index);
+      print(delete_index.toString() + "삭제 됨");
+      print(diaries.toString());
+    });
+  }
   }
 
   Widget _buildListItem(BuildContext context, int index) {
@@ -128,16 +82,17 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        ScrollSnapList(
-          onItemFocus: _onItemFocus,
-          itemSize: MediaQuery.of(context).size.width * 0.92,
-          itemBuilder: _buildListItem,
+        diaries.isNotEmpty? Swiper(
+          scale:0.9,
+          viewportFraction: 0.85,
           itemCount: diaries.length,
-          dynamicItemSize: true,
-          dynamicSizeEquation: customEquation, //optional
+          controller: _controller,
+          itemBuilder: _buildListItem,
+          onIndexChanged: _onItemChange,
+        ):Center(
+          child: Text("더 이상 일기가 없어요😥", style: TextStyle(fontSize: 16),),
         ),
-
-        Positioned(
+        diaries.isNotEmpty? Positioned(
           bottom: MediaQuery.of(context).size.height * 0.05,
           left: MediaQuery.of(context).size.width * 0.2,
           child: Container(
@@ -206,7 +161,7 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
               color: const Color(0xfffafafa),
             ),
           ),
-        ),
+        ): Text(""),
       ],
     );
   }
