@@ -1,7 +1,7 @@
 class Diary{
   String title = '';
   String contents = '';
-  int feel = 0;
+  int feel = 1;
   String image = '';
   DateTime dateTime = DateTime.now();
 

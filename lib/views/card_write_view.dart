@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
-import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
+import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
 
 class WriteCardPage extends StatefulWidget {
   @override
@@ -44,9 +44,11 @@ class _WriteCardPage extends State<WriteCardPage> {
   void _showPicker() {
     DatePicker.showDatePicker(
       context,
-      //locale: 'en',
-      dateFormat: 'yyyy-mm',
+      locale: 'ko',
+      dateFormat: 'yyyy-MM-dd',
       initialDateTime: _currentDateTime,
+      minDateTime: DateTime(2000),
+      maxDateTime: DateTime.now(),
       onConfirm2: (dateTime, List<int> index) {
         setState(() {
           _currentDateTime = dateTime;
@@ -136,10 +138,10 @@ class _WriteCardPage extends State<WriteCardPage> {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: _isPhoto ? Colors.white : Color(0xFFFDF5F5),
+                  color: _isPhoto ? Colors.white : Theme.of(context).highlightColor,
                   boxShadow:[
                     BoxShadow(
-                      color: Theme.of(context).shadowColor.withOpacity(0.4),
+                      color: Theme.of(context).accentColor.withOpacity(0.4),
                       offset: Offset(5.0, 5.0),
                       blurRadius: 10.0,
                       spreadRadius: 1.0,
@@ -149,60 +151,65 @@ class _WriteCardPage extends State<WriteCardPage> {
               ),
               back: Container(
                 // 메인 카드 뒷면
-                width: MediaQuery.of(context).size.width * 0.90,
-                height : MediaQuery.of(context).size.height * 0.72,
-                child: Center(
-                  child: Form(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
+                width: MediaQuery.of(context).size.width * 0.92,
+                height: MediaQuery.of(context).size.height * 0.72,
+                child: Form(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
+                    child: Column(children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 15),
+                            SizedBox(height: 9),
                             // 카드 입력(날짜)
                             InkWell(
-                              child: Text('${_currentDateTime.year}년 ${_currentDateTime.month}월 ${_currentDateTime.day}일', style: TextStyle(fontSize: 20)),
+                              child: Text(
+                                '${_currentDateTime.year}. ${_currentDateTime.month}. ${_currentDateTime.day}.',
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor), textAlign: TextAlign.left,
+                              ),
                               onTap: () => _showPicker(), // date picker widget
                             ),
+
                             SizedBox(height: 5),
-                            // 카드 입력(제목)
                             TextFormField(
                               initialValue : _isEdit? _diary.title: "",
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(40),
-                              ],
-                              textAlign: TextAlign.center,
+                              inputFormatters: [LengthLimitingTextInputFormatter(40),],
+                              style: TextStyle(fontSize: 18),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,
                                   hintText: '제목을 입력해 주세요'
                               ),
                             ),
-                            Container(
-                              height : MediaQuery.of(context).size.height * 0.4,
-                              /*
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey)
-                              ),*/
-                              child: SingleChildScrollView(
-                                physics: ClampingScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                reverse: false,
-                                // 카드 입력(내용)
-                                child : TextFormField(
-                                  initialValue : _isEdit? _diary.contents: "",
-                                  maxLines: null,
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
-                                      border: InputBorder.none,
-                                      hintText: '내용을 입력해 주세요'
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]
+                            SizedBox(height: 10),
+                          ],
+                        ),
                       ),
-                    ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.55,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: TextFormField(
+                            initialValue : _isEdit? _diary.contents: "",
+                            maxLines: 40,
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.left,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                hintText: '내용을 입력해 주세요'
+                            ),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).accentColor.withOpacity(0.1),
+                        ),
+                      )
+                    ]),
                   ),
                 ),
                 decoration: BoxDecoration(
@@ -210,12 +217,12 @@ class _WriteCardPage extends State<WriteCardPage> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).shadowColor.withOpacity(0.4),
+                      color: Theme.of(context).accentColor.withOpacity(0.4),
                       offset: Offset(5.0, 5.0),
                       blurRadius: 10.0,
                       spreadRadius: 1.0,
                     ),
-                  ]
+                  ],
                 ),
               ),
             ),

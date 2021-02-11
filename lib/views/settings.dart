@@ -3,7 +3,7 @@ import 'package:project_moonhwadiary/views/font.dart';
 import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
 import 'package:project_moonhwadiary/views/theme.dart';
 
-import 'package:project_moonhwadiary/DB/test.dart';
+import 'package:project_moonhwadiary/DB/ThemeController.dart';
 
 class Settings extends StatelessWidget {
   @override

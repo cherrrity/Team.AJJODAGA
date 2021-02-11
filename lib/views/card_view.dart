@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 import 'package:project_moonhwadiary/modules/HorizontalList.dart';
-import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
+import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 
 //DB

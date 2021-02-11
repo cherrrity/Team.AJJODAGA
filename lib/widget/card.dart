@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flip_card/flip_card.dart';
@@ -47,7 +48,7 @@ class _CardState extends State<PhotoCard> {
                 ? Center(
                     child: Column(
                       children: [
-                      Container(
+                        Container(
                           width: MediaQuery.of(context).size.width * 0.85,
                           height: MediaQuery.of(context).size.height * 0.62,
                           decoration: BoxDecoration(
@@ -59,7 +60,6 @@ class _CardState extends State<PhotoCard> {
                             ),
                           ),
                         ),
-
                         SizedBox(
                           height: 20,
                         ),
@@ -75,10 +75,10 @@ class _CardState extends State<PhotoCard> {
                   ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: diary.image != null ? Colors.white : Color(0xFFFDF5F5),
+              color: diary.image != null ? Colors.white : Theme.of(context).highlightColor,
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xffD8A7A7).withOpacity(0.4),
+                  color: Theme.of(context).accentColor.withOpacity(0.4),
                   offset: Offset(5.0, 5.0),
                   blurRadius: 10.0,
                   spreadRadius: 1.0,
@@ -90,41 +90,53 @@ class _CardState extends State<PhotoCard> {
             // 메인 카드 뒷면
             width: MediaQuery.of(context).size.width * 0.92,
             height: MediaQuery.of(context).size.height * 0.72,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 5, left: 10, right: 10),
-                child: Column(children: [
-                  SizedBox(height: 15),
-                  InkWell(
-                    child: Text('${diary.dateTime.year}년 ${diary.dateTime.month}월 ${diary.dateTime.day}일', style: TextStyle(fontSize: 20)),
-                    onTap: () => {}, // date picker widget
+            child: Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
+              child: Column(children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 9),
+                      Text(
+                        '${diary.dateTime.year}. ${diary.dateTime.month}. ${diary.dateTime.day}.',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor), textAlign: TextAlign.left,
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        diary.title,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    diary.title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.52,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text(diary.contents, style: TextStyle(fontSize: 16), textAlign: TextAlign.left,)
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.51,
-                    child: Text(
-                      diary.contents,
-                      textAlign: TextAlign.center,
-                    ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).accentColor.withOpacity(0.1),
                   ),
-                  SizedBox(height: 10),
-                  Row(
+                ),
+                SizedBox(height: 10),
+                Container(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // 수정 버튼
                       IconButton(
                           icon: Icon(
                             Icons.edit_rounded,
                             color: Colors.grey,
                           ),
-                          onPressed: () => Navigator.pushNamed(context, '/write_card', arguments: diary)),
-                      // 삭제 버튼
+                          onPressed: () => Navigator.pushNamed(
+                              context, '/write_card',
+                              arguments: diary)),
                       IconButton(
                           icon: Icon(
                             Icons.delete_rounded,
@@ -138,24 +150,32 @@ class _CardState extends State<PhotoCard> {
                                     title: Text("일기 삭제"),
                                     content: Text("삭제하시겠습니까?"),
                                     actions: [
-                                      FlatButton(onPressed: () => Navigator.pop(context), child: Text("취소")),
-                                      FlatButton(onPressed: () => {onDeleteItem(), Navigator.pop(context),}, child: Text("확인")),
+                                      FlatButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text("취소")),
+                                      FlatButton(
+                                          onPressed: () => {
+                                            onDeleteItem(),
+                                            Navigator.pop(context),
+                                          },
+                                          child: Text("확인")),
                                     ],
                                   );
-                                }
-                            ),
+                                }),
                           }),
                     ],
-                  )
-                ]),
-              ),
+                  ),
+                ),
+
+              ]),
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xffD8A7A7).withOpacity(0.4),
+                  color: Theme.of(context).accentColor.withOpacity(0.4),
                   offset: Offset(5.0, 5.0),
                   blurRadius: 10.0,
                   spreadRadius: 1.0,

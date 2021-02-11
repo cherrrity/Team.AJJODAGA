@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:project_moonhwadiary/DB/userSetting.dart';
+import 'package:project_moonhwadiary/DB/ThemeController.dart';
 import 'package:project_moonhwadiary/widget/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
@@ -13,11 +13,9 @@ import 'package:project_moonhwadiary/router/routers.dart';
 // 모델
 import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
-import 'package:project_moonhwadiary/views/NeumorphicContainer.dart';
-import 'package:project_moonhwadiary/DB/test.dart';
+import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
+import 'package:project_moonhwadiary/DB/ThemeController.dart';
 
-// 세팅
-import 'package:project_moonhwadiary/DB/SettingHelper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

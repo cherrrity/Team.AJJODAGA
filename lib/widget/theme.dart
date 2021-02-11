@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 /// ----  Pink(default) Theme  ----
+
+final pinkCardBackground    = Color(0xFFFDF5F5);
 final pinkBackground    = Color(0xFFFFDBDB);
 final pinkAccent        = Color(0xFFFEC4C4);
 final pinkShadow        = Color(0xFFD8A7A7);
+
 
 final pinkPocketBack1   = Color(0xffE68383);
 final pinkPocketBack2   = Color(0xffFF7272);
@@ -23,12 +26,14 @@ ThemeData pinkTheme(String font) => ThemeData(
     scaffoldBackgroundColor: pinkBackground,
     backgroundColor: pinkAccent,
     accentColor: pinkShadow,
+    highlightColor: pinkCardBackground,
     primaryColor: pinkPocketBack1,
     cardColor: pinkPocketBack2,
     canvasColor: pinkPocketBack3,
 );
 
 /// ----  purple Theme  ----
+final purpleCardBackground = Color(0xFFf8f5fd);
 final purpleBackground    = Color(0xFFE8DEFB);
 final purpleAccent        = Color(0xFFD9C8F8);
 final purpleShadow        = Color(0xffBAA7D9);
@@ -51,12 +56,14 @@ ThemeData purpleTheme(String font) => ThemeData(
   scaffoldBackgroundColor: purpleBackground,
   backgroundColor: purpleAccent,
   accentColor: purpleShadow,
+  highlightColor: purpleCardBackground,
   primaryColor: purplePocketBack1,
   cardColor: purplePocketBack2,
   canvasColor: purplePocketBack3,
 );
 
 /// ----  sky Theme  ----
+final skyCardBackground = Color(0xFFf5fbfd);
 final skyBackground    = Color(0xFFE2EDFC);
 final skyAccent        = Color(0xFFCEDFF9);
 final skyShadow        = Color(0xFF9BB2D5);
@@ -79,12 +86,14 @@ ThemeData skyTheme(String font) => ThemeData(
   scaffoldBackgroundColor: skyBackground,
   backgroundColor: skyAccent,
   accentColor: skyShadow,
+  highlightColor: skyCardBackground,
   primaryColor: skyPocketBack1,
   cardColor: skyPocketBack2,
   canvasColor: skyPocketBack3,
 );
 
 /// ----  mint Theme  ----
+final mintCardBackground = Color(0xFFf6fdf5);
 final mintBackground    = Color(0xffE2F7F3);
 final mintAccent        = Color(0xffCFF1EB);
 final mintShadow        = Color(0xFFA1C4BE);
@@ -107,12 +116,14 @@ ThemeData mintTheme(String font) => ThemeData(
   scaffoldBackgroundColor: mintBackground,
   backgroundColor: mintAccent,
   accentColor: mintShadow,
+  highlightColor: mintCardBackground,
   primaryColor: mintPocketBack1,
   cardColor: mintPocketBack2,
   canvasColor: mintPocketBack3,
 );
 
 /// ----  yellow Theme  ----
+final yellowCardBackground = Color(0xFFfdfcf5);
 final yellowBackground    = Color(0xffFFF5DA);
 final yellowAccent        = Color(0xffFEEDC2);
 final yellowShadow        = Color(0xFFD1BD8A);
@@ -135,12 +146,14 @@ ThemeData yellowTheme(String font) => ThemeData(
   scaffoldBackgroundColor: yellowBackground,
   backgroundColor: yellowAccent,
   accentColor: yellowShadow,
+  highlightColor: yellowCardBackground,
   primaryColor: yellowPocketBack1,
   cardColor: yellowPocketBack2,
   canvasColor: yellowPocketBack3,
 );
 
 /// ----  olive Theme  ----
+final oliveCardBackground = Color(0xFFf6fdf5);
 final oliveBackground    = Color(0xffE8F3E7);
 final oliveAccent        = Color(0xffD8EAD6);
 final oliveShadow        = Color(0xFF9BC397);
@@ -163,6 +176,7 @@ ThemeData oliveTheme(String font) => ThemeData(
   scaffoldBackgroundColor: oliveBackground,
   backgroundColor: oliveAccent,
   accentColor: oliveShadow,
+  highlightColor: oliveCardBackground,
   primaryColor: pinkPocketBack1,
   cardColor: pinkPocketBack2,
   canvasColor: pinkPocketBack3,
