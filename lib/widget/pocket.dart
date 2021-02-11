@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project_moonhwadiary/main.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 
-Widget pocket(List<Diary> diaries){
+import 'package:project_moonhwadiary/widget/theme.dart';
+
+Widget pocket(List<Diary> diaries, BuildContext context){
   List<int> dates = diaries.map((m) => m.dateTime.day).toList();
   List<int> satisfactions = diaries.map((m) => m.feel).toList();
 
@@ -25,11 +28,11 @@ Widget pocket(List<Diary> diaries){
               width: 60,
               height: 70,
               decoration: BoxDecoration(
-                color: const Color(0xffFEC4C4),
+                color: Theme.of(context).backgroundColor,
                 borderRadius: BorderRadius.circular(17),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xffD8A7A7).withOpacity(0.4),
+                    color: Theme.of(context).backgroundColor.withOpacity(0.4),
                     offset: Offset(5.0, 5.0),
                     blurRadius: 10.0,
                     spreadRadius: 1.0,
@@ -43,9 +46,9 @@ Widget pocket(List<Diary> diaries){
                 ],
                 gradient: RadialGradient(
                   colors: [
-                    Color(0xffE68383),
-                    Color(0xffFF7272),
-                    Color(0xffFEC4C4)
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).cardColor,
+                    Theme.of(context).canvasColor
                   ],
                   stops: [0.01, 0.1, 1.0],
                   center: Alignment(0.0, -0.1),
@@ -86,7 +89,7 @@ Widget pocket(List<Diary> diaries){
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: satColor(_satisfaction),
+                  colors: satColor(_satisfaction, MyApp.of(context).widget.themeController.currentTheme),
                 ),
               ),
               child: Center(
@@ -113,10 +116,21 @@ Widget pocket(List<Diary> diaries){
   );
 }
 
-List<Color> satColor(int satisfaction) {
-  if (satisfaction == 1) return [Color(0xffFFE8E8), Color(0xffFFD1D1)];
-  else if (satisfaction == 2) return [Color(0xffFDD7D7), Color(0xffFFB2B2)];
-  else if (satisfaction == 3) return [Color(0xffFCB0B0), Color(0xffFF9393)];
-  else if (satisfaction == 4) return [Color(0xffFB8989), Color(0xffFF6E6E)];
-  else if (satisfaction == 5) return [Color(0xffFF7575), Color(0xffF95353)];
+List<Color> satColor(int satisfaction, String theme) {
+  List<List<Color>> colors;
+
+  switch (theme) {
+    case "pink": colors = pinkPocketColors; break;
+    case "purple": colors = purplePocketColors; break;
+    case "sky": colors = skyPocketColors; break;
+    case "mint": colors = mintPocketColors; break;
+    case "yellow": colors = yellowPocketColors; break;
+    case "olive": colors = olivePocketColors; break;
+  }
+
+  if (satisfaction == 1) return colors[0];
+  else if (satisfaction == 2) return colors[1];
+  else if (satisfaction == 3) return colors[2];
+  else if (satisfaction == 4) return colors[3];
+  else if (satisfaction == 5) return colors[4];
 }

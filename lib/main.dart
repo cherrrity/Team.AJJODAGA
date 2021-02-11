@@ -307,7 +307,6 @@ class _MyHomePageState extends State<MyHomePage>
                   child: Icon(Icons.settings, color: Colors.white),
                   onTap: () => Navigator.pushNamed(context, '/setting'),
                 ),
-                color: const Color(0xFFFEC4C4),
                 shape: "iconButton",
               ),
             ),
@@ -392,7 +391,7 @@ class _MyHomePageState extends State<MyHomePage>
           height: 14.0,
         ),
         Expanded(
-          child: pocket(_currentDiaries),
+          child: pocket(_currentDiaries, context),
         ),
       ],
     );

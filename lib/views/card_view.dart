@@ -72,7 +72,6 @@ class _ViewCardPage extends State<ViewCardPage> {
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xffFFDBDB),
       body: Stack(
         children: [
           DynamicHorizontalDemo(diaries: _diaries),
@@ -89,7 +88,6 @@ class _ViewCardPage extends State<ViewCardPage> {
                         Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
                     onTap: () => Navigator.pop(context),
                   ),
-                  color: Color(0xFFFEC4C4),
                   shape: "iconButton",
                 ),
               ],

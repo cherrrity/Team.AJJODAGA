@@ -61,7 +61,6 @@ class _WriteCardPage extends State<WriteCardPage> {
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xffFFDBDB),
       body: Column(
         children: [
           SizedBox(
@@ -78,7 +77,6 @@ class _WriteCardPage extends State<WriteCardPage> {
                     child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
                     onTap: () => Navigator.pop(context),
                   ),
-                  color: Color(0xFFFEC4C4),
                   shape: "iconButton",
                 ),
                 NeumorphicContainer(
@@ -89,7 +87,6 @@ class _WriteCardPage extends State<WriteCardPage> {
                       // new DBHelp.insertDiary(diary);
                     },
                   ),
-                  color: Color(0xFFFEC4C4),
                   shape: "iconButton",
                 ),
               ],
@@ -142,7 +139,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                   color: _isPhoto ? Colors.white : Color(0xFFFDF5F5),
                   boxShadow:[
                     BoxShadow(
-                      color: const Color(0xffD8A7A7).withOpacity(0.4),
+                      color: Theme.of(context).shadowColor.withOpacity(0.4),
                       offset: Offset(5.0, 5.0),
                       blurRadius: 10.0,
                       spreadRadius: 1.0,
@@ -213,7 +210,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xffD8A7A7).withOpacity(0.4),
+                      color: Theme.of(context).shadowColor.withOpacity(0.4),
                       offset: Offset(5.0, 5.0),
                       blurRadius: 10.0,
                       spreadRadius: 1.0,
@@ -237,9 +234,9 @@ class _WriteCardPage extends State<WriteCardPage> {
                 color: Colors.white,
                 onPressed: () => {
                   // add function
+                  // DBHelp.inserDiary();
                 },
               ),
-              color: Color(0xFFFEC4C4),
               shape: "add",
             ),
           ),
