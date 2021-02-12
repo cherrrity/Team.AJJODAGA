@@ -1,26 +1,32 @@
-import 'dart:math';
-
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
-
-import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/widget/card.dart';
 
-class DynamicHorizontalDemo extends StatefulWidget {
+import '../main.dart';
+
+class DynamicHorizontalList extends StatefulWidget {
   List<Diary> diaries;
 
-  DynamicHorizontalDemo({this.diaries});
+  DynamicHorizontalList({this.diaries});
 
   @override
-  _DynamicHorizontalDemoState createState() => _DynamicHorizontalDemoState();
+  _DynamicHorizontalList createState() => _DynamicHorizontalList();
 }
 
-class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
+class _DynamicHorizontalList extends State<DynamicHorizontalList>{
+
+  PageController _pageController;
+  ScrollController _scrollController;
   SwiperController _controller;
+
+
   List<Diary> diaries = [];
+  List<Widget> cards = [];
   int _focusedIndex = 0;
 
   List<double> grayScale = <double>[
@@ -34,87 +40,174 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
   void initState() {
     super.initState();
     _controller = new SwiperController();
+    _scrollController = new ScrollController();
+    _pageController = new PageController(initialPage: _focusedIndex);
     diaries = widget.diaries;
   }
 
-  void _onItemChange(int index) {
-    _focusedIndex = index;
-    print("now : " + _focusedIndex.toString());
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _pageController.dispose();
+    super.dispose();
   }
 
-  _onItemDelete(){
-  int delete_index = _focusedIndex; // 삭제될 인덱스
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    //Navigator.popAndPushNamed(context,'/card');
+    buildListItem();
+  }
 
-  print("delete_index : "+ delete_index.toString());
 
-  if(diaries.isNotEmpty) {
-    if(diaries.length > 1) _controller.next(animation: true);
+  @override
+  void didUpdateWidget(DynamicHorizontalList oldWidget){
+    super.didUpdateWidget(oldWidget);
+    print("horizon didUpdateWidget");
+  }
+
+  void _onItemChange(int index) {
     setState(() {
-      // DB delete 함수 들어가야함
-      // DBHelp.deleteDiary(diaies[delete_index].no);
-      // 삭제 되면 진행
-      diaries.removeAt(delete_index);
-      print(delete_index.toString() + "삭제 됨");
-      print(diaries.toString());
+      if(index >= diaries.length) _focusedIndex = 0;
+      _focusedIndex = index;
+      print(_focusedIndex.toString()+" / "+(cards.length-1).toString());
     });
   }
+
+
+  _onItemDelete() async{
+    var delete_index = _focusedIndex;
+    //print("delete_index : " + delete_index.toString());
+    if (diaries.isNotEmpty) {
+      //print(_focusedIndex.toString()+" / "+(cards.length-1).toString());
+
+      if(cards.length > 1 && _focusedIndex < cards.length-1) {
+        animationMvePage(1);
+        _pageController.jumpToPage(_focusedIndex-1);
+        //previousPage();
+        //movePage(delete_index);
+      }else{
+        animationMvePage(-1);
+      }
+
+       setState(() {
+         print("controller : "+ _pageController.page.toString()+" / focus : "+_focusedIndex.toString()+" / del_i : "+delete_index.toString());
+         print("delete");
+        diaries.removeAt(delete_index);
+        cards.removeAt(delete_index);
+        if(_focusedIndex >= diaries.length) _focusedIndex = 0;
+         didUpdateWidget(context.widget);
+      });
+    }
+  }
+
+  void animationMvePage(int index){
+    print("prev Page");
+     _pageController.animateToPage(_focusedIndex + index,
+        duration: Duration(milliseconds: 400),
+        curve: Curves.easeIn
+    );
+     if(diaries.length > 1) _focusedIndex = _focusedIndex + index;
+     else _focusedIndex = 0;
+    print("prev done");
+  }
+
+  void movePage(int index){
+    _focusedIndex = index;
+    _pageController.jumpToPage(index);
+  }
+
+
+
+ List<Widget> buildListItem(){
+    Widget item;
+
+    for(int i = 0; i < diaries.length; i++){
+      item = Container(
+        width: MediaQuery.of(context).size.width * 0.92,
+        child: PhotoCard(diaries[i], _onItemDelete, i),
+        //child: PhotoCard(diaries[index]),
+      );
+      cards.add(item);
+    }
+    return cards;
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    if (index == diaries.length)
-      return Center(child: CircularProgressIndicator(),);
-
-    //horizontal
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.92,
-      child: PhotoCard(diaries[index], _onItemDelete),
-      //child: PhotoCard(diaries[index]),
-    );
-  }
-
-  ///Override default dynamicItemSize calculation
-  double customEquation(double distance){
-    return 1-min(distance.abs()/500, 0.2);
-    // return 1-(distance/1000);
+    Widget item;
+    if (index < diaries.length) {
+      item = Container(
+        width: MediaQuery.of(context).size.width * 0.92,
+        child: PhotoCard(diaries[index], _onItemDelete, index),
+        //child: PhotoCard(diaries[index]),
+      );
+      //horizontal
+      cards.add(item);
+      return item;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        diaries.isNotEmpty? Swiper(
-          scale:0.9,
+        diaries.isNotEmpty?
+            PageView(
+              children: cards,
+              controller: _pageController,
+              scrollDirection: Axis.horizontal,
+              onPageChanged: _onItemChange,
+            )
+        /*Swiper(
+          scale: 0.9,
           viewportFraction: 0.85,
+          loop: false,
           itemCount: diaries.length,
           controller: _controller,
           itemBuilder: _buildListItem,
           onIndexChanged: _onItemChange,
-        ):Center(
-          child: Text("더 이상 일기가 없어요😥", style: TextStyle(fontSize: 16),),
+        )*/
+            : Center(
+          child: Text(
+            "더 이상 일기가 없어요😥",
+            style: TextStyle(fontSize: 16),
+          ),
         ),
-        diaries.isNotEmpty? Positioned(
-          bottom: MediaQuery.of(context).size.height * 0.05,
-          left: MediaQuery.of(context).size.width * 0.2,
+        diaries.isNotEmpty
+            ? Positioned(
+          bottom: MediaQuery
+              .of(context)
+              .size
+              .height * 0.05,
+          left: MediaQuery
+              .of(context)
+              .size
+              .width * 0.2,
           child: Container(
             width: 230,
             child: Row(
               children: [
                 ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 1? ColorFilter.mode(
+                  colorFilter: diaries[_focusedIndex].feel == 1
+                      ? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) :  ColorFilter.matrix(grayScale),
+                  )
+                      : ColorFilter.matrix(grayScale),
                   child: Image.asset(
-                  'assets/emoji/emoji-3.png',
-                  width: 30,
+                    'assets/emoji/emoji-3.png',
+                    width: 30,
                   ),
                 ),
                 SizedBox(width: 10),
                 ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 2? ColorFilter.mode(
+                  colorFilter: diaries[_focusedIndex].feel == 2
+                      ? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) :  ColorFilter.matrix(grayScale),
+                  )
+                      : ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-4.png',
                     width: 30,
@@ -122,10 +215,12 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                 ),
                 SizedBox(width: 10),
                 ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 3? ColorFilter.mode(
+                  colorFilter: diaries[_focusedIndex].feel == 3
+                      ? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) :  ColorFilter.matrix(grayScale),
+                  )
+                      : ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-13.png',
                     width: 30,
@@ -133,10 +228,12 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                 ),
                 SizedBox(width: 10),
                 ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 4? ColorFilter.mode(
+                  colorFilter: diaries[_focusedIndex].feel == 4
+                      ? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) :  ColorFilter.matrix(grayScale),
+                  )
+                      : ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-10.png',
                     width: 30,
@@ -144,10 +241,12 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                 ),
                 SizedBox(width: 10),
                 ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 5? ColorFilter.mode(
+                  colorFilter: diaries[_focusedIndex].feel == 5
+                      ? ColorFilter.mode(
                     Colors.transparent,
                     BlendMode.multiply,
-                  ) : ColorFilter.matrix(grayScale),
+                  )
+                      : ColorFilter.matrix(grayScale),
                   child: Image.asset(
                     'assets/emoji/emoji-2.png',
                     width: 30,
@@ -155,13 +254,14 @@ class _DynamicHorizontalDemoState extends State<DynamicHorizontalDemo> {
                 ),
               ],
             ),
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            padding:
+            const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               color: const Color(0xfffafafa),
             ),
           ),
-        ): Text(""),
+        ) : Text(""),
       ],
     );
   }

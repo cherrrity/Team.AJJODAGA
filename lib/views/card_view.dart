@@ -20,6 +20,7 @@ class ViewCardPage extends StatefulWidget {
 }
 
 class _ViewCardPage extends State<ViewCardPage> {
+  DynamicHorizontalList horizontalList;
   List<Diary> _diaries;
   String _date;
   bool _isPhoto = true;
@@ -54,11 +55,14 @@ class _ViewCardPage extends State<ViewCardPage> {
           feel: 5,
           image: ""
       ),
+
     ];
   }
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("cardView didChange");
     _date = ModalRoute.of(context).settings.arguments;
 
     if(_date != null){
@@ -68,13 +72,19 @@ class _ViewCardPage extends State<ViewCardPage> {
   }
 
   @override
+  void didUpdateWidget(ViewCardPage oldWidget){
+    super.didUpdateWidget(oldWidget);
+    print("cardView didUpdateWidget");
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          DynamicHorizontalDemo(diaries: _diaries),
+          horizontalList = DynamicHorizontalList(diaries: _diaries),
           Container(
             margin:
                 const EdgeInsets.only(top: 40, bottom: 30, left: 20, right: 20),
