@@ -1,23 +1,27 @@
+import 'package:intl/intl.dart';
+
 class Diary{
+  int no;
   String title = '';
   String contents = '';
   int feel = 1;
   String image = '';
   DateTime dateTime = DateTime.now();
 
-  Diary({title, contents, feel, image, dateTime}){
-    this.title = title != null? title: this.title;
-    this.contents = contents != null? contents: this.contents;
-    this.feel = feel != null? feel: this.feel;
-    this.image = image != null? image: this.image;
-    this.dateTime = dateTime != null? dateTime: this.dateTime;
+  Diary({no, title, contents, feel, image, dateTime}){
+    this.no = no?? this.no;
+    this.title = title?? this.title;
+    this.contents = contents?? this.contents;
+    this.feel = feel?? this.feel;
+    this.image = image?? this.image;
+    this.dateTime = dateTime?? this.dateTime;
   }
 
   Map<String, dynamic> toMap(){
     return {
       'title' : title,
       'contents' : contents,
-      'dateTime' : dateTime,
+      'dateTime' : DateFormat('yyyy-MM-dd').format(dateTime),
       'feel' : feel,
       'image' : image
     };
@@ -25,6 +29,6 @@ class Diary{
 
   @override
   String toString() {
-    return 'Diary{ title: $title, contents:$contents, dateTime:$dateTime, image, : $image, feel: $feel}';
+    return 'Diary{ no: $no, title: $title, contents:$contents, dateTime:$dateTime, image, : $image, feel: $feel}';
   }
 }

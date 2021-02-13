@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:crypto/crypto.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:project_moonhwadiary/DB/DBHelp.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
@@ -19,6 +25,10 @@ class _WriteCardPage extends State<WriteCardPage> {
   bool _isEdit = false;
   DateTime _currentDateTime = DateTime.now();
 
+  File _image;
+  final picker = ImagePicker();
+  String image_file = "";
+
   List<double> grayScale = <double>[
     0.2126,0.7152,0.0722,0,0,
     0.2126,0.7152,0.0722,0,0,
@@ -26,9 +36,21 @@ class _WriteCardPage extends State<WriteCardPage> {
     0,0,0,1,0,
   ];
 
+  final _contentFocusNode = FocusNode();
+  final _editController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+
   @override
   void initState(){
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _editController.dispose();
+    _contentFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,9 +74,30 @@ class _WriteCardPage extends State<WriteCardPage> {
       onConfirm2: (dateTime, List<int> index) {
         setState(() {
           _currentDateTime = dateTime;
+          _diary.dateTime = dateTime;
         });
       },
     );
+  }
+
+  Future getImage(ImageSource imageSource) async {
+    final pickedFile = await picker.getImage(source: imageSource);
+
+    setState(() {
+      if (pickedFile != null) {
+        this.image_file = pickedFile.path;
+        print("selected image_path: $image_file");
+        _diary.image = image_file;
+        _image = File(pickedFile.path);
+      }
+    });
+  }
+
+
+  void saveForm() {
+    _form.currentState.save();
+    DBHelper().insertDiary(_diary);
+    Navigator.pop(context);
   }
 
   @override
@@ -83,6 +126,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                     child: Icon(Icons.check_rounded, color: Colors.white),
                     onTap: () => {
                       // card add function
+                      saveForm(),
                       // new DBHelp.insertDiary(diary);
                     },
                   ),
@@ -111,7 +155,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                             // 이미지 full cover
-                            image: AssetImage(_diary.image), // 카드가 될 이미지
+                            image: FileImage(File(_diary.image)), // 카드가 될 이미지
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -147,6 +191,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                 width: MediaQuery.of(context).size.width * 0.92,
                 height: MediaQuery.of(context).size.height * 0.72,
                 child: Form(
+                  key: _form,
                   child: Padding(
                     padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
                     child: Column(children: [
@@ -175,6 +220,12 @@ class _WriteCardPage extends State<WriteCardPage> {
                                   border: InputBorder.none,
                                   hintText: '제목을 입력해 주세요'
                               ),
+                              onFieldSubmitted: (_){
+                                FocusScope.of(context).requestFocus(_contentFocusNode);
+                              },
+                              onSaved: (value){
+                                _diary.title = value;
+                              },
                             ),
                             SizedBox(height: 10),
                           ],
@@ -195,6 +246,10 @@ class _WriteCardPage extends State<WriteCardPage> {
                                 border: InputBorder.none,
                                 hintText: '내용을 입력해 주세요'
                             ),
+                            focusNode: _contentFocusNode,
+                            onSaved: (value){
+                              _diary.contents = value;
+                            },
                           ),
                         ),
                         decoration: BoxDecoration(
@@ -233,8 +288,12 @@ class _WriteCardPage extends State<WriteCardPage> {
                 iconSize: 40,
                 color: Colors.white,
                 onPressed: () => {
-                  // add function
-                  // DBHelp.inserDiary();
+                  // image 가져오기
+                  setState(() {
+                    getImage(ImageSource.gallery);
+                    _diary.image = this.image_file;
+                    print("SDFSDFSDFSD: "+ _diary.image);
+                  })
                 },
               ),
               shape: "add",
