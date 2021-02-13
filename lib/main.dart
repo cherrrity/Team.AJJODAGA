@@ -13,7 +13,7 @@ import 'package:project_moonhwadiary/router/routers.dart';
 // 모델
 import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
-import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
+import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/DB/ThemeController.dart';
 
 
