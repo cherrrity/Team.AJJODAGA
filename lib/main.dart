@@ -254,12 +254,28 @@ class _MyHomePageState extends State<MyHomePage>
       feel: 4,
     ),
     Diary(
+      dateTime: DateTime(2021, 2, 11),
+      feel: 4,
+    ),
+    Diary(
       dateTime: DateTime(2021, 2, 8),
       feel: 1,
     ),
     Diary(
       dateTime: DateTime(2021, 2, 11),
       feel: 3,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 2, 11),
+      feel: 5,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 2, 2),
+      feel: 1,
+    ),
+    Diary(
+      dateTime: DateTime(2021, 2, 11),
+      feel: 2,
     ),
   ];
 
@@ -310,7 +326,10 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             Container(
               height: height * 0.78,
-              child: _datesView(),
+              child: SimpleGestureDetector(
+                onHorizontalSwipe: _onHorizontalSwipe,
+                child: _datesView(),
+              ),
             ),
             // 추가
             Container(
@@ -357,6 +376,7 @@ class _MyHomePageState extends State<MyHomePage>
           _currentDateTime.month == diaries[i].dateTime.month)
         _currentDiaries.add(diaries[i]);
     }
+    _currentDiaries.sort((a, b) => a.dateTime.day.compareTo(b.dateTime.day));
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -373,7 +393,8 @@ class _MyHomePageState extends State<MyHomePage>
                     child: Text(
                       '${_currentDateTime.year}년 ${_currentDateTime.month}월',
                       style: TextStyle(
-                        color: const Color(0xff974949),
+                        // color: const Color(0xff974949),
+                        color: Theme.of(context).textSelectionColor,
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
                       ),
