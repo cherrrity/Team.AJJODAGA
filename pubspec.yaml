@@ -97,6 +97,24 @@ flutter:
     - family: Mapo
       fonts:
         - asset: assets/fonts/MapoFlowerIsland.ttf
+    - family: NanumBareunhiphi
+      fonts:
+        - asset: assets/fonts/nanumBareunhiphi.ttf
+    - family: NanumFighting
+      fonts:
+        - asset: assets/fonts/nanumFighting.ttf
+    - family: LocusSangsang
+      fonts:
+        - asset: assets/fonts/locus_sangsang.ttf
+    - family: RixTodayCartoon
+      fonts:
+        - asset: assets/fonts/RixTodayCartoon.ttf
+    - family: UNGothicUni
+      fonts:
+        - asset: assets/fonts/UNGothicUni.ttf
+    - family: NeoDungenmoPro
+      fonts:
+        - asset: assets/fonts/NeoDungenmoPro.ttf
 
   #
   # For details regarding fonts from package dependencies,

@@ -60,7 +60,6 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
     buildListItem();
   }
 
-
   @override
   void didUpdateWidget(DynamicHorizontalList oldWidget){
     super.didUpdateWidget(oldWidget);
@@ -72,21 +71,17 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
       if(index >= diaries.length) _focusedIndex = 0;
       _focusedIndex = index;
       print(_focusedIndex.toString()+" / "+(cards.length-1).toString());
+
     });
   }
 
 
   _onItemDelete() async{
     var delete_index = _focusedIndex;
-    //print("delete_index : " + delete_index.toString());
     if (diaries.isNotEmpty) {
-      //print(_focusedIndex.toString()+" / "+(cards.length-1).toString());
-
       if(cards.length > 1 && _focusedIndex < cards.length-1) {
         animationMvePage(1);
-        _pageController.jumpToPage(_focusedIndex-1);
-        //previousPage();
-        //movePage(delete_index);
+        //_pageController.jumpToPage(_focusedIndex-1);
       }else{
         animationMvePage(-1);
       }
@@ -103,14 +98,12 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
   }
 
   void animationMvePage(int index){
-    print("prev Page");
      _pageController.animateToPage(_focusedIndex + index,
         duration: Duration(milliseconds: 400),
         curve: Curves.easeIn
     );
      if(diaries.length > 1) _focusedIndex = _focusedIndex + index;
      else _focusedIndex = 0;
-    print("prev done");
   }
 
   void movePage(int index){

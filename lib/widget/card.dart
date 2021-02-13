@@ -16,8 +16,10 @@ class PhotoCard extends StatefulWidget {
   PhotoCard(this.diary, this.callback, this.index);
 
   @override
-  _CardState createState() => _CardState(this.callback);
-
+  _CardState createState() {
+    cardstate = _CardState(this.callback);
+    return cardstate;
+  }
   getState() => cardstate;
 }
 
@@ -31,8 +33,13 @@ class _CardState extends State<PhotoCard>{
   @override
   void initState() {
     super.initState();
-    didUpdateWidget(context.widget);
+    didUpdateWidget(this.widget);
     diary = widget.diary;
+  }
+
+  refresh() {
+    debugPrint('card refresh');
+    setState(() { });
   }
 
   @override
@@ -120,18 +127,16 @@ class _CardState extends State<PhotoCard>{
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.52,
+                  height: MediaQuery.of(context).size.height * 0.51,
                   width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Text(diary.contents, style: TextStyle(fontSize: 16), textAlign: TextAlign.left,)
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    //color: Theme.of(context).accentColor.withOpacity(0.1),
+                  child: OverflowBox(
+                    child:  Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text(diary.contents, style: TextStyle(fontSize: 16, height: 1.35),  textAlign: TextAlign.left,)
+                    ),
                   ),
                 ),
-                // SizedBox(height: 10),
+                SizedBox(height: 10),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
