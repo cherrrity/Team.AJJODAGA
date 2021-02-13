@@ -87,7 +87,7 @@ class FontState extends State<Font> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 0.0),
-                child: Column(
+                child: ListView(
                   children: <Widget>[
                     RadioListTile(title: Text('나눔 고딕', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'NanumGothic'),),
                       value: Fonts.nanumGothic, groupValue: _fonts, activeColor: Colors.white,
