@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
-import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
+import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 
 class WriteCardPage extends StatefulWidget {
   @override
