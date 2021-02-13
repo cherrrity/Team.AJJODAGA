@@ -14,6 +14,7 @@ import 'package:project_moonhwadiary/DB/DBHelp.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
+// import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
 
 class WriteCardPage extends StatefulWidget {
   @override
