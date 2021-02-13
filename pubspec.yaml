@@ -79,9 +79,6 @@ flutter:
     - family: NanumGothic
       fonts:
         - asset: assets/fonts/NanumGothic.ttf
-    - family: NanumSehwa
-      fonts:
-        - asset: assets/fonts/nanumSehwa.ttf
     - family: NanumDaheong
       fonts:
         - asset: assets/fonts/nanumDaheong.ttf

@@ -65,9 +65,6 @@ class _WriteCardPage extends State<WriteCardPage> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          SizedBox(
-            height: 10,
-          ),
           Container(
             margin: const EdgeInsets.only(top: 30, bottom:30, left: 20, right: 20),
             child: Row(
@@ -94,39 +91,35 @@ class _WriteCardPage extends State<WriteCardPage> {
               ],
             ),
           ),
-
           Center(
             // 메인 카드 앞면
             child: FlipCard(
               direction: FlipDirection.HORIZONTAL, // default
               front: Container(
                 padding: EdgeInsets.all(16.0),
-                width: MediaQuery.of(context).size.width * 0.90,
-                height : MediaQuery.of(context).size.height * 0.72,
+                width: MediaQuery.of(context).size.width * 0.92,
+                height: MediaQuery.of(context).size.height * 0.72,
                 // 이미지가 있을 때 없을 때
-                child: _isPhoto ?
-                Center(
+                child: _diary.image != ''
+                    ? Center(
                   child: Column(
                     children: [
-                    Container(
+                      Container(
                         width: MediaQuery.of(context).size.width * 0.85,
                         height: MediaQuery.of(context).size.height * 0.62,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                             // 이미지 full cover
-                            image: AssetImage(_diary.image),  // 카드가 될 이미지
+                            image: AssetImage(_diary.image), // 카드가 될 이미지
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-
                       SizedBox(
                         height: 20,
                       ),
-                      _isEdit?  // 포토카드 사진 아래 타이틀
-                      Text(_diary.title):
-                      Text("")
+                      Text(_diary.title)
                     ],
                   ),
                 )
@@ -138,8 +131,8 @@ class _WriteCardPage extends State<WriteCardPage> {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: _isPhoto ? Colors.white : Theme.of(context).highlightColor,
-                  boxShadow:[
+                  color: _diary.image != '' ? Colors.white : Theme.of(context).highlightColor,
+                  boxShadow: [
                     BoxShadow(
                       color: Theme.of(context).accentColor.withOpacity(0.4),
                       offset: Offset(5.0, 5.0),

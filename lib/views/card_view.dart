@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 import 'package:project_moonhwadiary/modules/HorizontalList.dart';
-import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
+import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 
 //DB
@@ -74,7 +74,7 @@ class _ViewCardPage extends State<ViewCardPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          horizontalList = DynamicHorizontalList(diaries: _diaries),
+          DynamicHorizontalList(diaries: _diaries),
           Container(
             margin:
                 const EdgeInsets.only(top: 40, bottom: 30, left: 20, right: 20),
