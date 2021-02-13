@@ -7,24 +7,31 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 
 class PhotoCard extends StatefulWidget {
+  _CardState cardstate;
   final Diary diary;
   final VoidCallback callback;
+  final int index;
 
-  PhotoCard(this.diary, this.callback);
+
+  PhotoCard(this.diary, this.callback, this.index);
 
   @override
   _CardState createState() => _CardState(this.callback);
+
+  getState() => cardstate;
 }
 
-class _CardState extends State<PhotoCard> {
+class _CardState extends State<PhotoCard>{
   Diary diary;
   final VoidCallback onDeleteItem;
+  int index;
 
   _CardState(this.onDeleteItem);
 
   @override
   void initState() {
     super.initState();
+    didUpdateWidget(context.widget);
     diary = widget.diary;
   }
 
@@ -63,7 +70,7 @@ class _CardState extends State<PhotoCard> {
                         SizedBox(
                           height: 20,
                         ),
-                        Text("소제목")
+                        Text(diary.title)
                       ],
                     ),
                   )
@@ -75,7 +82,7 @@ class _CardState extends State<PhotoCard> {
                   ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: diary.image != null ? Colors.white : Theme.of(context).highlightColor,
+              color: diary.image != '' ? Colors.white : Theme.of(context).highlightColor,
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).accentColor.withOpacity(0.4),
@@ -124,7 +131,7 @@ class _CardState extends State<PhotoCard> {
                     //color: Theme.of(context).accentColor.withOpacity(0.1),
                   ),
                 ),
-                SizedBox(height: 10),
+                // SizedBox(height: 10),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 import 'package:project_moonhwadiary/modules/HorizontalList.dart';
 // import 'file:///C:/Users/hyej0/AndroidStudioProjects/Team.AJJODAGA/lib/modules/NeumorphicContainer.dart';
-import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 
 //DB
@@ -21,6 +21,7 @@ class ViewCardPage extends StatefulWidget {
 }
 
 class _ViewCardPage extends State<ViewCardPage> {
+  DynamicHorizontalList horizontalList;
   List<Diary> _diaries;
   String _date;
   bool _isPhoto = true;
@@ -55,11 +56,14 @@ class _ViewCardPage extends State<ViewCardPage> {
           feel: 5,
           image: ""
       ),
+
     ];
   }
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("cardView didChange");
     _date = ModalRoute.of(context).settings.arguments;
 
     if(_date != null){
@@ -69,13 +73,19 @@ class _ViewCardPage extends State<ViewCardPage> {
   }
 
   @override
+  void didUpdateWidget(ViewCardPage oldWidget){
+    super.didUpdateWidget(oldWidget);
+    print("cardView didUpdateWidget");
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          DynamicHorizontalDemo(diaries: _diaries),
+          horizontalList = DynamicHorizontalList(diaries: _diaries),
           Container(
             margin:
                 const EdgeInsets.only(top: 40, bottom: 30, left: 20, right: 20),

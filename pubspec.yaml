@@ -85,6 +85,19 @@ flutter:
     - family: NanumDaheong
       fonts:
         - asset: assets/fonts/nanumDaheong.ttf
+    - family: Bazzi
+      fonts:
+        - asset: assets/fonts/Bazzi.ttf
+    - family: Cafe24
+      fonts:
+        - asset: assets/fonts/Cafe24Oneprettynight.ttf
+    - family: Soojin
+      fonts:
+        - asset: assets/fonts/ImcreSoojin.ttf
+    - family: Mapo
+      fonts:
+        - asset: assets/fonts/MapoFlowerIsland.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
