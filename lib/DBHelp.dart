@@ -7,6 +7,7 @@ import 'package:project_moonhwadiary/name.dart';
 
 final String tableName = 'diaries';
 
+
 class DBHelper {
 
   DBHelper._();
@@ -30,7 +31,7 @@ class DBHelper {
         path,
         version: 1,
         onCreate: (db, version) async {
-          await db.execute('CREATE TABLE $tableName(_no integer PRIMARY KEY AUTOINCREMENT, datetime TEXT, title TEXT, contents TEXT, feel integer)');
+          await db.execute('CREATE TABLE $tableName(_no integer PRIMARY KEY AUTOINCREMENT, datetime TEXT, title TEXT, contents TEXT, feel integer,id TEXT, pic TEXT)');
         },
         onUpgrade: (db, oldVersion, newVersion){}
     );
@@ -51,6 +52,7 @@ class DBHelper {
   }
 
 
+
   Future<void> updateDiary(Diary diary) async {
     final db = await database;
 
@@ -67,6 +69,7 @@ class DBHelper {
     print("updateDiary : " + res.toString());
 
   }
+
 
   Future<void> deleteDiary(int no) async {
     final db = await database;
@@ -99,9 +102,12 @@ class DBHelper {
         contents: maps[i]['contents'] ,
         dateTime: maps[i]['datetime'],
         feel: maps[i]['feel'],
+        id: maps[i]['id'],
+        pic : maps[i]['pic'],
       );
     });
   }
+
 
   Future<List<Diary>> selectAllDiary() async {
     final db = await database;
