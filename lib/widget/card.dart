@@ -134,8 +134,8 @@ class _CardState extends State<PhotoCard>{
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.51,
-                  width: MediaQuery.of(context).size.width,
+                  height: _cardHeight * 0.73,
+                  width: _cardWidth,
                   child: OverflowBox(
                     child:  Padding(
                         padding: EdgeInsets.all(5),
