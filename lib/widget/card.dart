@@ -112,8 +112,10 @@ class _CardState extends State<PhotoCard>{
             width: _cardWidth,
             height: _cardHeight,
             child: Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
-              child: Column(children: [
+              padding: EdgeInsets.only(top: _cardHeight * 0.03, bottom: _cardHeight * 0.01, left: _cardWidth * 0.05, right: _cardWidth * 0.05),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
@@ -134,7 +136,7 @@ class _CardState extends State<PhotoCard>{
                   ),
                 ),
                 Container(
-                  height: _cardHeight * 0.73,
+                  height: _cardHeight * 0.74,
                   width: _cardWidth,
                   child: OverflowBox(
                     child:  Padding(
@@ -143,50 +145,51 @@ class _CardState extends State<PhotoCard>{
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
                 Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.edit_rounded,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () => Navigator.pushNamed(
-                              context, '/write_card',
-                              arguments: diary)),
-                      IconButton(
-                          icon: Icon(
-                            Icons.delete_rounded,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () => {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("일기 삭제"),
-                                    content: Text("삭제하시겠습니까?"),
-                                    actions: [
-                                      FlatButton(
-                                          onPressed: () =>
+                  child: Padding(
+                    padding: EdgeInsets.only(top: _cardHeight * 0.01),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                            icon: Icon(
+                              Icons.edit_rounded,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => Navigator.pushNamed(
+                                context, '/write_card',
+                                arguments: diary)),
+                        IconButton(
+                            icon: Icon(
+                              Icons.delete_rounded,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("일기 삭제"),
+                                      content: Text("삭제하시겠습니까?"),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text("취소")),
+                                        FlatButton(
+                                            onPressed: () => {
+                                              onDeleteItem(),
                                               Navigator.pop(context),
-                                          child: Text("취소")),
-                                      FlatButton(
-                                          onPressed: () => {
-                                            onDeleteItem(),
-                                            Navigator.pop(context),
-                                          },
-                                          child: Text("확인")),
-                                    ],
-                                  );
-                                }),
-                          }),
-                    ],
+                                            },
+                                            child: Text("확인")),
+                                      ],
+                                    );
+                                  }),
+                            }),
+                      ],
+                    ),
                   ),
                 ),
-
               ]),
             ),
             decoration: BoxDecoration(
