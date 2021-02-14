@@ -131,6 +131,64 @@ class _WriteCardPage extends State<WriteCardPage> {
     return iconList[randIndex];
   }
 
+  String _initImages()  {
+    // >> To get paths you need these 2 lines
+    var iconList = ["001-evil.svg",
+      "002-sleep.svg",
+      "003-mask.svg",
+      "004-winkle.svg",
+      "005-cry.svg",
+      "006-mermaid.svg",
+      "007-dance.svg",
+      "008-rich.svg",
+      "009-cake.svg",
+      "010-sick.svg",
+      "011-yes.svg",
+      "012-scared.svg",
+      "013-wine.svg",
+      "014-sad.svg",
+      "015-question.svg",
+      "016-intimidate.svg",
+      "017-ok.svg",
+      "018-flirt.svg",
+      "019-celebrate.svg",
+      "020-hurry.svg",
+      "021-cupcake.svg",
+      "022-unicorn.svg",
+      "023-greeting.svg",
+      "024-hungry.svg",
+      "025-happy.svg",
+      "026-sunglasses.svg",
+      "027-puke.svg",
+      "028-kiss.svg",
+      "029-vain.svg",
+      "030-toy.svg",
+      "031-surprise.svg",
+      "032-rubber ring.svg",
+      "033-mad.svg",
+      "034-headband.svg",
+      "035-tired.svg",
+      "036-No.svg",
+      "037-cat.svg",
+      "038-unamused.svg",
+      "039-what.svg",
+      "040-glutton.svg",
+      "041-love.svg",
+      "042-dramatic.svg",
+      "043-angry.svg",
+      "044-nervous.svg",
+      "045-fashion.svg",
+      "046-shy.svg",
+      "047-curious.svg",
+      "048-origami.svg",
+      "049-rolling eyes.svg",
+      "050-laugh.svg"];
+    // >> To get paths you need these 2 lines
+
+    final randIndex = Random().nextInt(iconList.length);
+    return iconList[randIndex];
+  }
+
   void _showPicker() {
     DatePicker.showDatePicker(
       context,
