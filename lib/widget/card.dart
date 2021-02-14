@@ -136,7 +136,7 @@ class _CardState extends State<PhotoCard>{
                   ),
                 ),
                 Container(
-                  height: _cardHeight * 0.74,
+                  height: _cardHeight * 0.72,
                   width: _cardWidth,
                   child: OverflowBox(
                     child:  Padding(
