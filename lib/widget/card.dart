@@ -44,27 +44,34 @@ class _CardState extends State<PhotoCard>{
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
+    double _width = MediaQuery.of(context).size.width;
+    double _cardHeight = _height * 0.72;
+    double _cardWidth = _width * 0.92;
+    double _innerImageHeight = _cardHeight * 0.83;
+    double _innerImageWidth = _cardWidth * 0.95;
+
     // TODO: implement build
     return Container(
       padding: null,
-      width: MediaQuery.of(context).size.width * 0.92,
-      height: MediaQuery.of(context).size.height * 0.72,
+      width: _cardWidth,
+      height: _cardHeight,
       child: Center(
         // 메인 카드 앞면
         child: FlipCard(
           direction: FlipDirection.HORIZONTAL, // default
           front: Container(
             padding: EdgeInsets.all(16.0),
-            width: MediaQuery.of(context).size.width * 0.92,
-            height: MediaQuery.of(context).size.height * 0.72,
+            width: _cardWidth,
+            height: _cardHeight,
             // 이미지가 있을 때 없을 때
             child: diary.image != ''
                 ? Center(
                     child: Column(
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          height: MediaQuery.of(context).size.height * 0.62,
+                          width: _innerImageWidth,
+                          height: _innerImageHeight,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
@@ -102,8 +109,8 @@ class _CardState extends State<PhotoCard>{
           ),
           back: Container(
             // 메인 카드 뒷면
-            width: MediaQuery.of(context).size.width * 0.92,
-            height: MediaQuery.of(context).size.height * 0.72,
+            width: _cardWidth,
+            height: _cardHeight,
             child: Padding(
               padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
               child: Column(children: [

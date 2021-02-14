@@ -118,7 +118,6 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
 
     for(int i = 0; i < diaries.length; i++){
       item = Container(
-        width: MediaQuery.of(context).size.width * 0.92,
         child: PhotoCard(diaries[i], _onItemDelete, i),
         //child: PhotoCard(diaries[index]),
       );
@@ -131,7 +130,6 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
     Widget item;
     if (index < diaries.length) {
       item = Container(
-        width: MediaQuery.of(context).size.width * 0.92,
         child: PhotoCard(diaries[index], _onItemDelete, index),
         //child: PhotoCard(diaries[index]),
       );
@@ -152,15 +150,6 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
               scrollDirection: Axis.horizontal,
               onPageChanged: _onItemChange,
             )
-        /*Swiper(
-          scale: 0.9,
-          viewportFraction: 0.85,
-          loop: false,
-          itemCount: diaries.length,
-          controller: _controller,
-          itemBuilder: _buildListItem,
-          onIndexChanged: _onItemChange,
-        )*/
             : Center(
           child: Text(
             "더 이상 일기가 없어요😥",

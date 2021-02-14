@@ -69,23 +69,26 @@ class _ViewCardPage extends State<ViewCardPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
+    double _width = MediaQuery.of(context).size.width;
+
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           DynamicHorizontalList(diaries: _diaries),
           Container(
-            margin:
-                const EdgeInsets.only(top: 40, bottom: 30, left: 20, right: 20),
+            margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 상단 아이콘 생성
                 NeumorphicContainer(
                   child: GestureDetector(
-                    child:
-                        Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                    child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
                     onTap: () => Navigator.pop(context),
                   ),
                   shape: "iconButton",
@@ -95,6 +98,8 @@ class _ViewCardPage extends State<ViewCardPage> {
           ),
         ],
       ),
+      // startdocked
+      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
     );
   }
 }

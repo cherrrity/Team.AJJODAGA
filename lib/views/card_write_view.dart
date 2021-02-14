@@ -20,6 +20,7 @@ class WriteCardPage extends StatefulWidget {
 }
 
 class _WriteCardPage extends State<WriteCardPage> {
+
   Diary _diary = new Diary();
   bool _isPhoto = false;
   bool _isEdit = false;
@@ -93,7 +94,6 @@ class _WriteCardPage extends State<WriteCardPage> {
     });
   }
 
-
   void saveForm() {
     _form.currentState.save();
     DBHelper().insertDiary(_diary);
@@ -102,14 +102,21 @@ class _WriteCardPage extends State<WriteCardPage> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
+    double _width = MediaQuery.of(context).size.width;
+    double _cardHeight = _height * 0.72;
+    double _cardWidth = _width * 0.92;
+    double _innerImageHeight = _cardHeight * 0.83;
+    double _innerImageWidth = _cardWidth * 0.95;
 
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 30, bottom:30, left: 20, right: 20),
+            margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -141,16 +148,16 @@ class _WriteCardPage extends State<WriteCardPage> {
               direction: FlipDirection.HORIZONTAL, // default
               front: Container(
                 padding: EdgeInsets.all(16.0),
-                width: MediaQuery.of(context).size.width * 0.92,
-                height: MediaQuery.of(context).size.height * 0.72,
+                width: _cardWidth,
+                height: _cardHeight,
                 // 이미지가 있을 때 없을 때
                 child: _diary.image != ''
                     ? Center(
                   child: Column(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        height: MediaQuery.of(context).size.height * 0.62,
+                        width: _innerImageWidth,
+                        height: _innerImageHeight,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
@@ -188,8 +195,8 @@ class _WriteCardPage extends State<WriteCardPage> {
               ),
               back: Container(
                 // 메인 카드 뒷면
-                width: MediaQuery.of(context).size.width * 0.92,
-                height: MediaQuery.of(context).size.height * 0.72,
+                width: _cardWidth,
+                height: _cardHeight,
                 child: Form(
                   key: _form,
                   child: Padding(
@@ -275,138 +282,134 @@ class _WriteCardPage extends State<WriteCardPage> {
               ),
             ),
           ),
-        ],
-      ),
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            left : 10,
-            bottom : 25,
-            child: NeumorphicContainer(
-              child: IconButton(
-                icon: Icon(Icons.add_rounded),
-                iconSize: 40,
-                color: Colors.white,
-                onPressed: () => {
-                  // image 가져오기
-                  setState(() {
-                    getImage(ImageSource.gallery);
-                    _diary.image = this.image_file;
-                    print("SDFSDFSDFSD: "+ _diary.image);
-                  })
-                },
-              ),
-              shape: "add",
+          Container(
+            //height : _height * 14,
+            margin: const EdgeInsets.only(top: 25, bottom:30, left: 20, right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                NeumorphicContainer(
+                  child: IconButton(
+                    icon: Icon(Icons.add_rounded),
+                    iconSize: 40,
+                    color: Colors.white,
+                    onPressed: () => {
+                      // image 가져오기
+                      setState(() {
+                        getImage(ImageSource.gallery);
+                        _diary.image = this.image_file;
+                        print("SDFSDFSDFSD: "+ _diary.image);
+                      })
+                    },
+                  ),
+                  shape: "add",
+                ),
+                Container(
+                  child: Row(
+                    children: [
+                      InkWell(
+                        child : ColorFiltered(
+                          colorFilter: _diary.feel == 1? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          ) :  ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-3.png',
+                            width: 30,
+                          ),
+                        ),
+                        onTap: () => {
+                          setState(() {
+                            _diary.feel = 1;
+                          })
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      InkWell(
+                        child : ColorFiltered(
+                          colorFilter: _diary.feel == 2? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          ) :  ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-4.png',
+                            width: 30,
+                          ),
+                        ),
+                        onTap: () => {
+                          setState(() {
+                            _diary.feel = 2;
+                          })
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      InkWell(
+                        child : ColorFiltered(
+                          colorFilter: _diary.feel == 3? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          ) :  ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-13.png',
+                            width: 30,
+                          ),
+                        ),
+                        onTap: () => {
+                          setState(() {
+                            _diary.feel = 3;
+                          })
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      InkWell(
+                        child : ColorFiltered(
+                          colorFilter: _diary.feel == 4? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          ) :  ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-10.png',
+                            width: 30,
+                          ),
+                        ),
+                        onTap: () => {
+                          setState(() {
+                            _diary.feel = 4;
+                          })
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      InkWell(
+                        child : ColorFiltered(
+                          colorFilter: _diary.feel == 5? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          ) :  ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-2.png',
+                            width: 30,
+                          ),
+                        ),
+                        onTap: () => {
+                          setState(() {
+                            _diary.feel = 5;
+                          })
+                        },
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: const Color(0xfffafafa),
+                  ),
+                )
+              ],
             ),
           ),
-          Positioned(
-              right: 40,
-              bottom: 40,
-              child: Container(
-                child: Row(
-                  children: [
-                    InkWell(
-                      child : ColorFiltered(
-                        colorFilter: _diary.feel == 1? ColorFilter.mode(
-                          Colors.transparent,
-                          BlendMode.multiply,
-                        ) :  ColorFilter.matrix(grayScale),
-                        child: Image.asset(
-                          'assets/emoji/emoji-3.png',
-                          width: 30,
-                        ),
-                      ),
-                      onTap: () => {
-                        setState(() {
-                          _diary.feel = 1;
-                        })
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    InkWell(
-                      child : ColorFiltered(
-                        colorFilter: _diary.feel == 2? ColorFilter.mode(
-                          Colors.transparent,
-                          BlendMode.multiply,
-                        ) :  ColorFilter.matrix(grayScale),
-                        child: Image.asset(
-                          'assets/emoji/emoji-4.png',
-                          width: 30,
-                        ),
-                      ),
-                      onTap: () => {
-                        setState(() {
-                          _diary.feel = 2;
-                        })
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    InkWell(
-                      child : ColorFiltered(
-                        colorFilter: _diary.feel == 3? ColorFilter.mode(
-                          Colors.transparent,
-                          BlendMode.multiply,
-                        ) :  ColorFilter.matrix(grayScale),
-                        child: Image.asset(
-                          'assets/emoji/emoji-13.png',
-                          width: 30,
-                        ),
-                      ),
-                      onTap: () => {
-                        setState(() {
-                          _diary.feel = 3;
-                        })
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    InkWell(
-                      child : ColorFiltered(
-                        colorFilter: _diary.feel == 4? ColorFilter.mode(
-                          Colors.transparent,
-                          BlendMode.multiply,
-                        ) :  ColorFilter.matrix(grayScale),
-                        child: Image.asset(
-                          'assets/emoji/emoji-10.png',
-                          width: 30,
-                        ),
-                      ),
-                      onTap: () => {
-                        setState(() {
-                          _diary.feel = 4;
-                        })
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    InkWell(
-                      child : ColorFiltered(
-                        colorFilter: _diary.feel == 5? ColorFilter.mode(
-                          Colors.transparent,
-                          BlendMode.multiply,
-                        ) :  ColorFilter.matrix(grayScale),
-                        child: Image.asset(
-                          'assets/emoji/emoji-2.png',
-                          width: 30,
-                        ),
-                      ),
-                      onTap: () => {
-                        setState(() {
-                          _diary.feel = 5;
-                        })
-                      },
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: const Color(0xfffafafa),
-                ),
-              )
-          )
+
         ],
       ),
-      // startdocked
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
     );
   }
 }
