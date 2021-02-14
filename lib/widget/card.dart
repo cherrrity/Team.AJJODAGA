@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +13,10 @@ class PhotoCard extends StatefulWidget {
   final Diary diary;
   final VoidCallback callback;
   final int index;
+  final String emptyImage;
 
 
-  PhotoCard(this.diary, this.callback, this.index);
+  PhotoCard(this.diary, this.callback, this.index, this.emptyImage);
 
   @override
   _CardState createState() {
@@ -27,19 +30,16 @@ class _CardState extends State<PhotoCard>{
   Diary diary;
   final VoidCallback onDeleteItem;
   int index;
+  String _emptyImage;
 
   _CardState(this.onDeleteItem);
 
   @override
   void initState() {
     super.initState();
-    didUpdateWidget(this.widget);
     diary = widget.diary;
-  }
-
-  refresh() {
-    debugPrint('card refresh');
-    setState(() { });
+    //print(widget.emptyImage);
+    _emptyImage = widget.emptyImage;
   }
 
   @override
@@ -90,7 +90,7 @@ class _CardState extends State<PhotoCard>{
                   )
                 : Center(
                     child: SvgPicture.asset(
-                      'assets/images/empty_card_cat.svg',
+                      'assets/icons/'+_emptyImage,
                       width: 150,
                     ),
                   ),
