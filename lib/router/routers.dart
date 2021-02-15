@@ -15,8 +15,8 @@ class Routes {
   Routes._();
 
   static final routes = {
-    //'/' : (BuildContext context) => MySplashScreen(),
-    '/' : (BuildContext context) => MyHomePage(),
+    '/' : (BuildContext context) => SplashScreen(),
+    '/home' : (BuildContext context) => MyHomePage(),
     '/card': (BuildContext context) => ViewCardPage(),
     '/write_card' : (BuildContext context) => WriteCardPage(),
     '/setting': (BuildContext context) => Settings(),

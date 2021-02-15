@@ -287,6 +287,15 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print("main didChange");
+  }
+
+
+
+  @override
   void dispose() {
     super.dispose();
     print("app 종료");

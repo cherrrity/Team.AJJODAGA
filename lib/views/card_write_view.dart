@@ -231,7 +231,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: _cardHeight*0.05,
                       ),
                       Text(_diary.title)
                     ],
@@ -270,7 +270,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 9),
+                            SizedBox(height: _cardHeight*0.01),
                             // 카드 입력(날짜)
                             InkWell(
                               child: Text(
@@ -280,7 +280,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                               onTap: () => _showPicker(), // date picker widget
                             ),
 
-                            SizedBox(height: 5),
+                            SizedBox(height: _cardHeight*0.01),
                             TextFormField(
                               initialValue : _isEdit? _diary.title: "",
                               inputFormatters: [LengthLimitingTextInputFormatter(40),],
@@ -297,7 +297,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                                 _diary.title = value;
                               },
                             ),
-                            SizedBox(height: 10),
+                              SizedBox(height: _cardHeight*0.01),
                           ],
                         ),
                       ),

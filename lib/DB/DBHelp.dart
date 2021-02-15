@@ -85,12 +85,12 @@ class DBHelper {
     print("deleteDiary : " + res.toString());
   }
 
-  Future<List<Diary>> selectDiary(int no) async {
+  Future<List<Diary>> selectDiary(String date) async {
     final db = await database;
 
     // 모든 Diary를 얻기 위해 테이블에 질의합니다.
     final List<Map<String, dynamic>> maps =
-    await db.query('diaries', where: 'no = ?', whereArgs: [no]);
+    await db.query('diaries', where: 'datetime = ?', whereArgs: [date]);
 
     print("selectDiary : "+ maps.toString());
 
@@ -105,6 +105,16 @@ class DBHelper {
         image : maps[i]['image'],
       );
     });
+  }
+
+  Future<int> getDiaryNumCnt() async {
+    final db = await database;
+
+    // 데이터베이스에서 Diary를 삭제합니다.
+    int count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM diaries'));
+    print("count : " + count.toString());
+
+    return count;
   }
 
 

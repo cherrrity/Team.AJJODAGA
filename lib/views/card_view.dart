@@ -58,12 +58,13 @@ class _ViewCardPage extends State<ViewCardPage> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     _date = ModalRoute.of(context).settings.arguments;
 
     if(_date != null){
       // 일자에 맞는 일기 db에서 찾아오기
-      //_diaries = new DBHelp.selectDiary(date);
+      _date = "2021-02-15";
+      _diaries = await DBHelper().selectDiary(_date);
     }
   }
 

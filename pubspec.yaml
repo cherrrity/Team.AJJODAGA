@@ -41,6 +41,9 @@ dependencies:
   sqflite: ^1.3.2+2
   image_picker: ^0.6.7+22
   crypto: any
+  intl: ^0.16.1
+  speech_bubble: ^0.0.7
+  number_slide_animation: ^0.1.1
 
 dev_dependencies:
   flutter_test:
