@@ -11,28 +11,57 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   int _totalDiaryCnt = 0;
+  int _once = 0;
+
+  AnimationController _controller;
+  Animation _animation;
+  CurvedAnimation _curve;
 
   @override
   void didChangeDependencies() async{
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _totalDiaryCnt = await DBHelper().getDiaryNumCnt();
-    setState(() {});
+    setState(() {
+      _controller.forward();
+    });
   }
 
   @override
   void initState(){
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+    _curve = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_curve);
+    _animation.addStatusListener((status) {
+      print("status " + status.toString());
+      if(_once == 0){
+        if (status == AnimationStatus.completed) _controller.reverse();
+        else if (status == AnimationStatus.dismissed) _controller.forward();
+        _once = 1;
+      }
+    });
+
     super.initState();
+
 
     Timer(Duration(seconds: 5), () => Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false));
   }
 
-  getCount() async{
-    _totalDiaryCnt = await DBHelper().getDiaryNumCnt();
-  }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -57,32 +86,38 @@ class _SplashScreenState extends State<SplashScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _totalDiaryCnt > 0?
-                        SpeechBubble(
-                          nipLocation: NipLocation.BOTTOM,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Icon(
-                                Icons.favorite,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(1.0),
-                              ),
-                              NumberSlideAnimation(
-                                number: _totalDiaryCnt.toString(),
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.bounceIn,
-                                textStyle: TextStyle(
+                        FadeTransition(
+                          opacity: _animation,
+                          child: SpeechBubble(
+                            nipLocation: NipLocation.BOTTOM,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                ),
+                                NumberSlideAnimation(
+                                  number: _totalDiaryCnt.toString(),
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.bounceIn,
+                                  textStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ): Text(""),
+                        ) : Text(""),
                         SizedBox(height: height*0.02),
-                        SvgPicture.asset('assets/icons/019-celebrate.svg', width: width * 0.3),
+                        FadeTransition(
+                          opacity: _animation,
+                          child : SvgPicture.asset('assets/icons/019-celebrate.svg', width: width * 0.3),
+                        )
                       ],
                     ),
                   ),
