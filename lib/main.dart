@@ -161,8 +161,8 @@ class _MyHomePageState extends State<MyHomePage>
             // 설정
             Container(
               height: height * 0.09,
-              padding: EdgeInsets.fromLTRB(20.0, 20.0, 0, 0),
-              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 20.0),
+              alignment: Alignment.centerLeft,
               child: NeumorphicContainer(
                 child: GestureDetector(
                   child: Icon(Icons.settings, color: Colors.white),
@@ -203,10 +203,12 @@ class _MyHomePageState extends State<MyHomePage>
   void _showPicker() {
     DatePicker.showDatePicker(
       context,
-      locale: 'en',
-      dateFormat: 'yyyy-mm',
+      locale: DateTimePickerLocale.ko,
+      dateFormat: 'yyyy-MM',
       initialDateTime: _currentDateTime,
-      onConfirm2: (dateTime, List<int> index) {
+      minDateTime: DateTime(2000),
+      maxDateTime: DateTime.now(),
+      onConfirm: (dateTime, List<int> index) {
         setState(() {
           _currentDateTime = dateTime;
           _datesView();
@@ -216,6 +218,9 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   Widget _datesView() {
+    int yearNum = _currentDateTime.year;
+    int monthNum = _currentDateTime.month;
+
     List<Diary> _currentDiaries = new List<Diary>();
     for (var i = 0; i < diaries.length; i++) {
       if (_currentDateTime.year == diaries[i].dateTime.year &&
@@ -256,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage>
           height: 14.0,
         ),
         Expanded(
-          child: pocket(_currentDiaries, context),
+          child: pocket(yearNum, monthNum, _currentDiaries, context),
         ),
       ],
     );
@@ -286,10 +291,12 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   void _getNextMonth() {
-    if (_currentDateTime.month == 12)
-      _currentDateTime = DateTime(_currentDateTime.year + 1, 1);
-    else
-      _currentDateTime =
-          DateTime(_currentDateTime.year, _currentDateTime.month + 1);
+    if (_currentDateTime.year < DateTime.now().year
+        || (_currentDateTime.year == DateTime.now().year && _currentDateTime.month < DateTime.now().month)) {
+      if (_currentDateTime.month == 12)
+        _currentDateTime = DateTime(_currentDateTime.year + 1, 1);
+      else
+        _currentDateTime = DateTime(_currentDateTime.year, _currentDateTime.month + 1);
+    }
   }
 }
