@@ -97,7 +97,7 @@ class DBHelper {
     // List<Map<String, dynamic>를 List<Diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
       return Diary(
-        no: maps[i]['no'],
+        no: maps[i]['_no'],
         title: maps[i]['title'],
         contents: maps[i]['contents'],
         dateTime: DateFormat('yyyy-MM-dd').parse(maps[i]['datetime']),
@@ -111,7 +111,7 @@ class DBHelper {
     final db = await database;
 
     //월별 검색
-    final List<Map<String, dynamic>> maps = await db.query('diaries', where:"strftime ('%Y-%m', datetime) = '${date}'" );
+    final List<Map<String, dynamic>> maps = await db.query('diaries', where:"strftime('%Y-%m', datetime) = '${date}'" );
     print(date);
 
     print("dateSelect : "+ maps.toString());
@@ -119,7 +119,7 @@ class DBHelper {
     // List<Map<String, dynamic>를 List<diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
       return Diary(
-        no: maps[i]['no'],
+        no: maps[i]['_no'],
         title: maps[i]['title'],
         contents: maps[i]['contents'],
         dateTime: DateFormat('yyyy-MM-dd').parse(maps[i]['datetime']),
@@ -154,7 +154,7 @@ class DBHelper {
     // List<Map<String, dynamic>를 List<diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
       return Diary(
-        no: maps[i]['no'],
+        no: maps[i]['_no'],
         title: maps[i]['title'],
         contents: maps[i]['contents'],
         dateTime: DateFormat('yyyy-MM-dd').parse(maps[i]['datetime']),

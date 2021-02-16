@@ -10,6 +10,7 @@ import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:project_moonhwadiary/modules/HorizontalList.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
+import 'package:project_moonhwadiary/widget/cardList.dart';
 
 //DB
 import 'package:project_moonhwadiary/DB/DBHelp.dart';
@@ -19,73 +20,35 @@ class ViewCardPage extends StatefulWidget {
   _ViewCardPage createState() => _ViewCardPage();
 }
 
-class _ViewCardPage extends State<ViewCardPage> {
+class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMixin {
   List<Diary> _diaries = [];
   String _date;
   bool _isPhoto = true;
   bool _isKeyboardUp = false;
 
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    _date = ModalRoute.of(context).settings.arguments;
-
-    if(_date != null){
-      // 일자에 맞는 일기 db에서 찾아오기
-      print(_date);
-      _date = "2021-02-"+_date;
-      _diaries = await DBHelper().selectDiary(_date);
-    }
-    setState(() {
-
-      print("did " + _diaries.toString());
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-
-    _diaries = [
-      Diary(
-          title: "test1",
-          contents: "test",
-          dateTime: DateFormat('yyyy-MM-dd').parse('2020-01-04'),
-          feel: 1,
-          image: ""
-      ), Diary(
-          title: "test2",
-          contents: "test",
-          dateTime: DateFormat('yyyy-MM-dd').parse('2020-01-04'),
-          feel: 2,
-          image: ""
-      ), Diary(
-          title: "test3",
-          contents: "test",
-          dateTime: DateFormat('yyyy-MM-dd').parse('2020-01-04'),
-          feel: 3,
-          image: ""
-      ), Diary(
-          title: "test4",
-          contents: "test",
-          dateTime: DateFormat('yyyy-MM-dd').parse('2020-01-04'),
-          feel: 5,
-          image: ""
-      ),
-    ];
-
-    didChangeDependencies();
-    // TODO: implement initState
-
+    _date = "2021-02-15";
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() async{
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _date = ModalRoute.of(context).settings.arguments;
+
+    print("2021-02-${_date} main didChange");
+    _diaries = await DBHelper().dateSelect(_date);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context)  {
 
     double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
     double _width = MediaQuery.of(context).size.width;
-
-    print("build " + _diaries.toString());
 
     // TODO: implement build
     return Scaffold(
@@ -93,7 +56,8 @@ class _ViewCardPage extends State<ViewCardPage> {
       body: Stack(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          DynamicHorizontalList(diaries: _diaries),
+          //DynamicHorizontalList(diaries: _diaries),
+          cardView(_diaries, context),
           Container(
             margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
             child: Row(

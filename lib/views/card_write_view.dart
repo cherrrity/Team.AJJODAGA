@@ -62,11 +62,14 @@ class _WriteCardPage extends State<WriteCardPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    print("didChange");
     var arg = ModalRoute.of(context).settings.arguments;
-    if(arg != null) _diary = arg;
-    _isEdit = arg == null? false : true ;  // 수정인지 확인
-    _currentDateTime = _isEdit? _diary.dateTime : DateTime.now(); // 수정일 때 수정 날짜로 변경
-    _isPhoto = false;
+    if(arg != null) {
+      _diary = arg;
+      _isEdit = arg == null? false : true ;  // 수정인지 확인
+      _currentDateTime = _isEdit? _diary.dateTime : DateTime.now(); // 수정일 때 수정 날짜로 변경
+      _isPhoto = false;
+    }
   }
 
   String _initImages()  {
@@ -138,7 +141,7 @@ class _WriteCardPage extends State<WriteCardPage> {
       onConfirm2: (dateTime, List<int> index) {
         setState(() {
           _currentDateTime = dateTime;
-          _diary.dateTime = dateTime;
+          _diary.dateTime = _currentDateTime;
         });
       },
     );
@@ -160,6 +163,8 @@ class _WriteCardPage extends State<WriteCardPage> {
   void saveForm() {
     _form.currentState.save();
     DBHelper().insertDiary(_diary);
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    currentFocus.unfocus();
     Navigator.pop(context, true);
   }
 

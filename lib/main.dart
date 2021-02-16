@@ -123,8 +123,6 @@ class _MyHomePageState extends State<MyHomePage>
     setState(() {});
   }
 
-
-
   @override
   void dispose() {
     super.dispose();
@@ -190,8 +188,7 @@ class _MyHomePageState extends State<MyHomePage>
                   child: IconButton(
                     icon: Icon(Icons.add, color: Colors.white),
                     iconSize: 30.0,
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/write_card'),
+                    onPressed: () => _navigateAndDisplaySelection(context),
                   ),
                 ),
                 shape: "add",
