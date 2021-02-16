@@ -38,10 +38,11 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _date = ModalRoute.of(context).settings.arguments;
+  }
 
-    print("2021-02-${_date} main didChange");
-    _diaries = await DBHelper().dateSelect(_date);
-    setState(() {});
+  Future<List<Diary>> _getDiaries(String date) async {
+    _diaries = await DBHelper().selectDiary("2021-02-16");
+    return _diaries;
   }
 
   @override
@@ -54,35 +55,36 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     double _cardWidth = _width * 0.92;
 
     // TODO: implement build
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: EdgeInsets.only(top: statusBarHeight),
-        child:  Stack(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            //DynamicHorizontalList(diaries: _diaries),
-            cardView(_diaries, context),
-            Container(
-              margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // 상단 아이콘 생성
-                  NeumorphicContainer(
-                    child: GestureDetector(
-                      child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                      onTap: () => Navigator.pop(context),
+    return FutureBuilder(
+      future: _getDiaries(_date),
+      builder: (context, snapshot){
+        return Padding(
+          padding: EdgeInsets.only(top: statusBarHeight),
+          child:  Stack(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              DynamicHorizontalList(diaries: snapshot.data),
+              //cardView(_diaries, context),
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // 상단 아이콘 생성
+                    NeumorphicContainer(
+                      child: GestureDetector(
+                        child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                        onTap: () => Navigator.pop(context),
+                      ),
+                      shape: "iconButton",
                     ),
-                    shape: "iconButton",
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+            ],
+          ),
+        );
+      },
     );
   }
 }

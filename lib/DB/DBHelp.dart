@@ -92,7 +92,7 @@ class DBHelper {
     final List<Map<String, dynamic>> maps =
     await db.query('diaries', where: 'datetime = ?', whereArgs: [date]);
 
-    print("selectDiary : "+ maps.toString());
+    print("selectDiary: "+ maps.toString());
 
     // List<Map<String, dynamic>를 List<Diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
