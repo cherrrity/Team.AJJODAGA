@@ -6,6 +6,7 @@ import 'package:project_moonhwadiary/widget/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 // 라우터
 import 'package:project_moonhwadiary/router/routers.dart';
@@ -15,7 +16,7 @@ import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/DB/ThemeController.dart';
-
+import 'package:project_moonhwadiary/DB/DBHelp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -104,180 +105,7 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   DateTime _currentDateTime;
 
-  List<Diary> diaries = [
-    Diary(
-      dateTime: DateTime(2020, 12, 3),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2020, 12, 5),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2020, 12, 9),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2020, 12, 17),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2020, 12, 24),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 1),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 2),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 3),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 4),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 5),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 6),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 7),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 8),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 9),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 10),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 11),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 12),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 13),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 14),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 15),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 16),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 17),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 18),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 19),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 20),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 21),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 22),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 23),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 24),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 25),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 26),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 27),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 28),
-      feel: 2,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 29),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 30),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 1, 31),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 2),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 11),
-      feel: 4,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 8),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 11),
-      feel: 3,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 11),
-      feel: 5,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 2),
-      feel: 1,
-    ),
-    Diary(
-      dateTime: DateTime(2021, 2, 11),
-      feel: 2,
-    ),
-  ];
+  List<Diary> diaries = [];
 
   @override
   void initState() {
@@ -287,10 +115,12 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async{
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     print("main didChange");
+    diaries = await DBHelper().dateSelect(DateFormat('yyyy-MM').format(_currentDateTime));
+    setState(() {});
   }
 
 
@@ -299,6 +129,16 @@ class _MyHomePageState extends State<MyHomePage>
   void dispose() {
     super.dispose();
     print("app 종료");
+  }
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await
+    Navigator.pushNamed(context, '/write_card');
+
+    if(result == true){
+      diaries = await DBHelper().dateSelect(DateFormat('yyyy-MM').format(_currentDateTime));
+      setState(() {});
+    }
   }
 
   void _onHorizontalSwipe(SwipeDirection direction) {
@@ -434,6 +274,7 @@ class _MyHomePageState extends State<MyHomePage>
       onPressed: () {
         setState(() {
           (next) ? _getNextMonth() : _getPrevMonth();
+          didChangeDependencies();
         });
       },
     );

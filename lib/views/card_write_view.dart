@@ -160,7 +160,7 @@ class _WriteCardPage extends State<WriteCardPage> {
   void saveForm() {
     _form.currentState.save();
     DBHelper().insertDiary(_diary);
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   @override

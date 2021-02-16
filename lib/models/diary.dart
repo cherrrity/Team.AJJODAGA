@@ -19,6 +19,7 @@ class Diary{
 
   Map<String, dynamic> toMap(){
     return {
+      'no' : no,
       'title' : title,
       'contents' : contents,
       'dateTime' : DateFormat('yyyy-MM-dd').format(dateTime),

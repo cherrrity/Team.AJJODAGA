@@ -42,6 +42,7 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
     _scrollController = new ScrollController();
     _pageController = new PageController(initialPage: _focusedIndex);
     diaries = widget.diaries;
+    print("hor di : " + diaries.toString());
   }
 
   @override
@@ -63,6 +64,7 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
   void didUpdateWidget(DynamicHorizontalList oldWidget){
     super.didUpdateWidget(oldWidget);
     print("horizon didUpdateWidget");
+    print("horizon : " + diaries.toString());
   }
 
   void _onItemChange(int index) {

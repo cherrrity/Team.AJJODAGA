@@ -20,21 +20,39 @@ class ViewCardPage extends StatefulWidget {
 }
 
 class _ViewCardPage extends State<ViewCardPage> {
-  List<Diary> _diaries;
+  List<Diary> _diaries = [];
   String _date;
   bool _isPhoto = true;
   bool _isKeyboardUp = false;
 
   @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    _date = ModalRoute.of(context).settings.arguments;
+
+    if(_date != null){
+      // 일자에 맞는 일기 db에서 찾아오기
+      print(_date);
+      _date = "2021-02-"+_date;
+      _diaries = await DBHelper().selectDiary(_date);
+    }
+    setState(() {
+
+      print("did " + _diaries.toString());
+    });
+  }
+
+  @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
+
     _diaries = [
       Diary(
-        title: "test1",
-        contents: "test",
-        dateTime: DateFormat('yyyy-MM-dd').parse('2020-01-04'),
-        feel: 1,
-        image: ""
+          title: "test1",
+          contents: "test",
+          dateTime: DateFormat('yyyy-MM-dd').parse('2020-01-04'),
+          feel: 1,
+          image: ""
       ), Diary(
           title: "test2",
           contents: "test",
@@ -55,17 +73,10 @@ class _ViewCardPage extends State<ViewCardPage> {
           image: ""
       ),
     ];
-  }
 
-  @override
-  void didChangeDependencies() async {
-    _date = ModalRoute.of(context).settings.arguments;
+    didChangeDependencies();
+    // TODO: implement initState
 
-    if(_date != null){
-      // 일자에 맞는 일기 db에서 찾아오기
-      _date = "2021-02-15";
-      _diaries = await DBHelper().selectDiary(_date);
-    }
   }
 
   @override
@@ -73,6 +84,8 @@ class _ViewCardPage extends State<ViewCardPage> {
 
     double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
     double _width = MediaQuery.of(context).size.width;
+
+    print("build " + _diaries.toString());
 
     // TODO: implement build
     return Scaffold(
