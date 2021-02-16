@@ -170,313 +170,317 @@ class _WriteCardPage extends State<WriteCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - (statusBarHeight * 2);
     double _width = MediaQuery.of(context).size.width;
     double _cardHeight = _height * 0.72;
-    double _cardWidth = _width * 0.92;
+    double _cardWidth = _width * 0.9;
     double _innerImageHeight = _cardHeight * 0.83;
     double _innerImageWidth = _cardWidth * 0.95;
 
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // 상단 아이콘 생성
-                NeumorphicContainer(
-                  child: GestureDetector(
-                    child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                    onTap: () => Navigator.pop(context),
+      body: Padding(
+        padding: EdgeInsets.only(top: statusBarHeight),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // 상단 아이콘 생성
+                  NeumorphicContainer(
+                    child: GestureDetector(
+                      child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                      onTap: () => Navigator.pop(context),
+                    ),
+                    shape: "iconButton",
                   ),
-                  shape: "iconButton",
-                ),
-                NeumorphicContainer(
-                  child: GestureDetector(
-                    child: Icon(Icons.check_rounded, color: Colors.white),
-                    onTap: () => {
-                      // card add function
-                      saveForm(),
-                      // new DBHelp.insertDiary(diary);
-                    },
+                  NeumorphicContainer(
+                    child: GestureDetector(
+                      child: Icon(Icons.check_rounded, color: Colors.white),
+                      onTap: () => {
+                        // card add function
+                        saveForm(),
+                        // new DBHelp.insertDiary(diary);
+                      },
+                    ),
+                    shape: "iconButton",
                   ),
-                  shape: "iconButton",
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Center(
-            // 메인 카드 앞면
-            child: FlipCard(
-              direction: FlipDirection.HORIZONTAL, // default
-              front: Container(
-                padding: EdgeInsets.all(16.0),
-                width: _cardWidth,
-                height: _cardHeight,
-                // 이미지가 있을 때 없을 때
-                child: _diary.image != ''
-                    ? Center(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: _innerImageWidth,
-                        height: _innerImageHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            // 이미지 full cover
-                            image: FileImage(File(_diary.image)), // 카드가 될 이미지
-                            fit: BoxFit.cover,
+            Center(
+              // 메인 카드 앞면
+              child: FlipCard(
+                direction: FlipDirection.HORIZONTAL, // default
+                front: Container(
+                  padding: EdgeInsets.all(16.0),
+                  width: _cardWidth,
+                  height: _cardHeight,
+                  // 이미지가 있을 때 없을 때
+                  child: _diary.image != ''
+                      ? Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: _innerImageWidth,
+                          height: _innerImageHeight,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              // 이미지 full cover
+                              image: FileImage(File(_diary.image)), // 카드가 될 이미지
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
+                        SizedBox(
+                          height: _cardHeight*0.05,
+                        ),
+                        Text(_diary.title)
+                      ],
+                    ),
+                  )
+                      : Center(
+                    child: SvgPicture.asset(
+                      'assets/icons/'+_emptyImage,
+                      width: 150,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: _diary.image != '' ? Colors.white : Theme.of(context).highlightColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).accentColor.withOpacity(0.4),
+                        offset: Offset(5.0, 5.0),
+                        blurRadius: 10.0,
+                        spreadRadius: 1.0,
                       ),
-                      SizedBox(
-                        height: _cardHeight*0.05,
-                      ),
-                      Text(_diary.title)
                     ],
                   ),
-                )
-                    : Center(
-                  child: SvgPicture.asset(
-                    'assets/icons/'+_emptyImage,
-                    width: 150,
-                  ),
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: _diary.image != '' ? Colors.white : Theme.of(context).highlightColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).accentColor.withOpacity(0.4),
-                      offset: Offset(5.0, 5.0),
-                      blurRadius: 10.0,
-                      spreadRadius: 1.0,
-                    ),
-                  ],
-                ),
-              ),
-              back: Container(
-                // 메인 카드 뒷면
-                width: _cardWidth,
-                height: _cardHeight,
-                child: Form(
-                  key: _form,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
-                    child: Column(children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: _cardHeight*0.01),
-                            // 카드 입력(날짜)
-                            InkWell(
-                              child: Text(
-                                '${_currentDateTime.year}. ${_currentDateTime.month}. ${_currentDateTime.day}.',
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor), textAlign: TextAlign.left,
+                back: Container(
+                  // 메인 카드 뒷면
+                  width: _cardWidth,
+                  height: _cardHeight,
+                  child: Form(
+                    key: _form,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
+                      child: Column(children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: _cardHeight*0.005),
+                              // 카드 입력(날짜)
+                              InkWell(
+                                child: Text(
+                                  '${_currentDateTime.year}. ${_currentDateTime.month}. ${_currentDateTime.day}.',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor), textAlign: TextAlign.left,
+                                ),
+                                onTap: () => _showPicker(), // date picker widget
                               ),
-                              onTap: () => _showPicker(), // date picker widget
-                            ),
 
-                            SizedBox(height: _cardHeight*0.01),
-                            TextFormField(
-                              initialValue : _isEdit? _diary.title: "",
-                              inputFormatters: [LengthLimitingTextInputFormatter(40),],
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                              SizedBox(height: _cardHeight*0.005),
+                              TextFormField(
+                                initialValue : _isEdit? _diary.title: "",
+                                inputFormatters: [LengthLimitingTextInputFormatter(40),],
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.zero,
+                                    border: InputBorder.none,
+                                    hintText: '제목을 입력해 주세요'
+                                ),
+                                onFieldSubmitted: (_){
+                                  FocusScope.of(context).requestFocus(_contentFocusNode);
+                                },
+                                onSaved: (value){
+                                  _diary.title = value;
+                                },
+                              ),
+                              SizedBox(height: _cardHeight*0.01),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.53,
+                          width: MediaQuery.of(context).size.width,
+                          child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: TextFormField(
+                              initialValue : _isEdit? _diary.contents: "",
+                              maxLines: 16,
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.left,
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,
-                                  hintText: '제목을 입력해 주세요'
+                                  hintText: '내용을 입력해 주세요'
                               ),
-                              onFieldSubmitted: (_){
-                                FocusScope.of(context).requestFocus(_contentFocusNode);
-                              },
+                              focusNode: _contentFocusNode,
                               onSaved: (value){
-                                _diary.title = value;
+                                _diary.contents = value;
                               },
                             ),
-                              SizedBox(height: _cardHeight*0.01),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.55,
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: TextFormField(
-                            initialValue : _isEdit? _diary.contents: "",
-                            maxLines: 40,
-                            style: TextStyle(fontSize: 16),
-                            textAlign: TextAlign.left,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                border: InputBorder.none,
-                                hintText: '내용을 입력해 주세요'
-                            ),
-                            focusNode: _contentFocusNode,
-                            onSaved: (value){
-                              _diary.contents = value;
-                            },
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Theme.of(context).accentColor.withOpacity(0.1),
-                        ),
-                      )
-                    ]),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).accentColor.withOpacity(0.4),
-                      offset: Offset(5.0, 5.0),
-                      blurRadius: 10.0,
-                      spreadRadius: 1.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).accentColor.withOpacity(0.1),
+                          ),
+                        )
+                      ]),
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Container(
-            //height : _height * 14,
-            margin: const EdgeInsets.only(top: 25, bottom:30, left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                NeumorphicContainer(
-                  child: IconButton(
-                    icon: Icon(Icons.add_rounded),
-                    iconSize: 40,
-                    color: Colors.white,
-                    onPressed: () => {
-                      // image 가져오기
-                      setState(() {
-                        getImage(ImageSource.gallery);
-                        _diary.image = this.image_file;
-                        print("SDFSDFSDFSD: "+ _diary.image);
-                      })
-                    },
                   ),
-                  shape: "add",
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      InkWell(
-                        child : ColorFiltered(
-                          colorFilter: _diary.feel == 1? ColorFilter.mode(
-                            Colors.transparent,
-                            BlendMode.multiply,
-                          ) :  ColorFilter.matrix(grayScale),
-                          child: Image.asset(
-                            'assets/emoji/emoji-3.png',
-                            width: 30,
-                          ),
-                        ),
-                        onTap: () => {
-                          setState(() {
-                            _diary.feel = 1;
-                          })
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      InkWell(
-                        child : ColorFiltered(
-                          colorFilter: _diary.feel == 2? ColorFilter.mode(
-                            Colors.transparent,
-                            BlendMode.multiply,
-                          ) :  ColorFilter.matrix(grayScale),
-                          child: Image.asset(
-                            'assets/emoji/emoji-4.png',
-                            width: 30,
-                          ),
-                        ),
-                        onTap: () => {
-                          setState(() {
-                            _diary.feel = 2;
-                          })
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      InkWell(
-                        child : ColorFiltered(
-                          colorFilter: _diary.feel == 3? ColorFilter.mode(
-                            Colors.transparent,
-                            BlendMode.multiply,
-                          ) :  ColorFilter.matrix(grayScale),
-                          child: Image.asset(
-                            'assets/emoji/emoji-13.png',
-                            width: 30,
-                          ),
-                        ),
-                        onTap: () => {
-                          setState(() {
-                            _diary.feel = 3;
-                          })
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      InkWell(
-                        child : ColorFiltered(
-                          colorFilter: _diary.feel == 4? ColorFilter.mode(
-                            Colors.transparent,
-                            BlendMode.multiply,
-                          ) :  ColorFilter.matrix(grayScale),
-                          child: Image.asset(
-                            'assets/emoji/emoji-10.png',
-                            width: 30,
-                          ),
-                        ),
-                        onTap: () => {
-                          setState(() {
-                            _diary.feel = 4;
-                          })
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      InkWell(
-                        child : ColorFiltered(
-                          colorFilter: _diary.feel == 5? ColorFilter.mode(
-                            Colors.transparent,
-                            BlendMode.multiply,
-                          ) :  ColorFilter.matrix(grayScale),
-                          child: Image.asset(
-                            'assets/emoji/emoji-2.png',
-                            width: 30,
-                          ),
-                        ),
-                        onTap: () => {
-                          setState(() {
-                            _diary.feel = 5;
-                          })
-                        },
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).accentColor.withOpacity(0.4),
+                        offset: Offset(5.0, 5.0),
+                        blurRadius: 10.0,
+                        spreadRadius: 1.0,
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: const Color(0xfffafafa),
-                  ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            Container(
+              //height : _height * 14,
+              margin: const EdgeInsets.only(top: 25, bottom:30, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NeumorphicContainer(
+                    child: IconButton(
+                      icon: Icon(Icons.add_rounded),
+                      iconSize: 40,
+                      color: Colors.white,
+                      onPressed: () => {
+                        // image 가져오기
+                        setState(() {
+                          getImage(ImageSource.gallery);
+                          _diary.image = this.image_file;
+                          print("SDFSDFSDFSD: "+ _diary.image);
+                        })
+                      },
+                    ),
+                    shape: "add",
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        InkWell(
+                          child : ColorFiltered(
+                            colorFilter: _diary.feel == 1? ColorFilter.mode(
+                              Colors.transparent,
+                              BlendMode.multiply,
+                            ) :  ColorFilter.matrix(grayScale),
+                            child: Image.asset(
+                              'assets/emoji/emoji-3.png',
+                              width: 30,
+                            ),
+                          ),
+                          onTap: () => {
+                            setState(() {
+                              _diary.feel = 1;
+                            })
+                          },
+                        ),
+                        SizedBox(width: 10),
+                        InkWell(
+                          child : ColorFiltered(
+                            colorFilter: _diary.feel == 2? ColorFilter.mode(
+                              Colors.transparent,
+                              BlendMode.multiply,
+                            ) :  ColorFilter.matrix(grayScale),
+                            child: Image.asset(
+                              'assets/emoji/emoji-4.png',
+                              width: 30,
+                            ),
+                          ),
+                          onTap: () => {
+                            setState(() {
+                              _diary.feel = 2;
+                            })
+                          },
+                        ),
+                        SizedBox(width: 10),
+                        InkWell(
+                          child : ColorFiltered(
+                            colorFilter: _diary.feel == 3? ColorFilter.mode(
+                              Colors.transparent,
+                              BlendMode.multiply,
+                            ) :  ColorFilter.matrix(grayScale),
+                            child: Image.asset(
+                              'assets/emoji/emoji-13.png',
+                              width: 30,
+                            ),
+                          ),
+                          onTap: () => {
+                            setState(() {
+                              _diary.feel = 3;
+                            })
+                          },
+                        ),
+                        SizedBox(width: 10),
+                        InkWell(
+                          child : ColorFiltered(
+                            colorFilter: _diary.feel == 4? ColorFilter.mode(
+                              Colors.transparent,
+                              BlendMode.multiply,
+                            ) :  ColorFilter.matrix(grayScale),
+                            child: Image.asset(
+                              'assets/emoji/emoji-10.png',
+                              width: 30,
+                            ),
+                          ),
+                          onTap: () => {
+                            setState(() {
+                              _diary.feel = 4;
+                            })
+                          },
+                        ),
+                        SizedBox(width: 10),
+                        InkWell(
+                          child : ColorFiltered(
+                            colorFilter: _diary.feel == 5? ColorFilter.mode(
+                              Colors.transparent,
+                              BlendMode.multiply,
+                            ) :  ColorFilter.matrix(grayScale),
+                            child: Image.asset(
+                              'assets/emoji/emoji-2.png',
+                              width: 30,
+                            ),
+                          ),
+                          onTap: () => {
+                            setState(() {
+                              _diary.feel = 5;
+                            })
+                          },
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      color: const Color(0xfffafafa),
+                    ),
+                  )
+                ],
+              ),
+            ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

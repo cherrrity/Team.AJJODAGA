@@ -47,36 +47,41 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   @override
   Widget build(BuildContext context)  {
 
-    double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - (statusBarHeight * 2);
     double _width = MediaQuery.of(context).size.width;
+    double _cardHeight = _height * 0.72;
+    double _cardWidth = _width * 0.92;
 
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //DynamicHorizontalList(diaries: _diaries),
-          cardView(_diaries, context),
-          Container(
-            margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // 상단 아이콘 생성
-                NeumorphicContainer(
-                  child: GestureDetector(
-                    child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                    onTap: () => Navigator.pop(context),
+      body: Padding(
+        padding: EdgeInsets.only(top: statusBarHeight),
+        child:  Stack(
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //DynamicHorizontalList(diaries: _diaries),
+            cardView(_diaries, context),
+            Container(
+              margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // 상단 아이콘 생성
+                  NeumorphicContainer(
+                    child: GestureDetector(
+                      child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                      onTap: () => Navigator.pop(context),
+                    ),
+                    shape: "iconButton",
                   ),
-                  shape: "iconButton",
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      // startdocked
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
     );
   }
