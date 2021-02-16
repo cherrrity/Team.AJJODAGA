@@ -19,6 +19,7 @@ PageController _pageController;
 
 _onItemDelete() async{
   var delete_index = _focusedIndex;
+
   if (_diaries.isNotEmpty) {
     if(cards.length > 1 && _focusedIndex < cards.length-1) {
       animationMvePage(1);
@@ -126,6 +127,10 @@ List<Widget> buildListItem(){
 Widget cardView(List<Diary> diaries, BuildContext context) {
 
   _diaries = diaries;
+
+  print("res"+ _diaries.toString());
+
+  cards = buildListItem();
 
   void _onItemChange(int index) {
   }

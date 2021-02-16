@@ -41,6 +41,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   }
 
   Future<List<Diary>> _getDiaries(String date) async {
+    // 날짜 수정
     _diaries = await DBHelper().selectDiary("2021-02-16");
     return _diaries;
   }
@@ -58,30 +59,32 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     return FutureBuilder(
       future: _getDiaries(_date),
       builder: (context, snapshot){
-        return Padding(
-          padding: EdgeInsets.only(top: statusBarHeight),
-          child:  Stack(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DynamicHorizontalList(diaries: snapshot.data),
-              //cardView(_diaries, context),
-              Container(
-                margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // 상단 아이콘 생성
-                    NeumorphicContainer(
-                      child: GestureDetector(
-                        child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                        onTap: () => Navigator.pop(context),
+        return Scaffold(
+          body: Padding(
+            padding: EdgeInsets.only(top: statusBarHeight),
+            child:  Stack(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //DynamicHorizontalList(diaries: snapshot.data),
+                cardView(_diaries, context),
+                Container(
+                  margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // 상단 아이콘 생성
+                      NeumorphicContainer(
+                        child: GestureDetector(
+                          child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                          onTap: () => Navigator.pop(context),
+                        ),
+                        shape: "iconButton",
                       ),
-                      shape: "iconButton",
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

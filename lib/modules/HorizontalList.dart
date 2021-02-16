@@ -63,7 +63,6 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
   @override
   void didUpdateWidget(DynamicHorizontalList oldWidget){
     super.didUpdateWidget(oldWidget);
-    print("horizon didUpdateWidget");
     print("horizon : " + diaries.toString());
   }
 
@@ -71,8 +70,6 @@ class _DynamicHorizontalList extends State<DynamicHorizontalList>{
     setState(() {
       if(index >= diaries.length) _focusedIndex = 0;
       _focusedIndex = index;
-      print(_focusedIndex.toString()+" / "+(cards.length-1).toString());
-
     });
   }
 
