@@ -1,4 +1,5 @@
 
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _CardState extends State<PhotoCard>{
   void initState() {
     super.initState();
     diary = widget.diary;
-    //print(widget.emptyImage);
+    print(diary.image);
     _emptyImage = widget.emptyImage;
   }
 
@@ -76,7 +77,7 @@ class _CardState extends State<PhotoCard>{
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
                               // 이미지 full cover
-                              image: AssetImage(diary.image), // 카드가 될 이미지
+                              image: FileImage(File(diary.image)), // 카드가 될 이미지
                               fit: BoxFit.cover,
                             ),
                           ),

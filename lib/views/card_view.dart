@@ -65,7 +65,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
 
   Future<List<Diary>> _getDiaries(String date) async {
     // 날짜 수정
-    _diaries = await DBHelper().selectDiary("2021-02-16");
+    _diaries = await DBHelper().selectDiary("2021-02-17");
     return _diaries;
   }
 
@@ -243,6 +243,9 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
       }
 
       setState(() {
+        // DB에서 삭제
+        DBHelper().deleteDiary(diaries[delete_index].no);
+
         diaries.removeAt(delete_index);
         cards.removeAt(delete_index);
         if(_focusedIndex >= diaries.length) _focusedIndex = 0;

@@ -162,7 +162,15 @@ class _WriteCardPage extends State<WriteCardPage> {
 
   void saveForm() {
     _form.currentState.save();
-    DBHelper().insertDiary(_diary);
+
+    if(_isEdit){
+      // 업데이트하는 경우
+      DBHelper().updateDiary(_diary);
+    }else{
+      // 새로 작성하는 경우
+      DBHelper().insertDiary(_diary);
+    }
+
     FocusScopeNode currentFocus = FocusScope.of(context);
     currentFocus.unfocus();
     Navigator.pop(context, true);
