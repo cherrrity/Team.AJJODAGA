@@ -39,15 +39,13 @@ class _NeumorphicContainerState extends State<NeumorphicContainer> {
 
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;// - MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     double _width = MediaQuery.of(context).size.width;
-    double _cardHeight = _height * 0.72;
-    double _cardWidth = _width * 0.92;
 
     final color = this.widget.color ?? Theme.of(context).backgroundColor;
     final shadowColor = this.widget.color ?? Theme.of(context).accentColor;
-    final shape = this.widget.shape == "iconButton"? _height * 0.01 : _height * 0.015;
-    final round = this.widget.shape == "iconButton"? 1.1 : 10.0;
+    final shape = this.widget.shape == "iconButton"? _width * 0.015 : _width * 0.03;
+    final round = this.widget.shape == "iconButton"? 1 : 10.0;
 
     return Listener(
       onPointerDown: _onPointerDown,

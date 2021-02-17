@@ -190,26 +190,27 @@ class _WriteCardPage extends State<WriteCardPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.only(top: statusBarHeight),
+        padding: EdgeInsets.only(top: _height*0.03+ statusBarHeight, bottom: _height*0.03, left: _width *0.05, right : _width * 0.05),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // 상단 아이콘 생성
                   NeumorphicContainer(
                     child: GestureDetector(
-                      child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                      onTap: () => Navigator.pop(context),
+                      child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white, size:_width * 0.06),
+                      onTap: () => {
+                        FocusScope.of(context).unfocus(),
+                        Navigator.pop(context)},
                     ),
                     shape: "iconButton",
                   ),
                   NeumorphicContainer(
                     child: GestureDetector(
-                      child: Icon(Icons.check_rounded, color: Colors.white),
+                      child: Icon(Icons.check_rounded, color: Colors.white, size:_width * 0.06),
                       onTap: () => {
                         // card add function
                         saveForm(),
@@ -221,107 +222,112 @@ class _WriteCardPage extends State<WriteCardPage> {
                 ],
               ),
             ),
-            Center(
-              // 메인 카드 앞면
-              child: FlipCard(
-                direction: FlipDirection.HORIZONTAL, // default
-                front: Container(
-                  padding: EdgeInsets.all(16.0),
-                  width: _cardWidth,
-                  height: _cardHeight,
-                  // 이미지가 있을 때 없을 때
-                  child: _diary.image != ''
-                      ? Center(
-                    child: Column(
-                      children: [
-                        Container(
-                          width: _innerImageWidth,
-                          height: _innerImageHeight,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              // 이미지 full cover
-                              image: FileImage(File(_diary.image)), // 카드가 될 이미지
-                              fit: BoxFit.cover,
+            Container(
+              child:  Center(
+                // 메인 카드 앞면
+                child: FlipCard(
+                  direction: FlipDirection.HORIZONTAL, // default
+                  front: Container(
+                    padding: EdgeInsets.all(_cardHeight*0.02),
+                    width: _cardWidth,
+                    height: _cardHeight,
+                    // 이미지가 있을 때 없을 때
+                    child: _diary.image != ''
+                        ? Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: _innerImageWidth,
+                            height: _innerImageHeight,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                // 이미지 full cover
+                                image: FileImage(File(_diary.image)), // 카드가 될 이미지
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
+                          SizedBox(
+                            height: _cardHeight*0.05,
+                          ),
+                          Text(_diary.title)
+                        ],
+                      ),
+                    )
+                        : Center(
+                      child: SvgPicture.asset(
+                        'assets/icons/'+_emptyImage,
+                        width: 150,
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: _diary.image != '' ? Colors.white : Theme.of(context).highlightColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).accentColor.withOpacity(0.4),
+                          offset: Offset(5.0, 5.0),
+                          blurRadius: 10.0,
+                          spreadRadius: 1.0,
                         ),
-                        SizedBox(
-                          height: _cardHeight*0.05,
-                        ),
-                        Text(_diary.title)
                       ],
                     ),
-                  )
-                      : Center(
-                    child: SvgPicture.asset(
-                      'assets/icons/'+_emptyImage,
-                      width: 150,
-                    ),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: _diary.image != '' ? Colors.white : Theme.of(context).highlightColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4),
-                        offset: Offset(5.0, 5.0),
-                        blurRadius: 10.0,
-                        spreadRadius: 1.0,
-                      ),
-                    ],
-                  ),
-                ),
-                back: Container(
-                  // 메인 카드 뒷면
-                  width: _cardWidth,
-                  height: _cardHeight,
+                  back: Container(
+                    // 메인 카드 뒷면
+                    width: _cardWidth,
+                    height: _cardHeight,
                   child: Form(
                     key: _form,
                     child: Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
+                      padding: EdgeInsets.all(_cardHeight*0.04),
                       child: Column(children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: _cardHeight*0.005),
-                              // 카드 입력(날짜)
-                              InkWell(
-                                child: Text(
-                                  '${_currentDateTime.year}. ${_currentDateTime.month}. ${_currentDateTime.day}.',
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor), textAlign: TextAlign.left,
+                        Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //SizedBox(height: _cardHeight*0.005),
+                                // 카드 입력(날짜)
+                                InkWell(
+                                  child: Text(
+                                    '${_currentDateTime.year}. ${_currentDateTime.month}. ${_currentDateTime.day}.',
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor), textAlign: TextAlign.left,
+                                  ),
+                                  onTap: () => _showPicker(), // date picker widget
                                 ),
-                                onTap: () => _showPicker(), // date picker widget
-                              ),
-
-                              SizedBox(height: _cardHeight*0.005),
-                              TextFormField(
-                                initialValue : _isEdit? _diary.title: "",
-                                inputFormatters: [LengthLimitingTextInputFormatter(40),],
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    hintText: '제목을 입력해 주세요'
+                                //SizedBox(height: _cardHeight*0.005),
+                                TextFormField(
+                                  initialValue : _isEdit? _diary.title: "",
+                                  inputFormatters: [LengthLimitingTextInputFormatter(40),],
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      border: InputBorder.none,
+                                      hintText: '제목을 입력해 주세요'
+                                  ),
+                                  onFieldSubmitted: (_){
+                                    FocusScope.of(context).requestFocus(_contentFocusNode);
+                                  },
+                                  onSaved: (value){
+                                    _diary.title = value;
+                                  },
                                 ),
-                                onFieldSubmitted: (_){
-                                  FocusScope.of(context).requestFocus(_contentFocusNode);
-                                },
-                                onSaved: (value){
-                                  _diary.title = value;
-                                },
-                              ),
-                              SizedBox(height: _cardHeight*0.01),
-                            ],
+                                SizedBox(height: _cardHeight*0.01),
+                              ],
+                            ),
                           ),
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.53,
+                          height: (_cardHeight - _cardHeight * 0.08) - 85,
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(10),
                             child: TextFormField(
                               initialValue : _isEdit? _diary.contents: "",
                               maxLines: 16,
@@ -346,38 +352,36 @@ class _WriteCardPage extends State<WriteCardPage> {
                       ]),
                     ),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4),
-                        offset: Offset(5.0, 5.0),
-                        blurRadius: 10.0,
-                        spreadRadius: 1.0,
-                      ),
-                    ],
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).accentColor.withOpacity(0.4),
+                          offset: Offset(5.0, 5.0),
+                          blurRadius: 10.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
             Container(
-              //height : _height * 14,
-              margin: const EdgeInsets.only(top: 25, bottom:30, left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   NeumorphicContainer(
                     child: IconButton(
-                      icon: Icon(Icons.add_rounded),
-                      iconSize: 40,
+                      icon: Icon(Icons.camera_alt),
+                      iconSize: _width * 0.09,
                       color: Colors.white,
                       onPressed: () => {
                         // image 가져오기
                         setState(() {
                           getImage(ImageSource.gallery);
                           _diary.image = this.image_file;
-                          print("SDFSDFSDFSD: "+ _diary.image);
                         })
                       },
                     ),
@@ -486,7 +490,6 @@ class _WriteCardPage extends State<WriteCardPage> {
                 ],
               ),
             ),
-
           ],
         ),
       ),

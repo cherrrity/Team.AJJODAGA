@@ -151,8 +151,11 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    final height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - (statusBarHeight * 2);
+    double _width = MediaQuery.of(context).size.width;
+    double _cardHeight = _height * 0.72;
+    double _cardWidth = _width * 0.9;
 
     return Scaffold(
       body: SafeArea(
@@ -160,41 +163,36 @@ class _MyHomePageState extends State<MyHomePage>
           children: [
             // 설정
             Container(
-              height: height * 0.09,
-              padding: EdgeInsets.fromLTRB(20.0, 20.0, 0, 0),
+              padding: EdgeInsets.only(top: statusBarHeight, bottom: _height*0.03, left: _width *0.05, right : _width * 0.05),
               alignment: Alignment.topLeft,
               child: NeumorphicContainer(
                 child: GestureDetector(
-                  child: Icon(Icons.settings, color: Colors.white),
+                  child: Icon(Icons.settings, color: Colors.white, size:_width * 0.06),
                   onTap: () => Navigator.pushNamed(context, '/setting'),
                 ),
                 shape: "iconButton",
               ),
             ),
             Container(
-              height: height * 0.78,
+              height: _height * 0.78,
               child: SimpleGestureDetector(
                 onHorizontalSwipe: _onHorizontalSwipe,
                 child: _datesView(),
               ),
             ),
-            // 추가
-            Container(
-              height: height * 0.13,
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 20.0, 20.0),
-              alignment: Alignment.bottomRight,
-              child: NeumorphicContainer(
-                child: GestureDetector(
-                  child: IconButton(
-                    icon: Icon(Icons.add, color: Colors.white),
-                    iconSize: 30.0,
-                    onPressed: () => _navigateAndDisplaySelection(context),
-                  ),
-                ),
-                shape: "add",
-              ),
-            ),
           ],
+        ),
+      ),
+      floatingActionButton: Container(
+        padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
+        child: NeumorphicContainer(
+          child: IconButton(
+            icon: Icon(Icons.add_rounded),
+            iconSize: _width * 0.09,
+            color: Colors.white,
+            onPressed: () => _navigateAndDisplaySelection(context),
+          ),
+          shape: "add",
         ),
       ),
     );

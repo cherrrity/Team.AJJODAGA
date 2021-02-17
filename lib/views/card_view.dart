@@ -1,18 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/services.dart';
-
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 import 'package:project_moonhwadiary/widget/card.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
-
-import 'package:project_moonhwadiary/modules/HorizontalList.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 //DB
 import 'package:project_moonhwadiary/DB/DBHelp.dart';
@@ -62,7 +56,6 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     _date = ModalRoute.of(context).settings.arguments;
   }
 
-
   Future<List<Diary>> _getDiaries(String date) async {
     // 날짜 수정
     _diaries = await DBHelper().selectDiary("2021-02-17");
@@ -76,7 +69,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     double _height = MediaQuery.of(context).size.height - (statusBarHeight * 2);
     double _width = MediaQuery.of(context).size.width;
     double _cardHeight = _height * 0.72;
-    double _cardWidth = _width * 0.92;
+    double _cardWidth = _width * 0.9;
 
     // TODO: implement build
     return FutureBuilder(
@@ -84,21 +77,21 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
       builder: (context, snapshot){
         return Scaffold(
           body: Padding(
-            padding: EdgeInsets.only(top: statusBarHeight),
+            padding: EdgeInsets.only(top: _height * 0.03 + statusBarHeight, bottom: _height * 0.03, ),
             child:  Stack(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                //DynamicHorizontalList(diaries: snapshot.data),
-                cardView(snapshot.data),
                 Container(
-                  margin: const EdgeInsets.only(top: 20, bottom:20, left: 20, right: 20),
+                  child: cardView(snapshot.data),
+                ),
+                Container(
+                  padding : EdgeInsets.only(left: _width * 0.05, right : _width * 0.05),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // 상단 아이콘 생성
                       NeumorphicContainer(
                         child: GestureDetector(
-                          child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                          child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white, size:_width * 0.06),
                           onTap: () => Navigator.pop(context),
                         ),
                         shape: "iconButton",
@@ -106,6 +99,87 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
                     ],
                   ),
                 ),
+                diaries.isNotEmpty ? Positioned(
+                  bottom: _height * 0.01,
+                  left: (_width/2) - (230/2),
+                  child:  Container(
+                    width: 230,
+                    child: Row(
+                      children: [
+                        ColorFiltered(
+                          colorFilter: diaries[_focusedIndex].feel == 1
+                              ? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          )
+                              : ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-3.png',
+                            width: 30,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ColorFiltered(
+                          colorFilter: diaries[_focusedIndex].feel == 2
+                              ? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          )
+                              : ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-4.png',
+                            width: 30,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ColorFiltered(
+                          colorFilter: diaries[_focusedIndex].feel == 3
+                              ? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          )
+                              : ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-13.png',
+                            width: 30,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ColorFiltered(
+                          colorFilter: diaries[_focusedIndex].feel == 4
+                              ? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          )
+                              : ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-10.png',
+                            width: 30,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ColorFiltered(
+                          colorFilter: diaries[_focusedIndex].feel == 5
+                              ? ColorFilter.mode(
+                            Colors.transparent,
+                            BlendMode.multiply,
+                          )
+                              : ColorFilter.matrix(grayScale),
+                          child: Image.asset(
+                            'assets/emoji/emoji-2.png',
+                            width: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+                    padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      color: const Color(0xfffafafa),
+                    ),
+                  ),
+                ) : Text(""),
               ],
             ),
           ),
@@ -117,110 +191,18 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   Widget cardView(List<Diary> list) {
     buildListItem(list);
 
-    return Stack(
-      children: <Widget>[
-        diaries.isNotEmpty?
-        PageView(
-          children: cards,
-          controller: _pageController,
-          scrollDirection: Axis.horizontal,
-          onPageChanged: _onItemChange,
-        )
-            : Center(
-          child: Text(
-            "더 이상 일기가 없어요😥",
-            style: TextStyle(fontSize: 16),
-          ),
+    return  Container (
+        padding: EdgeInsets.zero,
+        child: diaries.isNotEmpty?
+            PageView(
+              children: cards,
+              controller: _pageController,
+              scrollDirection: Axis.horizontal,
+              onPageChanged: _onItemChange,
+            ) : Text(
+          "더 이상 일기가 없어요 😥",
+          style: TextStyle(fontSize: 16),
         ),
-        diaries.isNotEmpty
-            ? Positioned(
-          bottom: MediaQuery
-              .of(context)
-              .size
-              .height * 0.05,
-          left: MediaQuery
-              .of(context)
-              .size
-              .width * 0.2,
-          child: Container(
-            width: 230,
-            child: Row(
-              children: [
-                ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 1
-                      ? ColorFilter.mode(
-                    Colors.transparent,
-                    BlendMode.multiply,
-                  )
-                      : ColorFilter.matrix(grayScale),
-                  child: Image.asset(
-                    'assets/emoji/emoji-3.png',
-                    width: 30,
-                  ),
-                ),
-                SizedBox(width: 10),
-                ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 2
-                      ? ColorFilter.mode(
-                    Colors.transparent,
-                    BlendMode.multiply,
-                  )
-                      : ColorFilter.matrix(grayScale),
-                  child: Image.asset(
-                    'assets/emoji/emoji-4.png',
-                    width: 30,
-                  ),
-                ),
-                SizedBox(width: 10),
-                ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 3
-                      ? ColorFilter.mode(
-                    Colors.transparent,
-                    BlendMode.multiply,
-                  )
-                      : ColorFilter.matrix(grayScale),
-                  child: Image.asset(
-                    'assets/emoji/emoji-13.png',
-                    width: 30,
-                  ),
-                ),
-                SizedBox(width: 10),
-                ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 4
-                      ? ColorFilter.mode(
-                    Colors.transparent,
-                    BlendMode.multiply,
-                  )
-                      : ColorFilter.matrix(grayScale),
-                  child: Image.asset(
-                    'assets/emoji/emoji-10.png',
-                    width: 30,
-                  ),
-                ),
-                SizedBox(width: 10),
-                ColorFiltered(
-                  colorFilter: diaries[_focusedIndex].feel == 5
-                      ? ColorFilter.mode(
-                    Colors.transparent,
-                    BlendMode.multiply,
-                  )
-                      : ColorFilter.matrix(grayScale),
-                  child: Image.asset(
-                    'assets/emoji/emoji-2.png',
-                    width: 30,
-                  ),
-                ),
-              ],
-            ),
-            padding:
-            const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: const Color(0xfffafafa),
-            ),
-          ),
-        ) : Text(""),
-      ],
     );
   }
 
@@ -345,6 +327,5 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     }
     return cards;
   }
-
 
 }
