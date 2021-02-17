@@ -4,7 +4,7 @@ import 'package:project_moonhwadiary/models/diary.dart';
 
 import 'package:project_moonhwadiary/widget/theme.dart';
 
-Widget pocket(List<Diary> diaries, BuildContext context){
+Widget pocket(int year, int month, List<Diary> diaries, BuildContext context){
   List<int> dates = diaries.map((m) => m.dateTime.day).toList();
   List<int> satisfactions = diaries.map((m) => m.feel).toList();
 
@@ -52,6 +52,7 @@ Widget pocket(List<Diary> diaries, BuildContext context){
       final _date = newList[index][0];
       final _satisfaction = newList[index][1];
       final _cnt = newList[index][2];
+      DateTime _currentDateTime;
       return Stack(
         children: [
           // 포켓 뒷 배경
@@ -125,9 +126,9 @@ Widget pocket(List<Diary> diaries, BuildContext context){
           // 포켓 클릭 시
           GestureDetector(
             onTap: () {
-              print('$_date');
-              // 년 월 일로 넘겨야 검색하기 편할 것 같아요
-              Navigator.pushNamed(context, '/card', arguments: '$_date');
+              print('$year, $month, $_date');
+              _currentDateTime = DateTime(year, month, _date);
+              Navigator.pushNamed(context, '/card', arguments: '$_currentDateTime');
             },
           ),
         ],

@@ -133,15 +133,15 @@ class _WriteCardPage extends State<WriteCardPage> {
   void _showPicker() {
     DatePicker.showDatePicker(
       context,
-      locale: 'ko',
+      locale: DateTimePickerLocale.ko,
       dateFormat: 'yyyy-MM-dd',
       initialDateTime: _currentDateTime,
       minDateTime: DateTime(2000),
       maxDateTime: DateTime.now(),
-      onConfirm2: (dateTime, List<int> index) {
+      onConfirm: (dateTime, List<int> index) {
         setState(() {
           _currentDateTime = dateTime;
-          _diary.dateTime = _currentDateTime;
+          _diary.dateTime = dateTime;
         });
       },
     );
