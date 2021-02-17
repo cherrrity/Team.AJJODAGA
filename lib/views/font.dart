@@ -119,7 +119,7 @@ class FontState extends State<Font> {
                           });
                         },
                       ),
-                      RadioListTile(title: Text('배찌', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Bazzi'),),
+                      RadioListTile(title: Text('넥슨 배찌체', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Bazzi'),),
                         value: Fonts.bazzi, groupValue: _fonts, activeColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.trailing,
                         onChanged: (value) {
@@ -130,7 +130,7 @@ class FontState extends State<Font> {
                           });
                         },
                       ),
-                      RadioListTile(title: Text('카페24', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Cafe24'),),
+                      RadioListTile(title: Text('카페24 고운밤', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Cafe24'),),
                         value: Fonts.cafe24, groupValue: _fonts, activeColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.trailing,
                         onChanged: (value) {
@@ -141,7 +141,7 @@ class FontState extends State<Font> {
                           });
                         },
                       ),
-                      RadioListTile(title: Text('수진', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Soojin'),),
+                      RadioListTile(title: Text('아임크리수진체', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Soojin'),),
                         value: Fonts.soojin, groupValue: _fonts, activeColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.trailing,
                         onChanged: (value) {
