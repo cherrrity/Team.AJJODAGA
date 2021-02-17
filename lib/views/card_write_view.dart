@@ -312,6 +312,9 @@ class _WriteCardPage extends State<WriteCardPage> {
                                   onFieldSubmitted: (_){
                                     FocusScope.of(context).requestFocus(_contentFocusNode);
                                   },
+                                  onChanged: (value){
+                                    _diary.title = value;
+                                  },
                                   onSaved: (value){
                                     _diary.title = value;
                                   },
