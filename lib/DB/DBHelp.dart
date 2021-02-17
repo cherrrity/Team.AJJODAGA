@@ -47,8 +47,6 @@ class DBHelper {
       diary.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-    print("insertDiary : " + res.toString());
   }
 
 
@@ -65,8 +63,6 @@ class DBHelper {
       // Diary의 dateTime를 whereArg로 넘겨 SQL injection을 방지합니다.
       whereArgs: [diary.no], //
     );
-
-    print("updateDiary : " + res.toString());
   }
 
 
@@ -81,8 +77,6 @@ class DBHelper {
       // Diary의 dateTime를 where의 인자로 넘겨 SQL injection을 방지합니다.
       whereArgs: [no],
     );
-
-    print("deleteDiary : " + res.toString());
   }
 
   Future<List<Diary>> selectDiary(String date) async {
@@ -91,8 +85,6 @@ class DBHelper {
     // 모든 Diary를 얻기 위해 테이블에 질의합니다.
     final List<Map<String, dynamic>> maps =
     await db.query('diaries', where: 'datetime = ?', whereArgs: [date]);
-
-    print("selectDiary: "+ maps.toString());
 
     // List<Map<String, dynamic>를 List<Diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
@@ -112,9 +104,6 @@ class DBHelper {
 
     //월별 검색
     final List<Map<String, dynamic>> maps = await db.query('diaries', where:"strftime('%Y-%m', datetime) = '${date}'" );
-    print(date);
-
-    print("dateSelect : "+ maps.toString());
 
     // List<Map<String, dynamic>를 List<diary>으로 변환합니다.
     return List.generate(maps.length, (i) {
@@ -134,7 +123,6 @@ class DBHelper {
 
     // 데이터베이스에서 Diary를 삭제합니다.
     int count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM diaries'));
-    print("count : " + count.toString());
 
     return count;
   }
@@ -148,8 +136,6 @@ class DBHelper {
 
     // 전체 검색
     final List<Map<String, dynamic>> maps = await db.query('diaries');
-
-    print("selecAlltDiary : "+ maps.toString());
 
     // List<Map<String, dynamic>를 List<diary>으로 변환합니다.
     return List.generate(maps.length, (i) {

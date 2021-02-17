@@ -39,7 +39,6 @@ class _CardState extends State<PhotoCard>{
   void initState() {
     super.initState();
     diary = widget.diary;
-    print(diary.image);
     _emptyImage = widget.emptyImage;
   }
 

@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.project_moonhwadiary">
+    package="com.ajjodaga.project_moonhwadiary">
    <application
-        android:label="project_moonhwadiary"
-        android:icon="@mipmap/ic_icon">
+       android:name="io.flutter.app.FlutterApplication"
+        android:label="문화일기"
+        android:icon="@mipmap/ic_icon"
+       >
 
         <activity
             android:name=".MainActivity"
@@ -41,4 +43,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

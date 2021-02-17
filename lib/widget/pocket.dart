@@ -127,7 +127,6 @@ Widget pocket(int year, int month, List<Diary> diaries, BuildContext context){
           // 포켓 클릭 시
           GestureDetector(
             onTap: () {
-              print('$year, $month, $_date');
               _currentDateTime = DateFormat('yyyy-MM-dd').format(DateTime(year, month, _date));
               Navigator.pushNamed(context, '/card', arguments: '$_currentDateTime');
             },

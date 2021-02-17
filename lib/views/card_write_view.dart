@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:io';
 
-import 'package:crypto/crypto.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,7 +60,6 @@ class _WriteCardPage extends State<WriteCardPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print("didChange");
     var arg = ModalRoute.of(context).settings.arguments;
     if(arg != null) {
       _diary = arg;

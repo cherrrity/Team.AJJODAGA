@@ -10,8 +10,6 @@ class ThemeController extends ChangeNotifier {
     // load theme from preferences on initialization
     _currentTheme = _prefs.getString(themePrefKey) ?? 'pink';
     _currentFont = _prefs.getString(fontPrefKey) ?? 'NanumGothic';
-
-    print(_currentTheme+" / "+_currentFont);
   }
 
   final SharedPreferences _prefs;

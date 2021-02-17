@@ -42,8 +42,6 @@ class FontState extends State<Font> {
     double _width = MediaQuery.of(context).size.width;
     double _cardHeight = _height * 0.72;
     double _cardWidth = _width * 0.9;
-    double _innerImageHeight = _cardHeight * 0.83;
-    double _innerImageWidth = _cardWidth * 0.95;
 
     return Scaffold(
       body: Padding(

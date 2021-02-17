@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:project_moonhwadiary/widget/card.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 
 //DB
 import 'package:project_moonhwadiary/DB/DBHelp.dart';
@@ -46,7 +45,6 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
     _pageController = new PageController();
-    _date = "2021-02-15";
   }
 
   @override
@@ -57,8 +55,6 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   }
 
   Future<List<Diary>> _getDiaries(String date) async {
-
-    print(date);
     // 날짜 수정
     _diaries = await DBHelper().selectDiary(date);
     return _diaries;
@@ -215,7 +211,6 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   }
 
   _onItemDelete() async{
-    print("delete");
     var delete_index = _focusedIndex;
 
     if (diaries.isNotEmpty) {
@@ -311,14 +306,12 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   }
 
   List<Widget> buildListItem(List<Diary> _list){
-    print("builder");
     Widget item;
     String emptyImage;
     if(!_checkOnce){
       diaries = _list;
       for(int i = 0; i < _list.length; i++){
         emptyImage = _initImages();
-        print("image : " + emptyImage);
         item = Container(
           child: PhotoCard(_list[i], _onItemDelete, i, emptyImage),
           //child: PhotoCard(diaries[index]),

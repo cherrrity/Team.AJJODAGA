@@ -41,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       end: 1.0,
     ).animate(_curve);
     _animation.addStatusListener((status) {
-      print("status " + status.toString());
       if(_once == 0){
         if (status == AnimationStatus.completed) _controller.reverse();
         else if (status == AnimationStatus.dismissed) _controller.forward();

@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_moonhwadiary/views/font.dart';
-// import 'package:project_moonhwadiary/views/neumorphicContainer.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
-import 'package:project_moonhwadiary/views/theme.dart';
-
-import 'package:project_moonhwadiary/DB/ThemeController.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -14,8 +9,6 @@ class Settings extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width;
     double _cardHeight = _height * 0.72;
     double _cardWidth = _width * 0.9;
-    double _innerImageHeight = _cardHeight * 0.83;
-    double _innerImageWidth = _cardWidth * 0.95;
 
     return Scaffold(
       body: Padding(

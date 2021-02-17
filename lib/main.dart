@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:project_moonhwadiary/DB/ThemeController.dart';
-import 'package:project_moonhwadiary/widget/theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
-import 'dart:convert';
-import 'package:intl/intl.dart';
 
 // 라우터
 import 'package:project_moonhwadiary/router/routers.dart';
@@ -15,8 +11,12 @@ import 'package:project_moonhwadiary/router/routers.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 import 'package:project_moonhwadiary/widget/pocket.dart';
 import 'package:project_moonhwadiary/modules/NeumorphicContainer.dart';
-import 'package:project_moonhwadiary/DB/ThemeController.dart';
+import 'package:project_moonhwadiary/widget/theme.dart';
+
+// DB
 import 'package:project_moonhwadiary/DB/DBHelp.dart';
+import 'package:project_moonhwadiary/DB/ThemeController.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,14 +45,8 @@ class MyAppState extends State<MyApp> {
   ThemeController _themeController;
 
   String _fontName = 'NanumGothic';
-  Color _backColor = Color(0xffFFDBDB);
-  Color _btnColor = Color(0xffFEC4C4);
-  Color _shadowColor = Color(0xFFD8A7A7);
 
   set fontName(String value) => setState(() => _fontName = value);
-  set backColor(Color value) => setState(() => _backColor = value);
-  set btnColor(Color value) => setState(() => _btnColor = value);
-  set shadowColor(Color value) => setState(() => _shadowColor = value);
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
     final date = DateTime.now();
     _currentDateTime = DateTime(date.year, date.month);
-    print("main init");
   }
 
   @override
@@ -154,8 +147,6 @@ class _MyHomePageState extends State<MyHomePage>
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     double _height = MediaQuery.of(context).size.height - (statusBarHeight * 2);
     double _width = MediaQuery.of(context).size.width;
-    double _cardHeight = _height * 0.72;
-    double _cardWidth = _width * 0.9;
 
     return Scaffold(
       body: SafeArea(
