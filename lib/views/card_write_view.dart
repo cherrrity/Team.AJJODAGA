@@ -251,7 +251,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                           SizedBox(
                             height: _cardHeight*0.05,
                           ),
-                          Text(_diary.title)
+                          _diary.title == '' ? Text("제목을 입력하시면 표시됩니다!", style: TextStyle(fontSize: 18),) :  Text(_diary.title, style: TextStyle(fontSize: 18),)
                         ],
                       ),
                     )
@@ -305,7 +305,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                                 TextFormField(
                                   initialValue : _isEdit? _diary.title: "",
                                   inputFormatters: [LengthLimitingTextInputFormatter(40),],
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
                                   decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
                                       border: InputBorder.none,
@@ -329,6 +329,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                           child: Padding(
                             padding: EdgeInsets.all(10),
                             child: TextFormField(
+                              inputFormatters: [LengthLimitingTextInputFormatter(200),],
                               initialValue : _isEdit? _diary.contents: "",
                               maxLines: 16,
                               style: TextStyle(fontSize: 16),

@@ -86,7 +86,7 @@ class _CardState extends State<PhotoCard>{
                         SizedBox(
                           height: _cardHeight*0.05,
                         ),
-                        Text(diary.title)
+                        Text(diary.title, style: TextStyle(fontSize: 18),)
                       ],
                     ),
                   )
@@ -132,7 +132,7 @@ class _CardState extends State<PhotoCard>{
                           SizedBox(height: _cardHeight*0.01),
                           Text(
                             diary.title,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87, letterSpacing: 1),
                           ),
                           SizedBox(height: _cardHeight*0.01),
                         ],
@@ -143,10 +143,7 @@ class _CardState extends State<PhotoCard>{
                     height: (_cardHeight - _cardHeight * 0.08) - 135,
                     width: _cardWidth,
                     child: OverflowBox(
-                      child:  Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text(diary.contents, style: TextStyle(fontSize: 16, height: 1.35),  textAlign: TextAlign.left,)
-                      ),
+                      child:  Text(diary.contents, style: TextStyle(fontSize: 16, height: 1.35, letterSpacing: 1),  textAlign: TextAlign.left,)
                     ),
                   ),
                   Container(

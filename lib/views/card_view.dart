@@ -203,7 +203,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
               onPageChanged: _onItemChange,
             ) : Text(
           "더 이상 일기가 없어요 😥",
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 17),
         ),
     );
   }
