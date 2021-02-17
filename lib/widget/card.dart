@@ -116,10 +116,10 @@ class _CardState extends State<PhotoCard>{
             child: Padding(
               padding: EdgeInsets.all(_cardHeight*0.04),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    height: 80,
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Column(
@@ -134,7 +134,7 @@ class _CardState extends State<PhotoCard>{
                             diary.title,
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87, letterSpacing: 1),
                           ),
-                          SizedBox(height: _cardHeight*0.01),
+                          SizedBox(height: _cardHeight*0.02),
                         ],
                       ),
                     ),

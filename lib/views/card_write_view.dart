@@ -282,11 +282,9 @@ class _WriteCardPage extends State<WriteCardPage> {
                     key: _form,
                     child: Padding(
                       padding: EdgeInsets.all(_cardHeight*0.04),
-                      child: Column(children: [
+                      child: Column(
+                        children: [
                         Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                          ),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Column(
@@ -318,7 +316,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                                     _diary.title = value;
                                   },
                                 ),
-                                SizedBox(height: _cardHeight*0.01),
+                                SizedBox(height: _cardHeight*0.02),
                               ],
                             ),
                           ),
