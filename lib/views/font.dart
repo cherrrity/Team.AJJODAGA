@@ -3,7 +3,7 @@ import 'package:project_moonhwadiary/DB/ThemeController.dart';
 import 'package:project_moonhwadiary/main.dart';
 import 'package:project_moonhwadiary/modules/neumorphicContainer.dart';
 
-enum Fonts { nanumGothic, nanumSehwa, nanumDaheong, bazzi, cafe24, soojin, mapo, nanumBareunhiphi, nanumFighting, LocusSangsang, RixTodayCartoon, UNGothicUni, NeoDungenmoPro }
+enum Fonts { nanumGothic, nanumSehwa, nanumDaheong, bazzi, cafe24, soojin, nanumBareunhiphi, nanumFighting, LocusSangsang, RixTodayCartoon, UNGothicUni, NeoDungenmoPro }
 
 class Font extends StatefulWidget {
   // const Font({Key key}) : super(key: key);
@@ -27,7 +27,7 @@ class FontState extends State<Font> {
         case "Bazzi" : _fonts = Fonts.bazzi; break;
         case "Cafe24" : _fonts = Fonts.cafe24; break;
         case "Soojin" : _fonts = Fonts.soojin; break;
-        case "Mapo" : _fonts = Fonts.mapo; break;
+        //case "Mapo" : _fonts = Fonts.mapo; break;
         case "NanumBareunhiphi" : _fonts = Fonts.nanumBareunhiphi; break;
         case "LocusSangsang" : _fonts = Fonts.LocusSangsang; break;
         case "RixTodayCartoon" : _fonts = Fonts.RixTodayCartoon; break;
@@ -168,18 +168,6 @@ class FontState extends State<Font> {
                             _fonts = value;
                             print('수진');
                             MyApp.of(context).fontName = "Soojin";
-                          });
-                        },
-                      ),
-                      RadioListTile(title: Text('마포', style: TextStyle(color: const Color(0xff393939), fontSize: 18.0, fontFamily: 'Mapo'),),
-                        value: Fonts.mapo, groupValue: _fonts, activeColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        onChanged: (value) {
-                          setState(() {
-                            ThemeController.of(context).setFont('Mapo');
-                            _fonts = value;
-                            print('마포');
-                            MyApp.of(context).fontName = "Mapo";
                           });
                         },
                       ),
