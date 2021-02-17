@@ -134,7 +134,7 @@ class _WriteCardPage extends State<WriteCardPage> {
     DatePicker.showDatePicker(
       context,
       locale: DateTimePickerLocale.ko,
-      dateFormat: 'yyyy-MM',
+      dateFormat: 'yyyy-MM-dd',
       initialDateTime: _currentDateTime,
       minDateTime: DateTime(2000),
       maxDateTime: DateTime.now(),
