@@ -10,6 +10,12 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - (statusBarHeight * 2);
+    double _width = MediaQuery.of(context).size.width;
+    double _cardHeight = _height * 0.72;
+    double _cardWidth = _width * 0.9;
+    double _innerImageHeight = _cardHeight * 0.83;
+    double _innerImageWidth = _cardWidth * 0.95;
 
     return Scaffold(
       body: Padding(
@@ -26,7 +32,7 @@ class Settings extends StatelessWidget {
                       child: NeumorphicContainer(
                         child: GestureDetector(
                           child: Icon(Icons.arrow_back_ios_rounded,
-                              color: Colors.white),
+                              color: Colors.white, size:_width * 0.06),
                           onTap: () => Navigator.pop(context),
                         ),
                         shape: "iconButton",
@@ -62,7 +68,7 @@ class Settings extends StatelessWidget {
                       trailing: NeumorphicContainer(
                         child: GestureDetector(
                           child: Icon(Icons.arrow_forward_ios_rounded,
-                              color: Colors.white),
+                              color: Colors.white, size:_width * 0.06),
                           onTap: () =>
                               Navigator.pushNamed(context, '/setting_font'),
                         ),
@@ -82,7 +88,7 @@ class Settings extends StatelessWidget {
                       trailing: NeumorphicContainer(
                         child: GestureDetector(
                           child: Icon(Icons.arrow_forward_ios_rounded,
-                              color: Colors.white),
+                              color: Colors.white, size:_width * 0.06),
                           onTap: () =>
                               Navigator.pushNamed(context, '/setting_theme'),
                         ),
