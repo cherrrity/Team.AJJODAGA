@@ -57,8 +57,10 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   }
 
   Future<List<Diary>> _getDiaries(String date) async {
+
+    print(date);
     // 날짜 수정
-    _diaries = await DBHelper().selectDiary("2021-02-17");
+    _diaries = await DBHelper().selectDiary(date);
     return _diaries;
   }
 
@@ -191,8 +193,8 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   Widget cardView(List<Diary> list) {
     buildListItem(list);
 
-    return  Container (
-        padding: EdgeInsets.zero,
+    return  Center (
+        //padding: EdgeInsets.zero,
         child: diaries.isNotEmpty?
             PageView(
               children: cards,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:project_moonhwadiary/main.dart';
 import 'package:project_moonhwadiary/models/diary.dart';
 
@@ -52,7 +53,7 @@ Widget pocket(int year, int month, List<Diary> diaries, BuildContext context){
       final _date = newList[index][0];
       final _satisfaction = newList[index][1];
       final _cnt = newList[index][2];
-      DateTime _currentDateTime;
+      String _currentDateTime;
       return Stack(
         children: [
           // 포켓 뒷 배경
@@ -127,7 +128,7 @@ Widget pocket(int year, int month, List<Diary> diaries, BuildContext context){
           GestureDetector(
             onTap: () {
               print('$year, $month, $_date');
-              _currentDateTime = DateTime(year, month, _date);
+              _currentDateTime = DateFormat('yyyy-MM-dd').format(DateTime(year, month, _date));
               Navigator.pushNamed(context, '/card', arguments: '$_currentDateTime');
             },
           ),
