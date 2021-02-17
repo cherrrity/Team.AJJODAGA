@@ -3,7 +3,7 @@ import 'package:project_moonhwadiary/DB/ThemeController.dart';
 import 'package:project_moonhwadiary/main.dart';
 import 'package:project_moonhwadiary/modules/neumorphicContainer.dart';
 
-enum Fonts { nanumGothic, nanumSehwa, nanumDaheong, bazzi, cafe24, soojin, nanumBareunhiphi, nanumFighting, LocusSangsang, RixTodayCartoon, UNGothicUni, NeoDungenmoPro }
+enum Fonts { nanumGothic, nanumDaheong, bazzi, cafe24, soojin, nanumBareunhiphi, nanumFighting, LocusSangsang, RixTodayCartoon, UNGothicUni, NeoDungenmoPro }
 
 class Font extends StatefulWidget {
   // const Font({Key key}) : super(key: key);
@@ -22,12 +22,10 @@ class FontState extends State<Font> {
     setState(() {
       switch(MyApp.of(context).widget.themeController.currentFont){
         case "NanumGothic" : _fonts = Fonts.nanumGothic; break;
-        case "NanumSehwa" : _fonts = Fonts.nanumSehwa; break;
         case "NanumDaheong" : _fonts = Fonts.nanumDaheong; break;
         case "Bazzi" : _fonts = Fonts.bazzi; break;
         case "Cafe24" : _fonts = Fonts.cafe24; break;
         case "Soojin" : _fonts = Fonts.soojin; break;
-        //case "Mapo" : _fonts = Fonts.mapo; break;
         case "NanumBareunhiphi" : _fonts = Fonts.nanumBareunhiphi; break;
         case "LocusSangsang" : _fonts = Fonts.LocusSangsang; break;
         case "RixTodayCartoon" : _fonts = Fonts.RixTodayCartoon; break;
@@ -108,18 +106,6 @@ class FontState extends State<Font> {
                             _fonts = value;
                             print('고딕');
                             MyApp.of(context).fontName = "NanumGothic";
-                          });
-                        },
-                      ),
-                      RadioListTile(title: Text('나눔손글씨 세화체', style: TextStyle(color: const Color(0xff393939), fontSize: 24.0, fontFamily: 'NanumSehwa'),),
-                        value: Fonts.nanumSehwa, groupValue: _fonts, activeColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        onChanged: (value) {
-                          setState(() {
-                            ThemeController.of(context).setFont('NanumSehwa');
-                            _fonts = value;
-                            print('세화');
-                            MyApp.of(context).fontName = "NanumSehwa";
                           });
                         },
                       ),

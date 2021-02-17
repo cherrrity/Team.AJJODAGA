@@ -139,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage>
     }
   }
 
+
   void _onHorizontalSwipe(SwipeDirection direction) {
     setState(() {
       if (direction == SwipeDirection.left) {

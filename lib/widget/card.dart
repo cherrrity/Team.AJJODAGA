@@ -143,7 +143,7 @@ class _CardState extends State<PhotoCard>{
                     height: (_cardHeight - _cardHeight * 0.08) - 135,
                     width: _cardWidth,
                     child: OverflowBox(
-                      child:  Text(diary.contents, style: TextStyle(fontSize: 16, height: 1.35, letterSpacing: 1),  textAlign: TextAlign.left,)
+                      child:  Text(diary.contents, style: TextStyle(fontSize: 16, height: 1.2, letterSpacing: 1),  textAlign: TextAlign.left,)
                     ),
                   ),
                   Container(
