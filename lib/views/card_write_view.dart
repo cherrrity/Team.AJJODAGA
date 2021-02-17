@@ -327,7 +327,7 @@ class _WriteCardPage extends State<WriteCardPage> {
                           child: Padding(
                             padding: EdgeInsets.all(10),
                             child: TextFormField(
-                              inputFormatters: [LengthLimitingTextInputFormatter(200),],
+                              inputFormatters: [LengthLimitingTextInputFormatter(400),],
                               initialValue : _isEdit? _diary.contents: "",
                               maxLines: 16,
                               style: TextStyle(fontSize: 16),
