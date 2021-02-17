@@ -43,6 +43,14 @@ class _CardState extends State<PhotoCard>{
     _emptyImage = widget.emptyImage;
   }
 
+  _waitDiaryUpdatePage(BuildContext context) async {
+    final result = await
+    Navigator.pushNamed(context, '/write_card', arguments: diary);
+    setState(() {
+      diary = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -157,9 +165,7 @@ class _CardState extends State<PhotoCard>{
                                 Icons.edit_rounded,
                                 color: Colors.grey,
                               ),
-                              onPressed: () => Navigator.pushNamed(
-                                  context, '/write_card',
-                                  arguments: diary)),
+                              onPressed: () => _waitDiaryUpdatePage(context)),
                           IconButton(
                               icon: Icon(
                                 Icons.delete_rounded,

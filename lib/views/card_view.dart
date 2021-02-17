@@ -94,7 +94,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
                       NeumorphicContainer(
                         child: GestureDetector(
                           child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white, size:_width * 0.06),
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false),
                         ),
                         shape: "iconButton",
                       ),

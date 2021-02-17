@@ -112,13 +112,13 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
     final date = DateTime.now();
     _currentDateTime = DateTime(date.year, date.month);
+    print("main init");
   }
 
   @override
   void didChangeDependencies() async{
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    print("main didChange");
     diaries = await DBHelper().dateSelect(DateFormat('yyyy-MM').format(_currentDateTime));
     setState(() {});
   }
@@ -126,10 +126,9 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void dispose() {
     super.dispose();
-    print("app 종료");
   }
 
-  _navigateAndDisplaySelection(BuildContext context) async {
+  _waitDiaryInsertPage(BuildContext context) async {
     final result = await
     Navigator.pushNamed(context, '/write_card');
 
@@ -191,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage>
             icon: Icon(Icons.add_rounded),
             iconSize: _width * 0.09,
             color: Colors.white,
-            onPressed: () => _navigateAndDisplaySelection(context),
+            onPressed: () => _waitDiaryInsertPage(context),
           ),
           shape: "add",
         ),

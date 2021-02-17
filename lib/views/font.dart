@@ -104,7 +104,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('NanumGothic');
                             _fonts = value;
-                            print('고딕');
                             MyApp.of(context).fontName = "NanumGothic";
                           });
                         },
@@ -116,7 +115,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('NanumDaheong');
                             _fonts = value;
-                            print('다행');
                             MyApp.of(context).fontName = "NanumDaheong";
                           });
                         },
@@ -128,7 +126,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('Bazzi');
                             _fonts = value;
-                            print('배찌');
                             MyApp.of(context).fontName = "Bazzi";
                           });
                         },
@@ -140,7 +137,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('Cafe24');
                             _fonts = value;
-                            print('카페24');
                             MyApp.of(context).fontName = "Cafe24";
                           });
                         },
@@ -152,7 +148,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('Soojin');
                             _fonts = value;
-                            print('수진');
                             MyApp.of(context).fontName = "Soojin";
                           });
                         },
@@ -164,7 +159,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('NanumBareunhiphi');
                             _fonts = value;
-                            print('바른히피');
                             MyApp.of(context).fontName = "NanumBareunhiphi";
                           });
                         },
@@ -176,7 +170,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('NanumFighting');
                             _fonts = value;
-                            print('응원한마디');
                             MyApp.of(context).fontName = "NanumFighting";
                           });
                         },
@@ -188,7 +181,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('LocusSangsang');
                             _fonts = value;
-                            print('상상체');
                             MyApp.of(context).fontName = "LocusSangsang";
                           });
                         },
@@ -200,7 +192,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('RixTodayCartoon');
                             _fonts = value;
-                            print('오늘의 만화');
                             MyApp.of(context).fontName = "RixTodayCartoon";
                           });
                         },
@@ -212,7 +203,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('UNGothicUni');
                             _fonts = value;
-                            print('유니 고딕');
                             MyApp.of(context).fontName = "UNGothicUni";
                           });
                         },
@@ -224,7 +214,6 @@ class FontState extends State<Font> {
                           setState(() {
                             ThemeController.of(context).setFont('NeoDungenmoPro');
                             _fonts = value;
-                            print('둥근모pro');
                             MyApp.of(context).fontName = "NeoDungenmoPro";
                           });
                         },

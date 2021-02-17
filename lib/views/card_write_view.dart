@@ -153,7 +153,6 @@ class _WriteCardPage extends State<WriteCardPage> {
     setState(() {
       if (pickedFile != null) {
         this.image_file = pickedFile.path;
-        print("selected image_path: $image_file");
         _diary.image = image_file;
         _image = File(pickedFile.path);
       }
@@ -166,14 +165,16 @@ class _WriteCardPage extends State<WriteCardPage> {
     if(_isEdit){
       // 업데이트하는 경우
       DBHelper().updateDiary(_diary);
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      currentFocus.unfocus();
+      Navigator.pop(context, _diary);
     }else{
       // 새로 작성하는 경우
       DBHelper().insertDiary(_diary);
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      currentFocus.unfocus();
+      Navigator.pop(context, true);
     }
-
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    currentFocus.unfocus();
-    Navigator.pop(context, true);
   }
 
   @override
