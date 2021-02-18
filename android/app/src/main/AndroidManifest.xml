@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ajjodaga.project_moonhwadiary">
+    package="com.example.project_moonhwadiary">
    <application
        android:name="io.flutter.app.FlutterApplication"
         android:label="문화일기"
