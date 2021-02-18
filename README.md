@@ -9,7 +9,7 @@ K-pop 문화 속에서 가수의 팬들이 포토 카드를 소중하게 모으�
 문화생활을 한장의 카드로 저장하여 뒤돌아 보았을 때 소중한 추억을 모아 볼 수 있습니다.
 
 [DOWNLOAD] <br>
-💾 [APK FILE](https://github.com/cherrrity/Team.AJJODAGA/raw/yejin/app-release.apk)
+💾 [APK FILE](https://github.com/cherrrity/Team.AJJODAGA/raw/yejin/MoonhwaDiary.apk)
 
 ## 개발환경
 - Android Studio
