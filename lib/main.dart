@@ -139,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage>
       } else {
         _getPrevMonth();
       }
+      didChangeDependencies();
     });
   }
 
@@ -179,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage>
         child: NeumorphicContainer(
           child: IconButton(
             icon: Icon(Icons.add_rounded),
-            iconSize: _width * 0.09,
+            iconSize: _width * 0.12,
             color: Colors.white,
             onPressed: () => _waitDiaryInsertPage(context),
           ),
@@ -201,12 +202,14 @@ class _MyHomePageState extends State<MyHomePage>
         setState(() {
           _currentDateTime = dateTime;
           _datesView();
+          didChangeDependencies();
         });
       },
     );
   }
 
   Widget _datesView() {
+
     int yearNum = _currentDateTime.year;
     int monthNum = _currentDateTime.month;
 
