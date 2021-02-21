@@ -1,4 +1,4 @@
-package com.example.project_moonhwadiary;
+package com.ajjodaga.project_moonhwadiary;
 
 import io.flutter.embedding.android.FlutterActivity;
 
