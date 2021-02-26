@@ -52,6 +52,9 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _date = ModalRoute.of(context).settings.arguments;
+    setState(() {
+      _getDiaries(_date);
+    });
   }
 
   Future<List<Diary>> _getDiaries(String date) async {
