@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage>
         child: NeumorphicContainer(
           child: IconButton(
             icon: Icon(Icons.add_rounded),
-            iconSize: _width * 0.12,
+            iconSize: _width * 0.08,
             color: Colors.white,
             onPressed: () => _waitDiaryInsertPage(context),
           ),

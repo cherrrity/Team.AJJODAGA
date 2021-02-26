@@ -8,20 +8,21 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:project_moonhwadiary/models/diary.dart';
+import 'package:project_moonhwadiary/views/card_view.dart';
 
 class PhotoCard extends StatefulWidget {
   _CardState cardstate;
   final Diary diary;
   final VoidCallback callback;
+  final VoidCallback updateCallBack;
   final int index;
   final String emptyImage;
 
-
-  PhotoCard(this.diary, this.callback, this.index, this.emptyImage);
+  PhotoCard(this.diary, this.callback, this.index, this.emptyImage,  this.updateCallBack);
 
   @override
   _CardState createState() {
-    cardstate = _CardState(this.callback);
+    cardstate = _CardState(this.callback, this.updateCallBack);
     return cardstate;
   }
   getState() => cardstate;
@@ -29,11 +30,13 @@ class PhotoCard extends StatefulWidget {
 
 class _CardState extends State<PhotoCard>{
   Diary diary;
-  final VoidCallback onDeleteItem;
   int index;
   String _emptyImage;
 
-  _CardState(this.onDeleteItem);
+  final VoidCallback onDeleteItem;
+  final VoidCallback updateCallBack;
+
+  _CardState(this.onDeleteItem, this.updateCallBack);
 
   @override
   void initState() {
@@ -47,6 +50,7 @@ class _CardState extends State<PhotoCard>{
     Navigator.pushNamed(context, '/write_card', arguments: diary);
     setState(() {
       diary = result;
+      updateCallBack();
     });
   }
 

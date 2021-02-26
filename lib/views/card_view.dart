@@ -35,6 +35,14 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   bool _checkOnce = false;
 
   @override
+  void didUpdateWidget(covariant ViewCardPage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      _getDiaries(_date);
+    });
+  }
+  @override
   void dispose() {
     // TODO: implement dispose
     _pageController.dispose();
@@ -52,10 +60,8 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _date = ModalRoute.of(context).settings.arguments;
-    setState(() {
-      _getDiaries(_date);
-    });
   }
+
 
   Future<List<Diary>> _getDiaries(String date) async {
     // 날짜 수정
@@ -189,7 +195,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
     );
   }
 
-  Widget cardView(List<Diary> list) {
+  Widget cardView(dynamic list) {
     buildListItem(list);
 
     return  Center (
@@ -210,6 +216,12 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
   _onItemChange(int index){
     setState(() {
       _focusedIndex = index;
+    });
+  }
+
+  _updateDiary(){
+    setState(() {
+      _getDiaries(_date);
     });
   }
 
@@ -316,7 +328,7 @@ class _ViewCardPage extends State<ViewCardPage> with SingleTickerProviderStateMi
       for(int i = 0; i < _list.length; i++){
         emptyImage = _initImages();
         item = Container(
-          child: PhotoCard(_list[i], _onItemDelete, i, emptyImage),
+          child: PhotoCard(_list[i], _onItemDelete, i, emptyImage, _updateDiary),
           //child: PhotoCard(diaries[index]),
         );
         cards.add(item);
